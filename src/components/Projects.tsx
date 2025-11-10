@@ -230,7 +230,7 @@ const Projects = () => {
                       <img 
                         src={item.image.startsWith('/') ? item.image : `/${item.image}`}
                         alt={item.title}
-                        className="absolute inset-0 w-full h-full object-cover opacity-100 z-0"
+                        className="absolute inset-0 w-full h-full object-cover opacity-50 z-0"
                         loading="lazy"
                         style={{ display: 'block' }}
                         onError={(e) => {
