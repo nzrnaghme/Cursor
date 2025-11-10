@@ -225,12 +225,14 @@ const Projects = () => {
                     index % 4 === 2 ? 'bg-gradient-to-br from-[#553c9a] via-[#6b4fb8] to-[#7b5fc8]' :
                     'bg-gradient-to-br from-[#2d5a87] via-[#3d6a97] to-[#4d7aa7]'
                   }`}>
-                    {/* Background image - always visible with opacity 1 */}
+                    {/* Background image - opacity 0.5 normally, 1 on hover */}
                     {item.image && (
                       <img 
                         src={item.image.startsWith('/') ? item.image : `/${item.image}`}
                         alt={item.title}
-                        className="absolute inset-0 w-full h-full object-cover opacity-50 z-0"
+                        className={`absolute inset-0 w-full h-full object-cover z-0 transition-opacity duration-300 ${
+                          hoveredItem === item.id ? 'opacity-100' : 'opacity-50'
+                        }`}
                         loading="lazy"
                         style={{ display: 'block' }}
                         onError={(e) => {
@@ -240,53 +242,54 @@ const Projects = () => {
                       />
                     )}
                     
+                    {/* Title - visible normally, hidden on hover */}
+                    <motion.div
+                      initial={{ opacity: 1 }}
+                      animate={{ 
+                        opacity: hoveredItem === item.id ? 0 : 1 
+                      }}
+                      transition={{ duration: 0.3 }}
+                      className="absolute inset-0 flex items-center justify-center z-[1] pointer-events-none"
+                    >
+                      <div className="text-white text-base sm:text-lg font-semibold text-center px-3 py-1 rounded drop-shadow-2xl bg-black/20 md:bg-black/10">
+                        {item.title}
+                      </div>
+                    </motion.div>
+                    
                     {/* Hover content - emoji, video, or picture (desktop only) */}
-                    <AnimatePresence mode="wait">
-                      {hoveredItem === item.id ? (
-                        <motion.div
-                          key="hover-content"
-                          initial={{ opacity: 0, scale: 0.8 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          exit={{ opacity: 0, scale: 0.8 }}
-                          transition={{ duration: 0.3 }}
-                          className="absolute inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm z-10 hidden md:flex"
-                        >
-                          {item.hoverVideo ? (
-                            <video 
-                              src={item.hoverVideo} 
-                              autoPlay 
-                              loop 
-                              muted 
-                              className="w-full h-full object-cover"
-                              onError={(e) => {
-                                (e.target as HTMLVideoElement).style.display = 'none'
-                              }}
-                            />
-                          ) : item.hoverImage ? (
-                            <img 
-                              src={item.hoverImage.startsWith('/') ? item.hoverImage : `/${item.hoverImage}`}
-                              alt={item.title}
-                              className="w-full h-full object-cover opacity-100"
-                              onError={(e) => {
-                                (e.target as HTMLImageElement).style.display = 'none'
-                              }}
-                            />
-                          ) : item.hoverEmoji ? (
-                            <div className="text-4xl md:text-6xl lg:text-8xl">{item.hoverEmoji}</div>
-                          ) : null}
-                        </motion.div>
-                      ) : (
-                        <motion.div
-                          key="title"
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          exit={{ opacity: 0 }}
-                          className="absolute inset-0 flex items-center justify-center bg-black/5 md:bg-transparent z-[1] pointer-events-none"
-                        >
-                          <div className="text-white text-base sm:text-lg font-semibold text-center px-3 py-1 rounded drop-shadow-2xl bg-black/20 md:bg-black/10">{item.title}</div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
+                    {hoveredItem === item.id && (
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        transition={{ duration: 0.3 }}
+                        className="absolute inset-0 flex items-center justify-center z-10 hidden md:flex"
+                      >
+                        {item.hoverVideo ? (
+                          <video 
+                            src={item.hoverVideo} 
+                            autoPlay 
+                            loop 
+                            muted 
+                            className="w-full h-full object-cover"
+                            onError={(e) => {
+                              (e.target as HTMLVideoElement).style.display = 'none'
+                            }}
+                          />
+                        ) : item.hoverImage ? (
+                          <img 
+                            src={item.hoverImage.startsWith('/') ? item.hoverImage : `/${item.hoverImage}`}
+                            alt={item.title}
+                            className="w-full h-full object-cover opacity-100"
+                            onError={(e) => {
+                              (e.target as HTMLImageElement).style.display = 'none'
+                            }}
+                          />
+                        ) : item.hoverEmoji ? (
+                          <div className="text-4xl md:text-6xl lg:text-8xl">{item.hoverEmoji}</div>
+                        ) : null}
+                      </motion.div>
+                    )}
                   </div>
 
                   {/* Content Section */}
