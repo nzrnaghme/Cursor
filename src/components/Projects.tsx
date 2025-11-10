@@ -53,10 +53,9 @@ const Projects = () => {
         'Manuscript in preparation',
         'Advisor: Prof. Shahnam Mirzaei'
       ],
-      image: '/project-speech-emotion.jpg',
-    
+      image: '/images/project-speech-emotion.png',
       hoverEmoji: '🎤',
-      hoverImage: './public/images/project-speech-emotion.png'
+      hoverImage: '/images/project-speech-emotion.png'
     },
     {
       id: 2,
@@ -71,9 +70,9 @@ const Projects = () => {
         'Built NLP-based chatbot with Google Cloud',
         'Demo available on LinkedIn'
       ],
-      image: '/project-cctv-chatbot.jpg',
+      image: '/images/project-covid-analysis.png',
       hoverEmoji: '📊',
-      hoverImage: './public/images/project-covid-analysis.png',
+      hoverImage: '/images/project-covid-analysis.png',
       link: 'https://www.linkedin.com/posts/naghme-nazar_machinelearning-nlp-datascience-ugcPost-7361228441074962434-s89Q?utm_source=share&utm_medium=member_desktop&rcm=ACoAACbyPb0Be82yiC7g1CitYj_zttwH1PBbPNM'
     },
     {
@@ -89,10 +88,10 @@ const Projects = () => {
         'Technologies: Python, Dialogflow, Google Cloud',
         'GitHub: CCTV Chatbot'
       ],
-      image: '/project-cctv-chatbot.jpg',
+      image: '/images/project-cctv-chatbot.png',
       link: 'https://github.com/nzrnaghme/CCTV',
       hoverEmoji: '🤖',
-      hoverImage: './public/images/project-cctv-chatbot.png',
+      hoverImage: '/images/project-cctv-chatbot.png',
       // hoverVideo: './public/cctv-chatbot-video.mp4'
     },
     // Experiences
@@ -113,9 +112,9 @@ const Projects = () => {
         'Reduced bugs by 25% through better processes',
         'Migrated legacy systems to Vue.js, improving performance by 30%'
       ],
-      image: '/experience-golrang.jpg',
+      image: '/images/experience-golrang.png',
       hoverEmoji: '💼',
-      hoverImage: './public/images/experience-golrang.png',
+      hoverImage: '/images/experience-golrang.png',
       link: 'https://www.kaman.io/',
     },
     {
@@ -133,9 +132,9 @@ const Projects = () => {
         'Applied code-splitting and lazy loading, optimizing application performance',
         'Worked with modern React patterns and best practices'
       ],
-      image: '/experience-erole.jpg',
+      image: '/images/experience-erole.png',
       hoverEmoji: '⚛️',
-      hoverImage: './public/images/experience-erole.png'
+      hoverImage: '/images/experience-erole.png'
     },
     {
       id: 6,
@@ -152,9 +151,9 @@ const Projects = () => {
         'Collaborated with UI/UX designers to ensure modern, intuitive designs',
         'Built responsive and accessible web applications'
       ],
-      image: '/experience-bahr.jpg',
+      image: '/images/experience-bahr.png',
       hoverEmoji: '🌐',
-      hoverImage: './public/images/experience-bahr.png',
+      hoverImage: '/images/experience-bahr.png',
       link: 'https://www.bahracademy.co.uk/',
     }
   ]
@@ -211,7 +210,7 @@ const Projects = () => {
           className="w-full"
           ref={itemsRef}
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             <AnimatePresence mode="wait">
               {filteredItems.map((item, index) => (
                 <motion.div
@@ -226,7 +225,7 @@ const Projects = () => {
                   onMouseLeave={() => setHoveredItem(null)}
                 >
                   {/* Image/Header Section */}
-                  <div className={`h-[150px] flex items-center justify-center relative overflow-hidden ${
+                  <div className={`h-[150px] sm:h-[180px] md:h-[200px] flex items-center justify-center relative overflow-hidden ${
                     index % 4 === 0 ? 'bg-gradient-to-br from-[#6b8e23] via-[#7b9e33] to-[#8bae43]' :
                     index % 4 === 1 ? 'bg-gradient-to-br from-[#4a5568] via-[#5a6578] to-[#6a7588]' :
                     index % 4 === 2 ? 'bg-gradient-to-br from-[#553c9a] via-[#6b4fb8] to-[#7b5fc8]' :
@@ -235,16 +234,18 @@ const Projects = () => {
                     {/* Background image - always visible with opacity 1 */}
                     {item.image && (
                       <img 
-                        src={item.image} 
+                        src={item.image.startsWith('/') ? item.image : `/${item.image}`}
                         alt={item.title}
-                        className="w-full h-full object-cover opacity-1"
+                        className="w-full h-full object-cover opacity-100"
+                        loading="lazy"
                         onError={(e) => {
-                          (e.target as HTMLImageElement).style.display = 'none'
+                          // Don't hide, show gradient background instead
+                          (e.target as HTMLImageElement).style.opacity = '0'
                         }}
                       />
                     )}
                     
-                    {/* Hover content - emoji, video, or picture */}
+                    {/* Hover content - emoji, video, or picture (desktop only) */}
                     <AnimatePresence mode="wait">
                       {hoveredItem === item.id ? (
                         <motion.div
@@ -253,7 +254,7 @@ const Projects = () => {
                           animate={{ opacity: 1, scale: 1 }}
                           exit={{ opacity: 0, scale: 0.8 }}
                           transition={{ duration: 0.3 }}
-                          className="absolute inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm"
+                          className="absolute inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm hidden md:flex"
                         >
                           {item.hoverVideo ? (
                             <video 
@@ -268,7 +269,7 @@ const Projects = () => {
                             />
                           ) : item.hoverImage ? (
                             <img 
-                              src={item.hoverImage} 
+                              src={item.hoverImage.startsWith('/') ? item.hoverImage : `/${item.hoverImage}`}
                               alt={item.title}
                               className="w-full h-full object-cover opacity-100"
                               onError={(e) => {
@@ -276,7 +277,7 @@ const Projects = () => {
                               }}
                             />
                           ) : item.hoverEmoji ? (
-                            <div className="text-6xl md:text-8xl">{item.hoverEmoji}</div>
+                            <div className="text-4xl md:text-6xl lg:text-8xl">{item.hoverEmoji}</div>
                           ) : null}
                         </motion.div>
                       ) : (
@@ -285,16 +286,16 @@ const Projects = () => {
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                           exit={{ opacity: 0 }}
-                          className="absolute inset-0 flex items-center justify-center"
+                          className="absolute inset-0 flex items-center justify-center bg-black/20 md:bg-transparent"
                         >
-                          <div className="text-white text-lg font-semibold text-center px-4">{item.title}</div>
+                          <div className="text-white text-base sm:text-lg font-semibold text-center px-4">{item.title}</div>
                         </motion.div>
                       )}
                     </AnimatePresence>
                   </div>
 
                   {/* Content Section */}
-                  <div className="p-4">
+                  <div className="p-4 sm:p-5 md:p-6">
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-xs uppercase tracking-wider text-gray-400 font-medium">{item.category}</span>
                       <span className="text-xs text-gray-500 font-medium">{item.year}</span>
