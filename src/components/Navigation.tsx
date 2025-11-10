@@ -1,7 +1,6 @@
-import { useState, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import MusicPlayer from './MusicPlayer'
-import Loading from './Loading'
 
 interface NavigationProps {
   currentSection: string
