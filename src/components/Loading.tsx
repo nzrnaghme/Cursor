@@ -1,17 +1,16 @@
 import { motion } from 'framer-motion'
-import './Loading.css'
 
 const Loading = () => {
   return (
     <motion.div 
-      className="loading-overlay"
+      className="fixed inset-0 bg-white/95 backdrop-blur-sm z-[9999] flex items-center justify-center"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      <div className="loading-container">
+      <div className="flex flex-col items-center gap-8">
         <motion.div
-          className="loading-logo"
+          className="text-[#6b8e23] flex items-center justify-center"
           animate={{ 
             rotate: [0, 360],
             scale: [1, 1.2, 1]
@@ -28,7 +27,7 @@ const Loading = () => {
           </svg>
         </motion.div>
         <motion.p
-          className="loading-text"
+          className="text-[#6b8e23] text-base font-medium uppercase tracking-wider"
           initial={{ opacity: 0 }}
           animate={{ opacity: [0, 1, 0] }}
           transition={{ duration: 1.5, repeat: Infinity }}
@@ -41,4 +40,3 @@ const Loading = () => {
 }
 
 export default Loading
-

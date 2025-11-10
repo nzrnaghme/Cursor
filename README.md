@@ -1,6 +1,6 @@
 # Portfolio Website
 
-A modern, visually stunning portfolio website inspired by [Lusion.co](https://lusion.co/), built with React, TypeScript, and cutting-edge animation libraries.
+A modern, visually stunning portfolio website, built with React, TypeScript, and cutting-edge animation libraries.
 
 ## Features
 
@@ -172,6 +172,4 @@ This project is open source and available for personal use.
 
 **Note**: Remember to replace all placeholder content with your actual information before deploying!
 
-## Credits
-
-Inspired by the beautiful design and animations of [Lusion.co](https://lusion.co/)
+## Credits by Melody Nazar

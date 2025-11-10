@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import './Contact.css'
+import ParticlesBackground from './ParticlesBackground'
 
 const Contact = () => {
   const { ref, inView } = useInView({
@@ -10,12 +10,6 @@ const Contact = () => {
   })
 
   const containerRef = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start end', 'end start']
-  })
-
-  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0])
 
   const [localTime, setLocalTime] = useState(
     new Date().toLocaleTimeString('en-US', { 
@@ -40,82 +34,75 @@ const Contact = () => {
   }, [])
 
   const socialLinks = [
-    { name: 'Twitter / X', url: 'https://twitter.com' },
-    { name: 'Instagram', url: 'https://instagram.com' },
-    { name: 'LinkedIn', url: 'https://linkedin.com' }
+    { name: 'Github', url: 'https://github.com/nzrnaghme' },
+    { name: 'LinkedIn', url: 'https://www.linkedin.com/in/naghme-nazar/' }
   ]
 
   return (
-    <section id="contact" className="contact" ref={containerRef}>
+    <section id="contact" className="py-20 px-6 min-h-screen flex items-center bg-gradient-to-br from-[#252525] to-[#1a1a1a] text-white relative" ref={containerRef}>
+      <ParticlesBackground className="opacity-50" />
       <motion.div 
-        className="contact-container"
-        style={{ opacity }}
+        className="max-w-[1200px] mx-auto w-full relative z-10"
       >
         <motion.div 
-          className="contact-header"
+          className="mb-8"
           ref={ref}
           initial={{ opacity: 0, y: 50 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, ease: [0.6, -0.05, 0.01, 0.99] }}
         >
-          <h2 className="contact-title">Is Your Big Idea Ready to Go Wild?</h2>
+          <h2 className="text-[clamp(2rem,5vw,4rem)] font-light mb-3 tracking-[-0.02em] leading-tight text-white">Let's Connect</h2>
           <motion.p 
-            className="contact-subtitle"
+            className="text-xl text-[#6b8e23] font-light"
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
             transition={{ delay: 0.2, duration: 0.8 }}
           >
-            Let's work together!
+            Melody Nazar
           </motion.p>
         </motion.div>
 
-        <div className="contact-content">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
           <motion.div 
-            className="contact-info"
+            className="flex flex-col gap-6"
             initial={{ opacity: 0, x: -50 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ delay: 0.3, duration: 0.8 }}
           >
-            <div className="contact-section">
-              <h4 className="contact-section-title">General enquiries</h4>
-              <a href="mailto:hello@lusion.co" className="contact-link">
-                hello@lusion.co
+            <div className="mb-6">
+              <h4 className="text-sm font-medium uppercase tracking-wider text-gray-400 mb-2">General enquiries</h4>
+              <a href="mailto:melodynzr@gmail.com" className="text-xl text-white transition-colors hover:text-[#6b8e23] inline-block font-light">
+                melodynzr@gmail.com
               </a>
             </div>
 
-            <div className="contact-section">
-              <h4 className="contact-section-title">New business</h4>
-              <a href="mailto:business@lusion.co" className="contact-link">
-                business@lusion.co
-              </a>
-            </div>
 
-            <div className="contact-section">
-              <h4 className="contact-section-title">Location</h4>
-              <p className="contact-location">
-                Suite 29 Marsh Street<br />
-                Bristol, BS1 4AA<br />
-                United Kingdom
+            <div>
+              <h4 className="text-sm font-medium uppercase tracking-wider text-gray-400 mb-2">Location</h4>
+              <p className="text-base leading-relaxed text-gray-300 font-light">
+                18724 Chase Street<br />
+                Northridge, California<br />
+                United State
               </p>
             </div>
           </motion.div>
 
           <motion.div 
-            className="contact-sidebar"
+            className="flex flex-col gap-6"
             initial={{ opacity: 0, x: 50 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ delay: 0.4, duration: 0.8 }}
           >
-            <div className="contact-socials">
-              <h4 className="contact-section-title">Socials</h4>
-              <ul className="social-links">
+            <div className="mb-4">
+              <h4 className="text-sm font-medium uppercase tracking-wider text-gray-400 mb-2">Socials</h4>
+              <ul className="list-none p-0 m-0 flex flex-col">
                 {socialLinks.map((link) => (
-                  <li key={link.name}>
+                  <li key={link.name} className="mb-2">
                     <motion.a 
                       href={link.url} 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="social-link"
+                      className="text-base text-white transition-colors hover:text-[#6b8e23] inline-block font-light"
                       whileHover={{ x: 5 }}
                     >
                       {link.name} →
@@ -125,17 +112,17 @@ const Contact = () => {
               </ul>
             </div>
 
-            <div className="contact-newsletter">
-              <h4 className="contact-section-title">Subscribe to our newsletter</h4>
-              <form className="newsletter-form">
+            <div className="p-6 border-2 border-white/10 bg-[#2a2a2a] rounded-lg">
+              <h4 className="text-sm font-medium uppercase tracking-wider text-gray-400 mb-3">Subscribe to our newsletter</h4>
+              <form className="flex flex-col gap-3 mt-3">
                 <input 
                   type="email" 
                   placeholder="Your email"
-                  className="newsletter-input"
+                  className="p-3 bg-[#1a1a1a] border-2 border-white/10 rounded text-white text-sm placeholder:text-gray-500 focus:outline-none focus:border-[#6b8e23] transition-all"
                 />
                 <motion.button 
                   type="submit"
-                  className="newsletter-button"
+                  className="px-6 py-3 bg-[#6b8e23] text-white rounded border-none text-sm font-medium cursor-pointer uppercase tracking-wider transition-all hover:bg-[#556b2f]"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -144,26 +131,25 @@ const Contact = () => {
               </form>
             </div>
 
-            <div className="contact-meta">
-              <div className="contact-meta-item">
-                <span className="contact-meta-label">Version</span>
-                <span className="contact-meta-value">2024 © Edition</span>
+            <div className="flex flex-col gap-3 pt-6 border-t border-white/10">
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-gray-400 uppercase tracking-wider">Version</span>
+                <span className="text-sm text-white">2025 © Edition</span>
               </div>
-              <div className="contact-meta-item">
-                <span className="contact-meta-label">Local time</span>
-                <span className="contact-meta-value">{localTime}</span>
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-gray-400 uppercase tracking-wider">Local time</span>
+                <span className="text-sm text-white">{localTime}</span>
               </div>
             </div>
           </motion.div>
         </div>
 
         <motion.div 
-          className="contact-footer"
+          className="flex justify-center items-center pt-6 border-t border-white/10 text-sm text-gray-400"
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ delay: 0.6, duration: 0.8 }}
         >
-          <p>©2024 LUSION Creative Studio</p>
           <p>Built with ❤️</p>
         </motion.div>
       </motion.div>

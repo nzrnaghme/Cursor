@@ -1,39 +1,21 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --bg-primary: #ffffff;
-  --bg-secondary: #f5f5f5;
-  --text-primary: #000000;
-  --text-secondary: #666666;
-  --accent: #000000;
-  --border: #e5e5e5;
-}
+@layer base {
+  * {
+    @apply m-0 p-0 box-border;
+  }
 
-* {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+  html {
+    @apply scroll-smooth;
+  }
 
-html {
-  scroll-behavior: smooth;
-}
+  body {
+    @apply font-sans antialiased bg-white text-black leading-relaxed overflow-x-hidden;
+  }
 
-body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  line-height: 1.6;
-  overflow-x: hidden;
+  #root {
+    @apply min-h-screen;
+  }
 }
-
-#root {
-  min-height: 100vh;
-}
-

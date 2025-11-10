@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import './MusicPlayer.css'
 
 const MusicPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false)
@@ -8,37 +7,78 @@ const MusicPlayer = () => {
   const audioRef = useRef<HTMLAudioElement>(null)
 
   useEffect(() => {
-    // Create audio element if it doesn't exist
-    if (!audioRef.current) {
-      const audio = new Audio()
-      // Add your music file here:
-      // Option 1: Place music file in public folder and reference it
-      // audio.src = '/music/background-music.mp3'
-      // Option 2: Use an external URL
-      // audio.src = 'https://example.com/music.mp3'
+    const audio = audioRef.current
+    if (audio) {
+      // Free relaxing piano music
+      // Option 1: Use a local file (recommended) - place your music file in the 'public' folder
+      // Uncomment the line below and add your music file to the public folder:
+      // audio.src = '/relaxing-piano.mp3'
+      
+      // Option 2: Use a remote URL (current setup - may not always work due to CORS)
+      // Using local file from public folder
+      audio.src = '/relaxing-piano.mp3'
       audio.loop = true
-      audio.volume = 0.5
-      audioRef.current = audio
+      audio.volume = 0.4
+      audio.preload = 'auto'
+      
+      // Handle audio events
+      const handleCanPlay = () => {
+        console.log('Audio ready to play')
+      }
+      
+      const handleError = (e: Event) => {
+        console.error('Audio loading error:', e)
+        console.log('Tip: You can add your own relaxing music file in the public folder and reference it as /your-file.mp3')
+      }
+      
+      const handlePlay = () => {
+        setIsPlaying(true)
+      }
+      
+      const handlePause = () => {
+        setIsPlaying(false)
+      }
+      
+      audio.addEventListener('canplay', handleCanPlay)
+      audio.addEventListener('error', handleError)
+      audio.addEventListener('play', handlePlay)
+      audio.addEventListener('pause', handlePause)
+      
+      // Cleanup
+      return () => {
+        audio.removeEventListener('canplay', handleCanPlay)
+        audio.removeEventListener('error', handleError)
+        audio.removeEventListener('play', handlePlay)
+        audio.removeEventListener('pause', handlePause)
+        audio.pause()
+      }
     }
   }, [])
 
-  const togglePlay = () => {
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause()
-      } else {
-        audioRef.current.play().catch((error) => {
-          console.log('Audio play failed:', error)
-          // If no audio file is set, just toggle the visual state
-        })
+  const togglePlay = async () => {
+    const audio = audioRef.current
+    if (audio) {
+      try {
+        if (isPlaying) {
+          audio.pause()
+        } else {
+          await audio.play()
+        }
+      } catch (error) {
+        console.error('Error playing audio:', error)
+        // If autoplay is blocked, show a message
+        alert('Please interact with the page first, then try playing the music again.')
       }
-      setIsPlaying(!isPlaying)
     }
   }
 
   return (
     <motion.button
-      className={`music-player ${isPlaying ? 'playing' : ''} ${isHovered ? 'hovered' : ''}`}
+      className={`w-12 h-12 rounded-full border-none flex items-center justify-center cursor-pointer transition-all relative overflow-hidden ${
+        isPlaying || isHovered 
+          ? 'bg-[#6b8e23]' 
+          : 'bg-[#f5f5f5] hover:bg-[#6b8e23]'
+      }`}
       onClick={togglePlay}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -46,18 +86,17 @@ const MusicPlayer = () => {
       whileTap={{ scale: 0.95 }}
       aria-label={isPlaying ? 'Pause music' : 'Play music'}
     >
-      <div className="music-icon-container">
+      <div className={`w-6 h-6 flex items-center justify-center transition-colors ${
+        isPlaying || isHovered ? 'text-white' : 'text-black'
+      }`}>
         {isPlaying ? (
-          // Animated wavy line when playing - magic line effect
           <motion.svg
-            className="music-wave"
             width="24"
             height="24"
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
-            {/* Animated wave bars - magic line running effect */}
             <motion.rect
               x="3"
               y="12"
@@ -154,9 +193,7 @@ const MusicPlayer = () => {
             />
           </motion.svg>
         ) : isHovered ? (
-          // Pause icon (two vertical lines) when hovered and paused
           <svg
-            className="music-pause"
             width="24"
             height="24"
             viewBox="0 0 24 24"
@@ -167,9 +204,7 @@ const MusicPlayer = () => {
             <rect x="13" y="4" width="3" height="16" fill="currentColor" />
           </svg>
         ) : (
-          // Static wavy line when paused and not hovered
           <svg
-            className="music-static"
             width="24"
             height="24"
             viewBox="0 0 24 24"
@@ -185,10 +220,9 @@ const MusicPlayer = () => {
           </svg>
         )}
       </div>
-      <audio ref={audioRef} />
+      <audio ref={audioRef} loop preload="auto" />
     </motion.button>
   )
 }
 
 export default MusicPlayer
-

@@ -1,7 +1,7 @@
 import { useRef } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import './About.css'
+import ParticlesBackground from './ParticlesBackground'
 
 const About = () => {
   const { ref, inView } = useInView({
@@ -10,67 +10,109 @@ const About = () => {
   })
 
   const containerRef = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start end', 'end start']
-  })
-
-  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0])
-  const y = useTransform(scrollYProgress, [0, 0.5], [50, -50])
 
   return (
-    <section id="about" className="about" ref={containerRef}>
+    <section id="about" className="py-20 px-6 min-h-screen flex items-center bg-gradient-to-b from-[#252525] to-[#1a1a1a] relative overflow-hidden" ref={containerRef}>
+      <ParticlesBackground className="opacity-50" />
       <motion.div 
-        className="about-container"
-        style={{ opacity, y }}
+        className="max-w-[1200px] mx-auto w-full relative z-10"
       >
         <motion.div 
-          className="about-content"
+          className="max-w-[800px]"
           ref={ref}
           initial={{ opacity: 0, y: 50 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, ease: [0.6, -0.05, 0.01, 0.99] }}
         >
           <motion.h2 
-            className="about-title"
+            className="text-[clamp(2rem,5vw,4rem)] font-light mb-6 tracking-[-0.02em] leading-tight text-white"
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
             transition={{ delay: 0.2, duration: 0.8 }}
           >
-            Connecting Ideals to Uniquely Crafted Experiences
+            About Me
           </motion.h2>
 
           <motion.div 
-            className="about-description"
+            className="text-lg leading-relaxed text-gray-300 mb-8"
             initial={{ opacity: 0, y: 30 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.4, duration: 0.8 }}
           >
-            <p>
-              At Lusion, we don't follow trends for the sake of it. We believe in a different approach - 
-              one that's centered around you, your audience, and the art of creating a memorable, 
-              personalized experience.
+            <p className="mb-4 font-light">
+              I'm a graduate student in Computer Engineering at California State University Northridge, 
+              specializing in hardware acceleration, signal processing, and machine learning systems. 
+              My research focuses on developing and optimizing real-time DSP/ML algorithms on FPGA platforms.
             </p>
-            <p>
-              Our commitment goes beyond fleeting trends; it's about crafting tailor-made digital journeys 
-              that resonate uniquely and leave a lasting impact.
+            <p className="font-light">
+              With 5+ years of software engineering experience combined with expertise in SoC design, 
+              FPGA/ASIC architectures, and performance modeling, I bridge the gap between hardware and 
+              software to create efficient ML accelerators and digital signal processing systems.
             </p>
           </motion.div>
 
+          {/* Education Section */}
           <motion.div 
-            className="about-cta"
+            className="mb-8"
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.6, duration: 0.8 }}
           >
-            <motion.h3 
-              className="about-cta-text"
-              whileHover={{ scale: 1.02 }}
-            >
-              Step into a new world<br />
-              and let your<br />
-              <span className="about-cta-highlight">imagination run wild</span>
-            </motion.h3>
+            <h3 className="text-2xl font-light mb-4 text-white">Education</h3>
+            <div className="space-y-6">
+              <div className="p-6 bg-[#2a2a2a] rounded-lg border border-white/10">
+                <div className="flex justify-between items-start mb-2">
+                  <div>
+                    <h4 className="text-xl font-medium text-white mb-1">Master, Computer Engineering</h4>
+                    <p className="text-[#6b8e23]">California State University Northridge</p>
+                  </div>
+                  <span className="text-sm text-gray-400">2024 - Present</span>
+                </div>
+                <ul className="mt-3 space-y-1 text-gray-300 text-sm">
+                  <li>• Grade A in System-on-Chip (SoC) design</li>
+                  <li>• Thesis: Real-Time Speech Emotion Recognition on FPGA (in progress)</li>
+                  <li>• Advisor: <a href="https://www.ecs.csun.edu/~smirzaei/" target="_blank" rel="noopener noreferrer" className="text-[#6b8e23] hover:underline">Prof. Shahnam Mirzaei</a></li>
+                </ul>
+              </div>
+
+              <div className="p-6 bg-[#2a2a2a] rounded-lg border border-white/10">
+                <div className="flex justify-between items-start mb-2">
+                  <div>
+                    <h4 className="text-xl font-medium text-white mb-1">Bachelor, Science Computer Software</h4>
+                    <p className="text-[#6b8e23]">University of Science & Technology of Mazandaran</p>
+                  </div>
+                  <span className="text-sm text-gray-400">Aug 2016 - Mar 2021</span>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Technical Skills */}
+          <motion.div 
+            className="mt-8 p-8 bg-gradient-to-br from-[#6b8e23] to-[#556b2f] text-white rounded-lg shadow-lg"
+            initial={{ opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.8, duration: 0.8 }}
+          >
+            <h3 className="text-2xl font-light mb-4">Technical Skills</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+              <div>
+                <h4 className="font-medium mb-2">Hardware & Systems</h4>
+                <p className="text-white/80">FPGA (Xilinx Vivado), Verilog/VHDL, SoC Design, Performance Modeling, ASIC Design</p>
+              </div>
+              <div>
+                <h4 className="font-medium mb-2">ML/DSP</h4>
+                <p className="text-white/80">Signal Processing (Librosa, MFCCs), CNN/RNN, Quantization & Pruning, TensorFlow, NumPy, Pandas</p>
+              </div>
+              <div>
+                <h4 className="font-medium mb-2">Programming</h4>
+                <p className="text-white/80">Python, C++, JavaScript, TypeScript</p>
+              </div>
+              <div>
+                <h4 className="font-medium mb-2">Web/Other</h4>
+                <p className="text-white/80">React.js, Next.js, Vue.js, React Native, Git, JIRA, VS Code, Google Cloud, Android Studio</p>
+              </div>
+            </div>
           </motion.div>
         </motion.div>
       </motion.div>

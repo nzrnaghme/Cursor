@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import Navigation from './components/Navigation'
 import Home from './components/Home'
+import About from './components/About'
 import Projects from './components/Projects'
 import Contact from './components/Contact'
 import Loading from './components/Loading'
@@ -14,7 +15,7 @@ function App() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'projects', 'contact']
+      const sections = ['home', 'about', 'projects', 'contact']
       const scrollPosition = window.scrollY + 100
 
       for (const section of sections) {
@@ -61,6 +62,7 @@ function App() {
         setLoading={setIsLoading}
       />
       <Home scrollToSection={scrollToSection} />
+      <About />
       <Projects />
       <Contact />
     </div>

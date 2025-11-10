@@ -1,179 +1,346 @@
 import { useState, useRef } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import './Projects.css'
+import ParticlesBackground from './ParticlesBackground'
+
+type FilterType = 'all' | 'projects' | 'experiences'
+
+interface Item {
+  id: number
+  type: 'project' | 'experience'
+  title: string
+  category: string
+  year: string
+  description: string
+  details: string[]
+  image?: string
+  location?: string
+  company?: string
+  link?: string
+  hoverEmoji?: string
+  hoverVideo?: string
+  hoverImage?: string
+}
 
 const Projects = () => {
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
+  const [filter, setFilter] = useState<FilterType>('all')
+  const [hoveredItem, setHoveredItem] = useState<number | null>(null)
   const { ref, inView } = useInView({
     threshold: 0.2,
-    triggerOnce: false
+    triggerOnce: true
   })
 
   const containerRef = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start end', 'end start']
+  const { ref: itemsRef, inView: itemsInView } = useInView({
+    threshold: 0.1,
+    triggerOnce: true
   })
 
-  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0])
-  const y = useTransform(scrollYProgress, [0, 0.5], [50, -50])
-
-  const projects = [
+  const items: Item[] = [
+    // Projects
     {
       id: 1,
-      title: 'Project One',
-      description: 'A stunning digital experience that pushes the boundaries of web design and user interaction.',
-      category: 'Web Design',
-      year: '2024'
+      type: 'project',
+      title: 'Real-time Speech Emotion Recognition on FPGA',
+      category: 'Research Project',
+      year: '2024',
+      description: 'Implemented a speech emotion recognition pipeline (MFCC + CNN) on Xilinx ZedBoard FPGA for real-time audio classification.',
+      details: [
+        'Optimized design through quantization and efficient mapping to LUTs, BRAMs, and DSP slices',
+        'Reduced latency and power usage significantly',
+        'Achieved ~89% accuracy while performing hardware-software trade-off analysis',
+        'Analyzed throughput, latency, and resource utilization',
+        'Manuscript in preparation',
+        'Advisor: Prof. Shahnam Mirzaei'
+      ],
+      image: '/project-speech-emotion.jpg',
+    
+      hoverEmoji: '🎤',
+      hoverImage: './public/images/project-speech-emotion.png'
     },
     {
       id: 2,
-      title: 'Project Two',
-      description: 'Interactive 3D visualization with immersive user experience and cutting-edge technology.',
-      category: '3D Design',
-      year: '2024'
+      type: 'project',
+      title: 'COVID-19 Discourse Analysis',
+      category: 'Research Project',
+      year: '2023',
+      description: 'Researched Iranian society\'s response to COVID-19 using social media data with large-scale sentiment analysis.',
+      details: [
+        'Conducted large-scale sentiment analysis on social media data related to COVID-19',
+        'Showcased scalable data processing and natural language analysis',
+        'Built NLP-based chatbot with Google Cloud',
+        'Demo available on LinkedIn'
+      ],
+      image: '/project-cctv-chatbot.jpg',
+      hoverEmoji: '📊',
+      hoverImage: './public/images/project-covid-analysis.png',
+      link: 'https://www.linkedin.com/posts/naghme-nazar_machinelearning-nlp-datascience-ugcPost-7361228441074962434-s89Q?utm_source=share&utm_medium=member_desktop&rcm=ACoAACbyPb0Be82yiC7g1CitYj_zttwH1PBbPNM'
     },
     {
       id: 3,
-      title: 'Project Three',
-      description: 'Brand identity and website redesign that captures the essence of modern digital culture.',
-      category: 'Branding',
-      year: '2023'
+      type: 'project',
+      title: 'CCTV Chatbot',
+      category: 'AI Application',
+      year: '2022',
+      description: 'Built an AI chatbot for a CCTV shopping platform to guide users in camera selection.',
+      details: [
+        'Integrated Dialogflow for NLP and Google Cloud for scalable infrastructure',
+        'Reduced customer support load by 40%',
+        'Technologies: Python, Dialogflow, Google Cloud',
+        'GitHub: CCTV Chatbot'
+      ],
+      image: '/project-cctv-chatbot.jpg',
+      link: 'https://github.com/nzrnaghme/CCTV',
+      hoverEmoji: '🤖',
+      hoverImage: './public/images/project-cctv-chatbot.png',
+      // hoverVideo: './public/cctv-chatbot-video.mp4'
     },
+    // Experiences
     {
       id: 4,
-      title: 'Project Four',
-      description: 'E-commerce platform with seamless user experience and innovative payment solutions.',
-      category: 'Web Development',
-      year: '2023'
+      type: 'experience',
+      title: 'Senior Frontend Developer',
+      company: 'Golrang Industrial Group',
+      location: 'Tehran, Iran',
+      category: 'Full-time',
+      year: '2022 - 2024',
+      description: 'Architected and developed cross-platform applications using React Native and PWA with React.js.',
+      details: [
+        'Delivered seamless experience for both iOS and Android users',
+        'Implemented custom UI components and optimized caching/state management',
+        'Reduced app load time by 40% and improved overall performance',
+        'Led a team of 5; improved collaboration and code review processes',
+        'Reduced bugs by 25% through better processes',
+        'Migrated legacy systems to Vue.js, improving performance by 30%'
+      ],
+      image: '/experience-golrang.jpg',
+      hoverEmoji: '💼',
+      hoverImage: './public/images/experience-golrang.png',
+      link: 'https://www.kaman.io/',
     },
     {
       id: 5,
-      title: 'Project Five',
-      description: 'Mobile application design with intuitive interface and beautiful animations.',
-      category: 'Mobile Design',
-      year: '2024'
+      type: 'experience',
+      title: 'React Developer',
+      company: 'Erole.ir',
+      location: 'Tehran, Iran',
+      category: 'Full-time',
+      year: '2021 - 2022',
+      description: 'Developed React applications with Redux state management and RESTful APIs.',
+      details: [
+        'Built custom UI components to enhance user interaction',
+        'Implemented two-way communication (SignalR) between client and server for real-time updates',
+        'Applied code-splitting and lazy loading, optimizing application performance',
+        'Worked with modern React patterns and best practices'
+      ],
+      image: '/experience-erole.jpg',
+      hoverEmoji: '⚛️',
+      hoverImage: './public/images/experience-erole.png'
     },
     {
       id: 6,
-      title: 'Project Six',
-      description: 'Creative agency website showcasing portfolio with dynamic content and smooth transitions.',
-      category: 'Web Design',
-      year: '2023'
+      type: 'experience',
+      title: 'Front End Web Developer',
+      company: 'Bahr Academy',
+      location: 'Sari, Iran',
+      category: 'Full-time',
+      year: '2019 - 2021',
+      description: 'Developed, designed and implemented responsive web applications using HTML, CSS, JavaScript.',
+      details: [
+        'Identified and fixed UI/UX bugs, improving site usability',
+        'Integrated third-party APIs and developed automated test suites for front-end components',
+        'Collaborated with UI/UX designers to ensure modern, intuitive designs',
+        'Built responsive and accessible web applications'
+      ],
+      image: '/experience-bahr.jpg',
+      hoverEmoji: '🌐',
+      hoverImage: './public/images/experience-bahr.png',
+      link: 'https://www.bahracademy.co.uk/',
     }
   ]
 
+  const filteredItems = filter === 'all' 
+    ? items 
+    : filter === 'projects' 
+    ? items.filter(item => item.type === 'project')
+    : items.filter(item => item.type === 'experience')
+
   return (
-    <section id="projects" className="projects" ref={containerRef}>
+    <section id="projects" className="py-20 px-6 min-h-screen flex items-center bg-gradient-to-b from-[#1a1a1a] to-[#252525] relative" ref={containerRef}>
+      <ParticlesBackground className="opacity-50" />
       <motion.div 
-        className="projects-container"
-        style={{ opacity, y }}
+        className="max-w-[1200px] mx-auto w-full relative z-10"
       >
         <motion.div 
-          className="projects-header"
+          className="mb-8"
           ref={ref}
           initial={{ opacity: 0, y: 50 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, ease: [0.6, -0.05, 0.01, 0.99] }}
         >
-          <div className="projects-header-top">
+          <div className="flex justify-between items-start gap-6 flex-col md:flex-row">
             <div>
-              <h2 className="projects-title">Projects</h2>
-              <p className="projects-description">
-                A selection of our most passionately crafted works with forward-thinking clients.
+              <h2 className="text-[clamp(2rem,5vw,4rem)] font-light mb-3 tracking-[-0.02em] leading-tight text-white">Projects & Experience</h2>
+              <p className="text-lg leading-relaxed text-gray-300 max-w-[600px] font-light">
+                A selection of my research projects and professional experiences in AI/ML hardware-software engineering.
               </p>
             </div>
-            <div className="view-toggle">
+          </div>
+
+          {/* Filter Buttons */}
+          <div className="flex gap-2 mt-6 mb-8">
+            {(['all', 'projects', 'experiences'] as FilterType[]).map((filterType) => (
               <motion.button
-                className={`view-button ${viewMode === 'list' ? 'active' : ''}`}
-                onClick={() => setViewMode('list')}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                aria-label="List view"
+                key={filterType}
+                className={`px-6 py-2 text-sm font-medium uppercase tracking-wider rounded-full transition-all ${
+                  filter === filterType
+                    ? 'bg-[#6b8e23] text-white'
+                    : 'bg-[#2a2a2a] text-gray-400 hover:text-white hover:bg-white/10'
+                }`}
+                onClick={() => setFilter(filterType)}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <line x1="4" y1="6" x2="20" y2="6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                  <line x1="4" y1="12" x2="20" y2="12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                  <line x1="4" y1="18" x2="20" y2="18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                </svg>
+                {filterType === 'all' ? 'All' : filterType === 'projects' ? 'Projects' : 'Experiences'}
               </motion.button>
-              <motion.button
-                className={`view-button ${viewMode === 'grid' ? 'active' : ''}`}
-                onClick={() => setViewMode('grid')}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                aria-label="Grid view"
-              >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="3" y="3" width="7" height="7" stroke="currentColor" strokeWidth="2" fill="none"/>
-                  <rect x="14" y="3" width="7" height="7" stroke="currentColor" strokeWidth="2" fill="none"/>
-                  <rect x="3" y="14" width="7" height="7" stroke="currentColor" strokeWidth="2" fill="none"/>
-                  <rect x="14" y="14" width="7" height="7" stroke="currentColor" strokeWidth="2" fill="none"/>
-                </svg>
-              </motion.button>
-            </div>
+            ))}
           </div>
         </motion.div>
 
         <motion.div
-          className={`projects-display ${viewMode}`}
-          key={viewMode}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.3 }}
+          className="w-full"
+          ref={itemsRef}
         >
-          {viewMode === 'grid' ? (
-            <div className="projects-grid">
-              {projects.map((project, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <AnimatePresence mode="wait">
+              {filteredItems.map((item, index) => (
                 <motion.div
-                  key={project.id}
-                  className="project-card"
+                  key={item.id}
+                  className="relative bg-[#2a2a2a] rounded-xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.3)] transition-all cursor-pointer border border-white/10 hover:shadow-[0_8px_30px_rgba(0,0,0,0.5)] hover:border-[#6b8e23] group"
                   initial={{ opacity: 0, y: 50 }}
-                  animate={inView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ delay: index * 0.1, duration: 0.6 }}
+                  animate={itemsInView ? { opacity: 1, y: 0 } : {}}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ delay: index * 0.1, duration: 0.6, ease: "easeOut" }}
                   whileHover={{ scale: 1.02, y: -5 }}
+                  onMouseEnter={() => setHoveredItem(item.id)}
+                  onMouseLeave={() => setHoveredItem(null)}
                 >
-                  <div className="project-image">
-                    <div className="project-placeholder">{project.title}</div>
+                  {/* Image/Header Section */}
+                  <div className={`h-[150px] flex items-center justify-center relative overflow-hidden ${
+                    index % 4 === 0 ? 'bg-gradient-to-br from-[#6b8e23] via-[#7b9e33] to-[#8bae43]' :
+                    index % 4 === 1 ? 'bg-gradient-to-br from-[#4a5568] via-[#5a6578] to-[#6a7588]' :
+                    index % 4 === 2 ? 'bg-gradient-to-br from-[#553c9a] via-[#6b4fb8] to-[#7b5fc8]' :
+                    'bg-gradient-to-br from-[#2d5a87] via-[#3d6a97] to-[#4d7aa7]'
+                  }`}>
+                    {/* Background image - always visible with opacity 1 */}
+                    {item.image && (
+                      <img 
+                        src={item.image} 
+                        alt={item.title}
+                        className="w-full h-full object-cover opacity-1"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).style.display = 'none'
+                        }}
+                      />
+                    )}
+                    
+                    {/* Hover content - emoji, video, or picture */}
+                    <AnimatePresence mode="wait">
+                      {hoveredItem === item.id ? (
+                        <motion.div
+                          key="hover-content"
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          exit={{ opacity: 0, scale: 0.8 }}
+                          transition={{ duration: 0.3 }}
+                          className="absolute inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm"
+                        >
+                          {item.hoverVideo ? (
+                            <video 
+                              src={item.hoverVideo} 
+                              autoPlay 
+                              loop 
+                              muted 
+                              className="w-full h-full object-cover"
+                              onError={(e) => {
+                                (e.target as HTMLVideoElement).style.display = 'none'
+                              }}
+                            />
+                          ) : item.hoverImage ? (
+                            <img 
+                              src={item.hoverImage} 
+                              alt={item.title}
+                              className="w-full h-full object-cover opacity-100"
+                              onError={(e) => {
+                                (e.target as HTMLImageElement).style.display = 'none'
+                              }}
+                            />
+                          ) : item.hoverEmoji ? (
+                            <div className="text-6xl md:text-8xl">{item.hoverEmoji}</div>
+                          ) : null}
+                        </motion.div>
+                      ) : (
+                        <motion.div
+                          key="title"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                          className="absolute inset-0 flex items-center justify-center"
+                        >
+                          <div className="text-white text-lg font-semibold text-center px-4">{item.title}</div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
-                  <div className="project-content">
-                    <span className="project-category">{project.category}</span>
-                    <h3 className="project-title">{project.title}</h3>
-                    <p className="project-description">{project.description}</p>
-                    <span className="project-year">{project.year}</span>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          ) : (
-            <div className="projects-list">
-              {projects.map((project, index) => (
-                <motion.div
-                  key={project.id}
-                  className="project-list-item"
-                  initial={{ opacity: 0, x: -50 }}
-                  animate={inView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ delay: index * 0.05, duration: 0.5 }}
-                  whileHover={{ x: 10 }}
-                >
-                  <div className="project-list-number">{String(index + 1).padStart(2, '0')}</div>
-                  <div className="project-list-image">
-                    <div className="project-list-placeholder">{project.title}</div>
-                  </div>
-                  <div className="project-list-content">
-                    <div className="project-list-header">
-                      <h3 className="project-list-title">{project.title}</h3>
-                      <span className="project-list-year">{project.year}</span>
+
+                  {/* Content Section */}
+                  <div className="p-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-xs uppercase tracking-wider text-gray-400 font-medium">{item.category}</span>
+                      <span className="text-xs text-gray-500 font-medium">{item.year}</span>
                     </div>
-                    <span className="project-list-category">{project.category}</span>
-                    <p className="project-list-description">{project.description}</p>
+                    {item.company && (
+                      <p className="text-sm text-[#6b8e23] mb-2">{item.company} {item.location && `• ${item.location}`}</p>
+                    )}
+                    <p className="text-sm leading-relaxed text-gray-300 mb-3">{item.description}</p>
+                    
+                    {/* Full Details on Hover */}
+                    <AnimatePresence>
+                      {hoveredItem === item.id && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="overflow-hidden pt-3 border-t border-white/10"
+                        >
+                          <ul className="space-y-2">
+                            {item.details.map((detail, idx) => (
+                              <li key={idx} className="text-xs text-gray-300 flex items-start gap-2">
+                                <span className="text-[#6b8e23] mt-1 shrink-0">•</span>
+                                <span>{detail}</span>
+                              </li>
+                            ))}
+                          </ul>
+                          {item.link && (
+                            <a 
+                              href={item.link} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="inline-block mt-3 text-xs text-[#6b8e23] hover:underline font-medium"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              View {item.type === 'project' ? 'Project' : 'Details'} →
+                            </a>
+                          )}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
-                  <div className="project-list-arrow">→</div>
                 </motion.div>
               ))}
-            </div>
-          )}
+            </AnimatePresence>
+          </div>
         </motion.div>
       </motion.div>
     </section>

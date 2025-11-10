@@ -19,7 +19,7 @@ const Scene3D = () => {
       <pointLight position={[10, 10, 10]} />
       <directionalLight position={[0, 5, 5]} intensity={1} />
       <Sphere ref={meshRef} args={[1, 32, 32]} position={[0, 0, 0]}>
-        <meshStandardMaterial color="#6366f1" metalness={0.8} roughness={0.2} />
+        <meshStandardMaterial color="#6b8e23" metalness={0.8} roughness={0.2} />
       </Sphere>
       <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={1} />
     </>
