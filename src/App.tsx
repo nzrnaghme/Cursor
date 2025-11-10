@@ -6,7 +6,6 @@ import About from './components/About'
 import Projects from './components/Projects'
 import Contact from './components/Contact'
 import Loading from './components/Loading'
-import ScrollToTop from './components/ScrollToTop'
 import './App.css'
 
 function App() {
@@ -66,7 +65,6 @@ function App() {
       <About />
       <Projects />
       <Contact />
-      <ScrollToTop />
     </div>
   )
 }

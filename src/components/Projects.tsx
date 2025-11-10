@@ -53,8 +53,9 @@ const Projects = () => {
         'Manuscript in preparation',
         'Advisor: Prof. Shahnam Mirzaei'
       ],
-      hoverEmoji: '🎤',
-      hoverImage: '/images/project-speech-emotion.png'
+      image: '/images/project-speech-emotion.png',
+      hoverImage: '/images/project-speech-emotion.png',
+
     },
     {
       id: 2,
@@ -69,8 +70,8 @@ const Projects = () => {
         'Built NLP-based chatbot with Google Cloud',
         'Demo available on LinkedIn'
       ],
-      hoverEmoji: '📊',
       hoverImage: '/images/project-covid-analysis.png',
+      image: '/images/project-covid-analysis.png',
       link: 'https://www.linkedin.com/posts/naghme-nazar_machinelearning-nlp-datascience-ugcPost-7361228441074962434-s89Q?utm_source=share&utm_medium=member_desktop&rcm=ACoAACbyPb0Be82yiC7g1CitYj_zttwH1PBbPNM'
     },
     {
@@ -87,8 +88,8 @@ const Projects = () => {
         'GitHub: CCTV Chatbot'
       ],
       link: 'https://github.com/nzrnaghme/CCTV',
-      hoverEmoji: '🤖',
       hoverImage: '/images/project-cctv-chatbot.png',
+      image: '/images/project-cctv-chatbot.png'
       // hoverVideo: './public/cctv-chatbot-video.mp4'
     },
     // Experiences
@@ -109,8 +110,8 @@ const Projects = () => {
         'Reduced bugs by 25% through better processes',
         'Migrated legacy systems to Vue.js, improving performance by 30%'
       ],
-      hoverEmoji: '💼',
       hoverImage: '/images/experience-golrang.png',
+      image: '/images/experience-golrang.png',
       link: 'https://www.kaman.io/',
     },
     {
@@ -128,8 +129,9 @@ const Projects = () => {
         'Applied code-splitting and lazy loading, optimizing application performance',
         'Worked with modern React patterns and best practices'
       ],
-      hoverEmoji: '⚛️',
-      hoverImage: '/images/experience-erole.png'
+      hoverImage: '/images/experience-erole.png',
+      image: '/images/experience-erole.png'
+
     },
     {
       id: 6,
@@ -146,8 +148,8 @@ const Projects = () => {
         'Collaborated with UI/UX designers to ensure modern, intuitive designs',
         'Built responsive and accessible web applications'
       ],
-      hoverEmoji: '🌐',
       hoverImage: '/images/experience-bahr.png',
+      image: '/images/experience-bahr.png',
       link: 'https://www.bahracademy.co.uk/',
     }
   ]
@@ -225,16 +227,13 @@ const Projects = () => {
                     index % 4 === 2 ? 'bg-gradient-to-br from-[#553c9a] via-[#6b4fb8] to-[#7b5fc8]' :
                     'bg-gradient-to-br from-[#2d5a87] via-[#3d6a97] to-[#4d7aa7]'
                   }`}>
-                    {/* Background image - opacity 0.5 normally, 1 on hover */}
+                    {/* Background image - always visible with opacity 1 */}
                     {item.image && (
                       <img 
                         src={item.image.startsWith('/') ? item.image : `/${item.image}`}
                         alt={item.title}
-                        className={`absolute inset-0 w-full h-full object-cover z-0 transition-opacity duration-300 ${
-                          hoveredItem === item.id ? 'opacity-100' : 'opacity-50'
-                        }`}
+                        className="absolute inset-0 w-full h-full object-cover opacity-50 z-0"
                         loading="lazy"
-                        style={{ display: 'block' }}
                         onError={(e) => {
                           // Don't hide, show gradient background instead
                           (e.target as HTMLImageElement).style.opacity = '0'
@@ -242,54 +241,53 @@ const Projects = () => {
                       />
                     )}
                     
-                    {/* Title - visible normally, hidden on hover */}
-                    <motion.div
-                      initial={{ opacity: 1 }}
-                      animate={{ 
-                        opacity: hoveredItem === item.id ? 0 : 1 
-                      }}
-                      transition={{ duration: 0.3 }}
-                      className="absolute inset-0 flex items-center justify-center z-[1] pointer-events-none"
-                    >
-                      <div className="text-white text-base sm:text-lg font-semibold text-center px-3 py-1 rounded drop-shadow-2xl bg-black/20 md:bg-black/10">
-                        {item.title}
-                      </div>
-                    </motion.div>
-                    
                     {/* Hover content - emoji, video, or picture (desktop only) */}
-                    {hoveredItem === item.id && (
-                      <motion.div
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.8 }}
-                        transition={{ duration: 0.3 }}
-                        className="absolute inset-0 flex items-center justify-center z-10 hidden md:flex"
-                      >
-                        {item.hoverVideo ? (
-                          <video 
-                            src={item.hoverVideo} 
-                            autoPlay 
-                            loop 
-                            muted 
-                            className="w-full h-full object-cover"
-                            onError={(e) => {
-                              (e.target as HTMLVideoElement).style.display = 'none'
-                            }}
-                          />
-                        ) : item.hoverImage ? (
-                          <img 
-                            src={item.hoverImage.startsWith('/') ? item.hoverImage : `/${item.hoverImage}`}
-                            alt={item.title}
-                            className="w-full h-full object-cover opacity-100"
-                            onError={(e) => {
-                              (e.target as HTMLImageElement).style.display = 'none'
-                            }}
-                          />
-                        ) : item.hoverEmoji ? (
-                          <div className="text-4xl md:text-6xl lg:text-8xl">{item.hoverEmoji}</div>
-                        ) : null}
-                      </motion.div>
-                    )}
+                    <AnimatePresence mode="wait">
+                      {hoveredItem === item.id ? (
+                        <motion.div
+                          key="hover-content"
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          exit={{ opacity: 0, scale: 0.8 }}
+                          transition={{ duration: 0.3 }}
+                          className="absolute inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm hidden md:flex z-10"
+                        >
+                          {item.hoverVideo ? (
+                            <video 
+                              src={item.hoverVideo} 
+                              autoPlay 
+                              loop 
+                              muted 
+                              className="w-full h-full object-cover"
+                              onError={(e) => {
+                                (e.target as HTMLVideoElement).style.display = 'none'
+                              }}
+                            />
+                          ) : item.hoverImage ? (
+                            <img 
+                              src={item.hoverImage.startsWith('/') ? item.hoverImage : `/${item.hoverImage}`}
+                              alt={item.title}
+                              className="w-full h-full object-cover opacity-100"
+                              onError={(e) => {
+                                (e.target as HTMLImageElement).style.display = 'none'
+                              }}
+                            />
+                          ) : item.hoverEmoji ? (
+                            <div className="text-4xl md:text-6xl lg:text-8xl">{item.hoverEmoji}</div>
+                          ) : null}
+                        </motion.div>
+                      ) : (
+                        <motion.div
+                          key="title"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                          className="absolute inset-0 flex items-center justify-center bg-black/20 md:bg-transparent z-10"
+                        >
+                          <div className="text-white text-base sm:text-lg font-semibold text-center px-4">{item.title}</div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
 
                   {/* Content Section */}
