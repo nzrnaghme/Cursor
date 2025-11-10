@@ -53,7 +53,6 @@ const Projects = () => {
         'Manuscript in preparation',
         'Advisor: Prof. Shahnam Mirzaei'
       ],
-      image: '/images/project-speech-emotion.png',
       hoverEmoji: '🎤',
       hoverImage: '/images/project-speech-emotion.png'
     },
@@ -70,7 +69,6 @@ const Projects = () => {
         'Built NLP-based chatbot with Google Cloud',
         'Demo available on LinkedIn'
       ],
-      image: '/images/project-covid-analysis.png',
       hoverEmoji: '📊',
       hoverImage: '/images/project-covid-analysis.png',
       link: 'https://www.linkedin.com/posts/naghme-nazar_machinelearning-nlp-datascience-ugcPost-7361228441074962434-s89Q?utm_source=share&utm_medium=member_desktop&rcm=ACoAACbyPb0Be82yiC7g1CitYj_zttwH1PBbPNM'
@@ -88,7 +86,6 @@ const Projects = () => {
         'Technologies: Python, Dialogflow, Google Cloud',
         'GitHub: CCTV Chatbot'
       ],
-      image: '/images/project-cctv-chatbot.png',
       link: 'https://github.com/nzrnaghme/CCTV',
       hoverEmoji: '🤖',
       hoverImage: '/images/project-cctv-chatbot.png',
@@ -112,7 +109,6 @@ const Projects = () => {
         'Reduced bugs by 25% through better processes',
         'Migrated legacy systems to Vue.js, improving performance by 30%'
       ],
-      image: '/images/experience-golrang.png',
       hoverEmoji: '💼',
       hoverImage: '/images/experience-golrang.png',
       link: 'https://www.kaman.io/',
@@ -132,7 +128,6 @@ const Projects = () => {
         'Applied code-splitting and lazy loading, optimizing application performance',
         'Worked with modern React patterns and best practices'
       ],
-      image: '/images/experience-erole.png',
       hoverEmoji: '⚛️',
       hoverImage: '/images/experience-erole.png'
     },
@@ -151,7 +146,6 @@ const Projects = () => {
         'Collaborated with UI/UX designers to ensure modern, intuitive designs',
         'Built responsive and accessible web applications'
       ],
-      image: '/images/experience-bahr.png',
       hoverEmoji: '🌐',
       hoverImage: '/images/experience-bahr.png',
       link: 'https://www.bahracademy.co.uk/',
@@ -236,7 +230,7 @@ const Projects = () => {
                       <img 
                         src={item.image.startsWith('/') ? item.image : `/${item.image}`}
                         alt={item.title}
-                        className="w-full h-full object-cover opacity-100"
+                        className="absolute inset-0 w-full h-full object-cover opacity-100 z-0"
                         loading="lazy"
                         onError={(e) => {
                           // Don't hide, show gradient background instead
@@ -254,7 +248,7 @@ const Projects = () => {
                           animate={{ opacity: 1, scale: 1 }}
                           exit={{ opacity: 0, scale: 0.8 }}
                           transition={{ duration: 0.3 }}
-                          className="absolute inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm hidden md:flex"
+                          className="absolute inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm z-10 hidden md:flex"
                         >
                           {item.hoverVideo ? (
                             <video 
@@ -286,7 +280,7 @@ const Projects = () => {
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                           exit={{ opacity: 0 }}
-                          className="absolute inset-0 flex items-center justify-center bg-black/20 md:bg-transparent"
+                          className="absolute inset-0 flex items-center justify-center bg-black/20 md:bg-black/10 z-[1]"
                         >
                           <div className="text-white text-base sm:text-lg font-semibold text-center px-4">{item.title}</div>
                         </motion.div>
