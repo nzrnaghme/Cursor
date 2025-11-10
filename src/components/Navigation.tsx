@@ -56,7 +56,15 @@ const Navigation = ({ currentSection, menuOpen, setMenuOpen, scrollToSection, se
         transition={{ duration: 0.5 }}
       >
         <div className="max-w-[1400px] mx-auto flex justify-between items-center">
-          <div className="flex items-center pointer-events-auto">
+          <div className="flex items-center gap-4 pointer-events-auto">
+            <motion.div
+              className="w-12 h-12 rounded-full bg-[#6b8e23] flex items-center justify-center text-white font-bold text-lg cursor-pointer hover:bg-[#556b2f] transition-colors"
+              onClick={() => scrollToSection('home')}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              MN
+            </motion.div>
             <MusicPlayer />
           </div>
           <div className="flex items-center gap-4 pointer-events-auto relative">
