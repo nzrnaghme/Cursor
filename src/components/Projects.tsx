@@ -232,6 +232,7 @@ const Projects = () => {
                         alt={item.title}
                         className="absolute inset-0 w-full h-full object-cover opacity-100 z-0"
                         loading="lazy"
+                        style={{ display: 'block' }}
                         onError={(e) => {
                           // Don't hide, show gradient background instead
                           (e.target as HTMLImageElement).style.opacity = '0'
@@ -280,9 +281,9 @@ const Projects = () => {
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                           exit={{ opacity: 0 }}
-                          className="absolute inset-0 flex items-center justify-center bg-black/20 md:bg-black/10 z-[1]"
+                          className="absolute inset-0 flex items-center justify-center bg-black/5 md:bg-transparent z-[1] pointer-events-none"
                         >
-                          <div className="text-white text-base sm:text-lg font-semibold text-center px-4">{item.title}</div>
+                          <div className="text-white text-base sm:text-lg font-semibold text-center px-3 py-1 rounded drop-shadow-2xl bg-black/20 md:bg-black/10">{item.title}</div>
                         </motion.div>
                       )}
                     </AnimatePresence>
