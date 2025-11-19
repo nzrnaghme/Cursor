@@ -227,7 +227,7 @@ const Projects = () => {
                     index % 4 === 2 ? 'bg-gradient-to-br from-[#553c9a] via-[#6b4fb8] to-[#7b5fc8]' :
                     'bg-gradient-to-br from-[#2d5a87] via-[#3d6a97] to-[#4d7aa7]'
                   }`}>
-                    {/* Background image - always visible with opacity 1 */}
+                    {/* Background image - always visible with opacity 50 */}
                     {item.image && (
                       <img 
                         src={item.image.startsWith('/') ? item.image : `/${item.image}`}

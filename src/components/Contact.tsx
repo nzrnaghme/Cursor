@@ -76,12 +76,24 @@ const Contact = () => {
               </a>
             </div>
 
+            <div className="mb-6">
+              <motion.a
+                href="https://drive.google.com/file/d/14QUSkB4gcI4k_3rM3Aj9xB5c4ExDuQA-/view?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block px-6 py-3 bg-[#6b8e23] text-white rounded border-none text-sm font-medium cursor-pointer uppercase tracking-wider transition-all hover:bg-[#556b2f]"
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Download CV
+              </motion.a>
+            </div>
+
 
             <div>
               <h4 className="text-sm font-medium uppercase tracking-wider text-gray-400 mb-2">Location</h4>
               <p className="text-base leading-relaxed text-gray-300 font-light">
-                18724 Chase Street<br />
-                Northridge, California<br />
+                Los Angles, California<br />
                 United State
               </p>
             </div>

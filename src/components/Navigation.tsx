@@ -124,6 +124,23 @@ const Navigation = ({ currentSection, menuOpen, setMenuOpen, scrollToSection, se
                           </motion.button>
                         </motion.li>
                       ))}
+                      <motion.li
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: navItems.length * 0.05, duration: 0.2 }}
+                      >
+                        <motion.a
+                          href="https://drive.google.com/file/d/14QUSkB4gcI4k_3rM3Aj9xB5c4ExDuQA-/view?usp=sharing"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-full py-3.5 px-5 bg-transparent border-none text-left text-sm font-medium text-black cursor-pointer uppercase tracking-wider rounded-lg transition-all relative flex items-center gap-3 hover:bg-[#f5f5f5]"
+                          onClick={() => setMenuOpen(false)}
+                          whileHover={{ x: 5 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          CV
+                        </motion.a>
+                      </motion.li>
                     </ul>
                   </motion.div>
                 )}
