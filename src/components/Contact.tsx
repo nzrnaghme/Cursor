@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import ParticlesBackground from './ParticlesBackground'
+import { saveEmailToGit } from '../services/githubService'
 
 const Contact = () => {
   const { ref, inView } = useInView({
@@ -10,6 +11,9 @@ const Contact = () => {
   })
 
   const containerRef = useRef<HTMLDivElement>(null)
+  const [email, setEmail] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitMessage, setSubmitMessage] = useState('')
 
   const [localTime, setLocalTime] = useState(
     new Date().toLocaleTimeString('en-US', { 
@@ -37,6 +41,34 @@ const Contact = () => {
     { name: 'Github', url: 'https://github.com/nzrnaghme' },
     { name: 'LinkedIn', url: 'https://www.linkedin.com/in/naghme-nazar/' }
   ]
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    
+    if (!email || !email.includes('@')) {
+      setSubmitMessage('Please enter a valid email address')
+      return
+    }
+
+    setIsSubmitting(true)
+    setSubmitMessage('')
+
+    try {
+      const response = await saveEmailToGit(email)
+      
+      if (response.success) {
+        setSubmitMessage('Thank you for subscribing!')
+        setEmail('')
+      } else {
+        setSubmitMessage(response.message || 'Something went wrong. Please try again.')
+      }
+    } catch (error) {
+      setSubmitMessage('Failed to subscribe. Please try again later.')
+    } finally {
+      setIsSubmitting(false)
+      setTimeout(() => setSubmitMessage(''), 5000)
+    }
+  }
 
   return (
     <section id="contact" className="py-20 px-6 min-h-screen flex items-center bg-gradient-to-br from-[#252525] to-[#1a1a1a] text-white relative" ref={containerRef}>
@@ -126,19 +158,37 @@ const Contact = () => {
 
             <div className="p-6 border-2 border-white/10 bg-[#2a2a2a] rounded-lg">
               <h4 className="text-sm font-medium uppercase tracking-wider text-gray-400 mb-3">Subscribe to our newsletter</h4>
-              <form className="flex flex-col gap-3 mt-3">
+              <form onSubmit={handleSubmit} className="flex flex-col gap-3 mt-3">
                 <input 
                   type="email" 
                   placeholder="Your email"
-                  className="p-3 bg-[#1a1a1a] border-2 border-white/10 rounded text-white text-sm placeholder:text-gray-500 focus:outline-none focus:border-[#6b8e23] transition-all"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  disabled={isSubmitting}
+                  className="p-3 bg-[#1a1a1a] border-2 border-white/10 rounded text-white text-sm placeholder:text-gray-500 focus:outline-none focus:border-[#6b8e23] transition-all disabled:opacity-50"
+                  required
                 />
+                {submitMessage && (
+                  <motion.p
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className={`text-xs ${
+                      submitMessage.includes('Thank you') 
+                        ? 'text-[#6b8e23]' 
+                        : 'text-red-400'
+                    }`}
+                  >
+                    {submitMessage}
+                  </motion.p>
+                )}
                 <motion.button 
                   type="submit"
-                  className="px-6 py-3 bg-[#6b8e23] text-white rounded border-none text-sm font-medium cursor-pointer uppercase tracking-wider transition-all hover:bg-[#556b2f]"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  disabled={isSubmitting}
+                  className="px-6 py-3 bg-[#6b8e23] text-white rounded border-none text-sm font-medium cursor-pointer uppercase tracking-wider transition-all hover:bg-[#556b2f] disabled:opacity-50 disabled:cursor-not-allowed"
+                  whileHover={{ scale: isSubmitting ? 1 : 1.05 }}
+                  whileTap={{ scale: isSubmitting ? 1 : 0.95 }}
                 >
-                  Subscribe
+                  {isSubmitting ? 'Subscribing...' : 'Subscribe'}
                 </motion.button>
               </form>
             </div>

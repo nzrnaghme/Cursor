@@ -1,0 +1,55 @@
+name: Update Visitor Count
+
+on:
+  repository_dispatch:
+    types: [increment-visitor]
+  workflow_dispatch:
+
+jobs:
+  update-count:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      
+      - name: Read current count from README
+        id: read-count
+        run: |
+          COUNT=$(grep -oP '(?<=👁️ Visitor Count: )\d+' README.md || echo "0")
+          echo "current_count=$COUNT" >> $GITHUB_OUTPUT
+      
+      - name: Increment count
+        id: increment
+        run: |
+          CURRENT=${{ steps.read-count.outputs.current_count }}
+          NEW=$((CURRENT + 1))
+          echo "new_count=$NEW" >> $GITHUB_OUTPUT
+      
+      - name: Update README with new count
+        run: |
+          NEW_COUNT=${{ steps.increment.outputs.new_count }}
+          if grep -q "👁️ Visitor Count:" README.md; then
+            sed -i "s/👁️ Visitor Count: [0-9]*/👁️ Visitor Count: $NEW_COUNT/" README.md
+          else
+            echo "" >> README.md
+            echo "## Statistics" >> README.md
+            echo "" >> README.md
+            echo "👁️ Visitor Count: $NEW_COUNT" >> README.md
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git commit -m "Update visitor count to $NEW_COUNT" || exit 0
+          git push
+      
+      - name: Output new count
+        run: |
+          echo "Visitor count updated to: ${{ steps.increment.outputs.new_count }}"
+

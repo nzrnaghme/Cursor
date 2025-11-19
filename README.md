@@ -173,3 +173,7 @@ This project is open source and available for personal use.
 **Note**: Remember to replace all placeholder content with your actual information before deploying!
 
 ## Credits by Melody Nazar
+
+## Statistics
+
+👁️ Visitor Count: 0

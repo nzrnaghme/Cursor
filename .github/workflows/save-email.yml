@@ -1,0 +1,50 @@
+name: Save Email Subscription
+
+on:
+  repository_dispatch:
+    types: [save-email]
+  workflow_dispatch:
+    inputs:
+      email:
+        description: 'Email address to save'
+        required: true
+
+jobs:
+  save-email:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      
+      - name: Get email from event
+        id: get-email
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo "email=${{ github.event.inputs.email }}" >> $GITHUB_OUTPUT
+          else
+            echo "email=${{ github.event.client_payload.email }}" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Append email to subscribers.txt
+        run: |
+          EMAIL="${{ steps.get-email.outputs.email }}"
+          TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          echo "$EMAIL | $TIMESTAMP" >> subscribers.txt
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add subscribers.txt
+          git commit -m "Add email subscription: $EMAIL" || exit 0
+          git push
+      
+      - name: Send notification email (optional)
+        if: success()
+        run: |
+          echo "Email ${{ steps.get-email.outputs.email }} has been saved to subscribers.txt"
+
