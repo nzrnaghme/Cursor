@@ -1,10 +1,6 @@
 // Service to interact with GitHub API for saving emails and updating visitor count
 // Note: This requires a backend service or GitHub Actions workflow
 
-const REPO_OWNER = 'nzrnaghme'
-const REPO_NAME = 'FPAG-Features-Clock-Management-DSP-Blocks-DDR-and-SRL-'
-const API_BASE = 'https://api.github.com'
-
 export interface SaveEmailResponse {
   success: boolean
   message: string
@@ -21,7 +17,7 @@ export const saveEmailToGit = async (email: string): Promise<SaveEmailResponse> 
   try {
     // Try to use API endpoint (if deployed to Vercel/Netlify)
     // For local development, this will fail gracefully
-    const apiUrl = import.meta.env.VITE_API_URL || '/api/save-email'
+    const apiUrl = (import.meta.env?.VITE_API_URL as string) || '/api/save-email'
     
     const response = await fetch(apiUrl, {
       method: 'POST',
@@ -47,7 +43,7 @@ export const saveEmailToGit = async (email: string): Promise<SaveEmailResponse> 
   } catch (error) {
     console.error('Error saving email:', error)
     // In development, show a helpful message
-    if (import.meta.env.DEV) {
+    if (import.meta.env?.DEV) {
       return {
         success: false,
         message: 'Backend API not configured. See SETUP_BACKEND.md for setup.',
@@ -64,7 +60,7 @@ export const saveEmailToGit = async (email: string): Promise<SaveEmailResponse> 
 // Note: Requires backend API endpoint (see SETUP_BACKEND.md)
 export const incrementVisitorCount = async (): Promise<VisitorCountResponse> => {
   try {
-    const apiUrl = import.meta.env.VITE_API_URL || '/api/increment-visitor'
+    const apiUrl = (import.meta.env?.VITE_API_URL as string) || '/api/increment-visitor'
     
     const response = await fetch(apiUrl, {
       method: 'POST',
@@ -95,7 +91,7 @@ export const incrementVisitorCount = async (): Promise<VisitorCountResponse> => 
 // Get current visitor count (without incrementing)
 export const getVisitorCount = async (): Promise<number> => {
   try {
-    const apiUrl = import.meta.env.VITE_API_URL || '/api/visitor-count'
+    const apiUrl = (import.meta.env?.VITE_API_URL as string) || '/api/visitor-count'
     
     const response = await fetch(apiUrl, {
       method: 'GET',
