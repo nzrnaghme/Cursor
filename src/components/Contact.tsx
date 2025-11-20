@@ -58,8 +58,8 @@ const Contact = () => {
       // Try GitHub API first (works on Vercel), fallback to Formspree (works on GitHub Pages)
       let response = await saveEmailToGit(email)
       
-      // If GitHub API fails, try Formspree as fallback
-      if (!response.success && response.message?.includes('API endpoint not found')) {
+      // If GitHub API fails (404, 405, or any error), try Formspree as fallback
+      if (!response.success) {
         console.log('GitHub API not available, trying Formspree...')
         response = await saveEmailToFormspree(email)
       }

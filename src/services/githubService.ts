@@ -37,6 +37,8 @@ export const saveEmailToGit = async (email: string): Promise<SaveEmailResponse> 
         // If response is not JSON, use status-based message
         if (response.status === 404) {
           errorMessage = 'API endpoint not found. Please ensure backend is deployed.'
+        } else if (response.status === 405) {
+          errorMessage = 'API endpoint not found. Please ensure backend is deployed.'
         } else if (response.status >= 500) {
           errorMessage = 'Server error. Please try again later.'
         }
