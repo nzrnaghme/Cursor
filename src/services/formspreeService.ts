@@ -4,7 +4,10 @@
 // 2. Get your form ID
 // 3. Replace the saveEmailToGit call in Contact.tsx with saveEmailToFormspree
 
-const FORMPREE_FORM_ID = 'YOUR_FORM_ID_HERE' // Replace with your Formspree form ID
+// Get Form ID from environment variable or use a default
+// To set up: Go to https://formspree.io, create a form, and get the form ID
+// Then set VITE_FORMPREE_FORM_ID in your environment or replace below
+const FORMPREE_FORM_ID = import.meta.env?.VITE_FORMPREE_FORM_ID || 'YOUR_FORM_ID_HERE'
 
 export interface SaveEmailResponse {
   success: boolean

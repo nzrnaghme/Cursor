@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import ParticlesBackground from './ParticlesBackground'
 import { saveEmailToGit } from '../services/githubService'
+import { saveEmailToFormspree } from '../services/formspreeService'
 
 const Contact = () => {
   const { ref, inView } = useInView({
@@ -54,7 +55,14 @@ const Contact = () => {
     setSubmitMessage('')
 
     try {
-      const response = await saveEmailToGit(email)
+      // Try GitHub API first (works on Vercel), fallback to Formspree (works on GitHub Pages)
+      let response = await saveEmailToGit(email)
+      
+      // If GitHub API fails, try Formspree as fallback
+      if (!response.success && response.message?.includes('API endpoint not found')) {
+        console.log('GitHub API not available, trying Formspree...')
+        response = await saveEmailToFormspree(email)
+      }
       
       if (response.success) {
         setSubmitMessage('Thank you for subscribing!')
