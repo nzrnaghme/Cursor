@@ -1,7 +1,16 @@
 // Serverless function to save email subscriptions
-// This can be deployed to Vercel, Netlify, or similar platforms
+// Vercel serverless function format
 
 export default async function handler(req, res) {
+  // Set CORS headers
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS')
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
+
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end()
+  }
+
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' })
   }
@@ -9,17 +18,32 @@ export default async function handler(req, res) {
   const { email } = req.body
 
   if (!email || !email.includes('@')) {
-    return res.status(400).json({ error: 'Invalid email address' })
+    return res.status(400).json({ 
+      success: false,
+      message: 'Invalid email address' 
+    })
   }
 
   try {
+    // Check if GitHub token is configured
+    const githubToken = process.env.GITHUB_TOKEN
+    
+    if (!githubToken) {
+      console.error('GITHUB_TOKEN environment variable is not set')
+      // Fallback: Save to a simple file or use alternative service
+      return res.status(200).json({
+        success: false,
+        message: 'Backend not configured. Please set GITHUB_TOKEN environment variable.',
+      })
+    }
+
     // Trigger GitHub Action to save email
     const response = await fetch(
       `https://api.github.com/repos/nzrnaghme/FPAG-Features-Clock-Management-DSP-Blocks-DDR-and-SRL-/dispatches`,
       {
         method: 'POST',
         headers: {
-          'Authorization': `token ${process.env.GITHUB_TOKEN}`,
+          'Authorization': `token ${githubToken}`,
           'Accept': 'application/vnd.github.v3+json',
           'Content-Type': 'application/json',
         },
@@ -33,7 +57,9 @@ export default async function handler(req, res) {
     )
 
     if (!response.ok) {
-      throw new Error('Failed to trigger GitHub Action')
+      const errorText = await response.text()
+      console.error('GitHub API error:', response.status, errorText)
+      throw new Error(`Failed to trigger GitHub Action: ${response.status}`)
     }
 
     return res.status(200).json({
@@ -44,7 +70,7 @@ export default async function handler(req, res) {
     console.error('Error saving email:', error)
     return res.status(500).json({
       success: false,
-      message: 'Failed to save email',
+      message: 'Failed to save email. Please try again later.',
     })
   }
 }

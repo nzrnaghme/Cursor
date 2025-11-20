@@ -28,20 +28,48 @@ export const saveEmailToGit = async (email: string): Promise<SaveEmailResponse> 
     })
 
     if (!response.ok) {
-      // If API is not set up, return a helpful message
-      if (response.status === 404) {
-        return {
-          success: false,
-          message: 'API endpoint not configured. See SETUP_BACKEND.md for setup instructions.',
+      // Try to get error message from response
+      let errorMessage = 'Failed to save email'
+      try {
+        const errorData = await response.json()
+        errorMessage = errorData.message || errorMessage
+      } catch {
+        // If response is not JSON, use status-based message
+        if (response.status === 404) {
+          errorMessage = 'API endpoint not found. Please ensure backend is deployed.'
+        } else if (response.status >= 500) {
+          errorMessage = 'Server error. Please try again later.'
         }
       }
-      throw new Error('Failed to save email')
+      
+      return {
+        success: false,
+        message: errorMessage,
+      }
     }
 
     const data = await response.json()
+    
+    // Check if the response indicates failure
+    if (!data.success) {
+      return {
+        success: false,
+        message: data.message || 'Failed to save email. Please try again later.',
+      }
+    }
+    
     return data
   } catch (error) {
     console.error('Error saving email:', error)
+    
+    // Check if it's a network error
+    if (error instanceof TypeError && error.message.includes('fetch')) {
+      return {
+        success: false,
+        message: 'Network error. Please check your connection and try again.',
+      }
+    }
+    
     // In development, show a helpful message
     if (import.meta.env?.DEV) {
       return {
@@ -49,6 +77,7 @@ export const saveEmailToGit = async (email: string): Promise<SaveEmailResponse> 
         message: 'Backend API not configured. See SETUP_BACKEND.md for setup.',
       }
     }
+    
     return {
       success: false,
       message: 'Failed to save email. Please try again later.',
@@ -72,19 +101,35 @@ export const incrementVisitorCount = async (): Promise<VisitorCountResponse> => 
     if (!response.ok) {
       // If API is not set up, try to get count from README directly
       if (response.status === 404) {
+        console.warn('API endpoint not found, falling back to direct README read')
         const count = await getVisitorCount()
         return { success: true, count }
       }
-      throw new Error('Failed to update visitor count')
+      // For other errors, still try to get the count
+      console.warn('API error, falling back to direct README read')
+      const count = await getVisitorCount()
+      return { success: true, count }
     }
 
     const data = await response.json()
+    
+    // Even if API returns success: false, try to return a count
+    if (!data.success && data.count !== undefined) {
+      return { success: true, count: data.count }
+    }
+    
     return data
   } catch (error) {
     console.error('Error updating visitor count:', error)
     // Fallback: try to get count without incrementing
-    const count = await getVisitorCount()
-    return { success: true, count }
+    try {
+      const count = await getVisitorCount()
+      return { success: true, count }
+    } catch (fallbackError) {
+      console.error('Fallback also failed:', fallbackError)
+      // Last resort: return 0
+      return { success: true, count: 0 }
+    }
   }
 }
 
@@ -95,20 +140,14 @@ export const getVisitorCount = async (): Promise<number> => {
     
     const response = await fetch(apiUrl, {
       method: 'GET',
+      // Add cache busting to ensure fresh data
+      cache: 'no-store',
     })
 
     if (!response.ok) {
       // Fallback: try to read from GitHub directly (public repo)
-      try {
-        const readmeResponse = await fetch(
-          'https://raw.githubusercontent.com/nzrnaghme/FPAG-Features-Clock-Management-DSP-Blocks-DDR-and-SRL-/main/README.md'
-        )
-        const readmeText = await readmeResponse.text()
-        const countMatch = readmeText.match(/👁️ Visitor Count: (\d+)/)
-        return countMatch ? parseInt(countMatch[1]) : 0
-      } catch {
-        return 0
-      }
+      console.warn('API failed, trying direct GitHub read')
+      return await getVisitorCountFromGitHub()
     }
 
     const data = await response.json()
@@ -116,16 +155,34 @@ export const getVisitorCount = async (): Promise<number> => {
   } catch (error) {
     console.error('Error getting visitor count:', error)
     // Final fallback: try GitHub directly
-    try {
-      const readmeResponse = await fetch(
-        'https://raw.githubusercontent.com/nzrnaghme/FPAG-Features-Clock-Management-DSP-Blocks-DDR-and-SRL-/main/README.md'
-      )
-      const readmeText = await readmeResponse.text()
-      const countMatch = readmeText.match(/👁️ Visitor Count: (\d+)/)
-      return countMatch ? parseInt(countMatch[1]) : 0
-    } catch {
+    return await getVisitorCountFromGitHub()
+  }
+}
+
+// Helper function to get count directly from GitHub
+const getVisitorCountFromGitHub = async (): Promise<number> => {
+  try {
+    const readmeResponse = await fetch(
+      'https://raw.githubusercontent.com/nzrnaghme/FPAG-Features-Clock-Management-DSP-Blocks-DDR-and-SRL-/main/README.md',
+      { 
+        cache: 'no-store',
+        headers: {
+          'Cache-Control': 'no-cache'
+        }
+      }
+    )
+    
+    if (!readmeResponse.ok) {
+      console.error('Failed to fetch README:', readmeResponse.status)
       return 0
     }
+    
+    const readmeText = await readmeResponse.text()
+    const countMatch = readmeText.match(/👁️ Visitor Count: (\d+)/)
+    return countMatch ? parseInt(countMatch[1]) : 0
+  } catch (error) {
+    console.error('Error reading from GitHub:', error)
+    return 0
   }
 }
 

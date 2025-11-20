@@ -16,37 +16,44 @@ const VisitorCounter = () => {
         if (sessionStorage.getItem(sessionKey)) {
           // Get count without incrementing
           const currentCount = await getVisitorCount()
-          setCount(currentCount)
+          setCount(currentCount || 0)
           return
         }
 
         // Increment count
         const response = await incrementVisitorCount()
-        if (response.success) {
+        if (response.success && response.count !== null && response.count !== undefined) {
           setCount(response.count)
           sessionStorage.setItem(sessionKey, 'true')
           setHasCounted(true)
         } else {
           // Fallback: try to get count without incrementing
           const currentCount = await getVisitorCount()
-          setCount(currentCount)
+          setCount(currentCount || 0)
+          // Still mark as counted to avoid repeated attempts
+          sessionStorage.setItem(sessionKey, 'true')
+          setHasCounted(true)
         }
       } catch (error) {
         console.error('Error counting visitor:', error)
-        setCount(null)
+        // Set to 0 instead of null so it still displays
+        setCount(0)
+        // Mark as counted to avoid repeated failed attempts
+        const sessionKey = 'visitor_counted'
+        sessionStorage.setItem(sessionKey, 'true')
+        setHasCounted(true)
       }
     }
 
     countVisitor()
   }, [hasCounted])
 
-  if (count === null) {
-    return null // Don't show anything while loading
-  }
+  // Show 0 if count is null (loading state)
+  const displayCount = count ?? 0
 
   return (
     <div className="text-xs text-gray-400">
-      👁️ {count.toLocaleString()} visitors
+      👁️ {displayCount.toLocaleString()} visitors
     </div>
   )
 }
