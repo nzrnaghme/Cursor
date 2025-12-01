@@ -88,31 +88,67 @@ const About = () => {
             </div>
           </motion.div>
 
-          {/* Technical Skills */}
+          {/* Research Interests / Future Directions */}
           <motion.div 
-            className="mt-8 p-8 bg-gradient-to-br from-[#6b8e23] to-[#556b2f] text-white rounded-lg shadow-lg"
+            className="mb-8"
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.8, duration: 0.8 }}
           >
+            <h3 className="text-2xl font-light mb-4 text-white">Research Interests / Future Directions</h3>
+            <div className="p-6 bg-[#2a2a2a] rounded-lg border border-white/10">
+              <p className="text-lg text-gray-300 font-light leading-relaxed">
+                Real-time embedded ML for sensorimotor cognition / affective computing / multimodal human signals
+              </p>
+            </div>
+          </motion.div>
+
+          {/* Technical Skills - Reorganized by Priority */}
+          <motion.div 
+            className="mt-8 p-8 bg-gradient-to-br from-[#6b8e23] to-[#556b2f] text-white rounded-lg shadow-lg"
+            initial={{ opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 1.0, duration: 0.8 }}
+          >
             <h3 className="text-2xl font-light mb-4">Technical Skills</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-              <div>
-                <h4 className="font-medium mb-2">Hardware & Systems</h4>
-                <p className="text-white/80">FPGA (Xilinx Vivado), Verilog/VHDL, SoC Design,Hardware-accelerated ML, Performance Modeling, 
-                Performance Modeling, ASIC Design, DSP Pipelines, Embedded Systems</p>
+            
+            {/* ML/DSP/Embedded ML - Priority 1 */}
+            <div className="mb-6">
+              <h4 className="font-medium mb-3 text-lg">ML/DSP/Embedded ML</h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div>
+                  <h5 className="font-medium mb-2 opacity-90">Hardware-Accelerated ML & DSP</h5>
+                  <p className="text-white/80">FPGA (Xilinx Vivado), Verilog/VHDL, SoC Design, Hardware-accelerated ML, DSP Pipelines, Embedded Systems, ASIC Design, Performance Modeling</p>
+                </div>
+                <div>
+                  <h5 className="font-medium mb-2 opacity-90">ML & Signal Processing</h5>
+                  <p className="text-white/80">Signal Processing (Librosa, MFCCs), CNN/RNN, Quantization & Pruning, TensorFlow, NumPy, Pandas, MATLAB</p>
+                </div>
               </div>
-              <div>
-                <h4 className="font-medium mb-2">ML/DSP</h4>
-                <p className="text-white/80">Signal Processing (Librosa, MFCCs), CNN/RNN, Quantization & Pruning, TensorFlow, NumPy, Pandas</p>
-              </div>
-              <div>
-                <h4 className="font-medium mb-2">Programming</h4>
-                <p className="text-white/80">Python, C++, JavaScript, TypeScript, MATLAB (basic)</p>
-              </div>
-              <div>
-                <h4 className="font-medium mb-2">Web/Other</h4>
-                <p className="text-white/80">React.js, Next.js, Vue.js, React Native, Git, JIRA, VS Code, Google Cloud, Android Studio</p>
+            </div>
+
+            {/* Sensorimotor / Cognitive Angle - Priority 2 */}
+            <div className="mb-6 pt-4 border-t border-white/20">
+              <h4 className="font-medium mb-3 text-lg">Sensorimotor / Cognitive Angle</h4>
+              <p className="text-sm text-white/80">
+                Real-time emotion recognition, sensorimotor signal processing, embodied cognition, 
+                multimodal human signals (speech, gesture, physiological), affective computing, 
+                human-centered ML systems
+              </p>
+            </div>
+
+            {/* Software / Web Skills - Priority 3 */}
+            <div className="pt-4 border-t border-white/20">
+              <h4 className="font-medium mb-3 text-lg">Skills (Software, Web)</h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div>
+                  <h5 className="font-medium mb-2 opacity-90">Programming Languages</h5>
+                  <p className="text-white/80">Python, C++, JavaScript, TypeScript</p>
+                </div>
+                <div>
+                  <h5 className="font-medium mb-2 opacity-90">Web & Tools</h5>
+                  <p className="text-white/80">React.js, Next.js, Vue.js, React Native, Git, JIRA, VS Code, Google Cloud, Android Studio</p>
+                </div>
               </div>
             </div>
           </motion.div>

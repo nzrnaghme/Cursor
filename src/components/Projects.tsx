@@ -47,13 +47,9 @@ const Projects = () => {
       description: 'Built an end-to-end DSP/ML pipeline for real-time speech emotion recognition, addressing latency and compute bottlenecks in traditional SER systems through hardware-accelerated inference on Xilinx ZedBoard FPGA.',
       details: [
         'Problem: Traditional Speech Emotion Recognition (SER) systems face latency and compute bottlenecks, making real-time affect recognition difficult for embodied affective computing applications',
-        'Method: Designed and implemented an end-to-end DSP/ML pipeline including MFCC feature extraction, feature normalization, 2D CNN classification, and hardware-level optimization on Xilinx ZedBoard FPGA',
-        'Quantized CNN architecture for efficient FPGA inference with minimal accuracy loss',
-        'Mapped entire system onto hardware resources: LUTs, BRAMs, and DSP slices for optimal performance',
-        'Achieved significant improvements in real-time performance for embodied affective computing applications',
-        'Conducted comprehensive hardware-software co-design analysis: throughput, latency, and resource utilization',
-        'Research focus: real-time ML, sensorimotor cues, embedded cognition, and signal processing',
-        'Manuscript in preparation | Advisor: Prof. Shahnam Mirzaei'
+        'Method: Designed and implemented an end-to-end DSP/ML pipeline including MFCC feature extraction, feature normalization, 2D CNN classification, and hardware-level optimization on Xilinx ZedBoard FPGA. Quantized CNN architecture for efficient FPGA inference and mapped entire system onto hardware resources (LUTs, BRAMs, DSP slices)',
+        'Contribution: Achieved significant improvements in real-time performance for embodied affective computing applications. Conducted comprehensive hardware-software co-design analysis: throughput, latency, and resource utilization',
+        'Next Step/Research Value: Extending to multimodal sensorimotor signal processing (speech + gesture + physiological signals) for more robust affective computing. Manuscript in preparation | Advisor: Prof. Shahnam Mirzaei'
       ],
       image: '/images/project-speech-emotion.png',
       hoverImage: '/images/project-speech-emotion.png',
@@ -67,11 +63,9 @@ const Projects = () => {
       description: 'Analyzed Iranian society\'s response to COVID-19 by measuring emotional and linguistic shifts across millions of Persian social media posts using advanced NLP techniques.',
       details: [
         'Problem: Crisis-driven social behavior changes are hard to measure at population scale, making it difficult to understand how communities respond to unprecedented events',
-        'Method: Built comprehensive pipelines for sentiment classification, topic modeling, and temporal behavior tracking across millions of Persian posts from Iranian social media',
-        'Contribution: Identified emotional cycles and linguistic drift patterns that emerged during the pandemic',
-        'Mapped behavioral responses as a function of crisis timeline, revealing how public sentiment evolved over time',
-        'Strengthened expertise in human-centered data modeling and large-scale social media analysis',
-        'Built NLP-based chatbot with Google Cloud for scalable data processing and natural language analysis'
+        'Method: Built comprehensive pipelines for sentiment classification, topic modeling, and temporal behavior tracking across millions of Persian posts from Iranian social media. Developed NLP-based chatbot with Google Cloud for scalable data processing',
+        'Contribution: Identified emotional cycles and linguistic drift patterns that emerged during the pandemic. Mapped behavioral responses as a function of crisis timeline, revealing how public sentiment evolved over time',
+        'Next Step/Research Value: Strengthened expertise in human-centered data modeling and large-scale social media analysis. Foundation for understanding multimodal human signals in crisis contexts'
       ],
       hoverImage: '/images/project-covid-analysis.png',
       image: '/images/project-covid-analysis.png',
@@ -87,12 +81,8 @@ const Projects = () => {
       details: [
         'Problem: Users need personalized guidance for CCTV camera selection, but traditional support methods are resource-intensive and cannot scale effectively',
         'Method: Built an AI chatbot using Dialogflow for NLP and Google Cloud for scalable infrastructure, implementing intent classification and dialogue logic to understand user needs',
-        'Research Value: Although applied, this project strengthened expertise in human behavior modeling (query patterns, user needs)',
-        'Enhanced skills in intent classification and dialogue logic for conversational AI systems',
-        'Gained practical experience with real-world ML deployment constraints and production-level considerations',
-        'Integrated Dialogflow for NLP and Google Cloud for scalable infrastructure',
-        'Reduced customer support load by 40% through automated intelligent assistance',
-        'Technologies: Python, Dialogflow, Google Cloud'
+        'Contribution: Reduced customer support load by 40% through automated intelligent assistance. Gained practical experience with real-world ML deployment constraints and production-level considerations',
+        'Next Step/Research Value: Although applied, this project strengthened expertise in human behavior modeling (query patterns, user needs) and intent classification for conversational AI systems. Foundation for understanding user intent in sensorimotor interaction contexts'
       ],
       link: 'https://github.com/nzrnaghme/CCTV',
       hoverImage: '/images/project-cctv-chatbot.png',
@@ -329,10 +319,16 @@ const Projects = () => {
                           <div className="max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
                             <ul className="space-y-2">
                             {item.details.map((detail, idx) => {
-                              const isProblemMethodOrContribution = detail.startsWith('Problem:') || detail.startsWith('Method:') || detail.startsWith('Contribution:') || detail.startsWith('Research Value:');
-                              const parts = isProblemMethodOrContribution 
-                                ? detail.split(': ') 
-                                : null;
+                              const isProblemMethodOrContribution = detail.startsWith('Problem:') || detail.startsWith('Method:') || detail.startsWith('Contribution:') || detail.startsWith('Research Value:') || detail.startsWith('Next Step/Research Value:');
+                              let parts = null;
+                              if (isProblemMethodOrContribution) {
+                                // Handle "Next Step/Research Value:" which has a colon after a slash
+                                if (detail.startsWith('Next Step/Research Value:')) {
+                                  parts = ['Next Step/Research Value', detail.substring('Next Step/Research Value: '.length)];
+                                } else {
+                                  parts = detail.split(': ');
+                                }
+                              }
                               
                               return (
                                 <li key={idx} className="text-xs text-gray-300 flex items-start gap-2">
