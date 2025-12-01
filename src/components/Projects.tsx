@@ -174,7 +174,7 @@ const Projects = () => {
             <div>
               <h2 className="text-[clamp(2rem,5vw,4rem)] font-light mb-3 tracking-[-0.02em] leading-tight text-white">Projects & Experience</h2>
               <p className="text-lg leading-relaxed text-gray-300 max-w-[600px] font-light">
-                A selection of my research projects and professional experiences in AI/ML hardware-software engineering.
+                Exploring how real-time DSP/ML systems can model human affect, sensorimotor signals, and embodied cognition.
               </p>
             </div>
           </div>
@@ -208,25 +208,25 @@ const Projects = () => {
               {filteredItems.map((item, index) => (
                 <motion.div
                   key={item.id}
-                  className="relative bg-[#2a2a2a] rounded-xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.3)] transition-all cursor-pointer border border-white/10 hover:shadow-[0_8px_30px_rgba(0,0,0,0.5)] hover:border-[#6b8e23] group"
+                  className="relative bg-[#2a2a2a] rounded-xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.3)] transition-all cursor-pointer border border-white/10 hover:shadow-[0_8px_30px_rgba(0,0,0,0.5)] hover:border-[#6b8e23] group flex flex-col"
                   initial={{ opacity: 0, y: 50 }}
                   animate={itemsInView ? { opacity: 1, y: 0 } : {}}
                   exit={{ opacity: 0, scale: 0.9 }}
                   transition={{ delay: index * 0.1, duration: 0.6, ease: "easeOut" }}
-                  whileHover={{ scale: 1.02, y: -5 }}
+                  whileHover={{ scale: 1.01 }}
                   onMouseEnter={() => {
-                    // Only allow one card to be hovered at a time
+                    // Set only this specific card as hovered
                     setHoveredItem(item.id)
                   }}
                   onMouseLeave={() => {
-                    // Clear hover state when leaving this specific card
+                    // Only clear if this is the currently hovered card
                     if (hoveredItem === item.id) {
                       setHoveredItem(null)
                     }
                   }}
                 >
                   {/* Image/Header Section */}
-                  <div className={`h-[150px] sm:h-[180px] md:h-[200px] flex items-center justify-center relative overflow-hidden ${
+                  <div className={`h-[200px] flex items-center justify-center relative overflow-hidden ${
                     index % 4 === 0 ? 'bg-gradient-to-br from-[#6b8e23] via-[#7b9e33] to-[#8bae43]' :
                     index % 4 === 1 ? 'bg-gradient-to-br from-[#4a5568] via-[#5a6578] to-[#6a7588]' :
                     index % 4 === 2 ? 'bg-gradient-to-br from-[#553c9a] via-[#6b4fb8] to-[#7b5fc8]' :
@@ -307,9 +307,10 @@ const Projects = () => {
                     <p className="text-sm leading-relaxed text-gray-300 mb-3">{item.description}</p>
                     
                     {/* Full Details on Hover */}
-                    <AnimatePresence>
+                    <AnimatePresence mode="wait">
                       {hoveredItem === item.id && (
                         <motion.div
+                          key={`details-${item.id}`}
                           initial={{ opacity: 0, height: 0 }}
                           animate={{ opacity: 1, height: 'auto' }}
                           exit={{ opacity: 0, height: 0 }}

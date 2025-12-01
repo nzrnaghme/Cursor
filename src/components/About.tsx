@@ -95,11 +95,30 @@ const About = () => {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.8, duration: 0.8 }}
           >
-            <h3 className="text-2xl font-light mb-4 text-white">Research Interests / Future Directions</h3>
+            <h3 className="text-2xl font-light mb-4 text-white">Research Interests</h3>
             <div className="p-6 bg-[#2a2a2a] rounded-lg border border-white/10">
-              <p className="text-lg text-gray-300 font-light leading-relaxed">
-                Real-time embedded ML for sensorimotor cognition / affective computing / multimodal human signals
-              </p>
+              <ul className="space-y-2 text-lg text-gray-300 font-light leading-relaxed">
+                <li className="flex items-start gap-2">
+                  <span className="text-[#6b8e23] mt-1 shrink-0">•</span>
+                  <span>Real-time embedded ML</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-[#6b8e23] mt-1 shrink-0">•</span>
+                  <span>Speech & sensorimotor signals</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-[#6b8e23] mt-1 shrink-0">•</span>
+                  <span>Affective computing / cognition modeling</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-[#6b8e23] mt-1 shrink-0">•</span>
+                  <span>DSP pipelines & hardware acceleration</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-[#6b8e23] mt-1 shrink-0">•</span>
+                  <span>Multimodal human-signal understanding</span>
+                </li>
+              </ul>
             </div>
           </motion.div>
 
