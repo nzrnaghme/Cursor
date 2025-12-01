@@ -101,9 +101,9 @@ Melody Nazar           </motion.h1>
             animate={inView ? { opacity: 1 } : {}}
             transition={{ delay: 0.7, duration: 0.8 }}
           >
-            Graduate student in Computer Engineering developing and optimizing real-time DSP/ML algorithms on FPGA platforms. 
-            Combining 5+ years of software engineering experience with expertise in hardware acceleration, signal processing, 
-            and machine learning systems.
+            Graduate student in Computer Engineering at CSUN focusing on real-time DSP/ML methods and hardware-accelerated inference on FPGA platforms.
+Integrating 5+ years of software engineering experience with expertise in signal processing, embedded ML systems, and data-driven modeling.
+My work sits at the intersection of machine learning, sensorimotor signals, and human cognition—building systems that interpret embodied information in real time.
           </motion.p>
 
           <motion.div

@@ -2,8 +2,6 @@ import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import ParticlesBackground from './ParticlesBackground'
-import { saveEmailToGit } from '../services/githubService'
-import { saveEmailToFormspree } from '../services/formspreeService'
 
 const Contact = () => {
   const { ref, inView } = useInView({
@@ -12,9 +10,6 @@ const Contact = () => {
   })
 
   const containerRef = useRef<HTMLDivElement>(null)
-  const [email, setEmail] = useState('')
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitMessage, setSubmitMessage] = useState('')
 
   const [localTime, setLocalTime] = useState(
     new Date().toLocaleTimeString('en-US', { 
@@ -43,40 +38,6 @@ const Contact = () => {
     { name: 'LinkedIn', url: 'https://www.linkedin.com/in/naghme-nazar/' }
   ]
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    
-    if (!email || !email.includes('@')) {
-      setSubmitMessage('Please enter a valid email address')
-      return
-    }
-
-    setIsSubmitting(true)
-    setSubmitMessage('')
-
-    try {
-      // Try GitHub API first (works on Vercel), fallback to Formspree (works on GitHub Pages)
-      let response = await saveEmailToGit(email)
-      
-      // If GitHub API fails (404, 405, or any error), try Formspree as fallback
-      if (!response.success) {
-        console.log('GitHub API not available, trying Formspree...')
-        response = await saveEmailToFormspree(email)
-      }
-      
-      if (response.success) {
-        setSubmitMessage('Thank you for subscribing!')
-        setEmail('')
-      } else {
-        setSubmitMessage(response.message || 'Something went wrong. Please try again.')
-      }
-    } catch (error) {
-      setSubmitMessage('Failed to subscribe. Please try again later.')
-    } finally {
-      setIsSubmitting(false)
-      setTimeout(() => setSubmitMessage(''), 5000)
-    }
-  }
 
   return (
     <section id="contact" className="py-20 px-6 min-h-screen flex items-center bg-gradient-to-br from-[#252525] to-[#1a1a1a] text-white relative" ref={containerRef}>
@@ -165,40 +126,18 @@ const Contact = () => {
             </div>
 
             <div className="p-6 border-2 border-white/10 bg-[#2a2a2a] rounded-lg">
-              <h4 className="text-sm font-medium uppercase tracking-wider text-gray-400 mb-3">Subscribe to our newsletter</h4>
-              <form onSubmit={handleSubmit} className="flex flex-col gap-3 mt-3">
-                <input 
-                  type="email" 
-                  placeholder="Your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  disabled={isSubmitting}
-                  className="p-3 bg-[#1a1a1a] border-2 border-white/10 rounded text-white text-sm placeholder:text-gray-500 focus:outline-none focus:border-[#6b8e23] transition-all disabled:opacity-50"
-                  required
-                />
-                {submitMessage && (
-                  <motion.p
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className={`text-xs ${
-                      submitMessage.includes('Thank you') 
-                        ? 'text-[#6b8e23]' 
-                        : 'text-red-400'
-                    }`}
-                  >
-                    {submitMessage}
-                  </motion.p>
-                )}
-                <motion.button 
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="px-6 py-3 bg-[#6b8e23] text-white rounded border-none text-sm font-medium cursor-pointer uppercase tracking-wider transition-all hover:bg-[#556b2f] disabled:opacity-50 disabled:cursor-not-allowed"
-                  whileHover={{ scale: isSubmitting ? 1 : 1.05 }}
-                  whileTap={{ scale: isSubmitting ? 1 : 0.95 }}
-                >
-                  {isSubmitting ? 'Subscribing...' : 'Subscribe'}
-                </motion.button>
-              </form>
+              <h4 className="text-sm font-medium uppercase tracking-wider text-gray-400 mb-3">Get in touch</h4>
+              <p className="text-sm text-gray-300 mb-4 font-light">
+                Have a question or want to discuss a project? Feel free to reach out via email.
+              </p>
+              <motion.a
+                href="mailto:melodynzr@gmail.com?subject=Hello&body=Hi Melody,"
+                className="inline-block px-6 py-3 bg-[#6b8e23] text-white rounded border-none text-sm font-medium cursor-pointer uppercase tracking-wider transition-all hover:bg-[#556b2f] text-center w-full"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Send Email
+              </motion.a>
             </div>
 
             <div className="flex flex-col gap-3 pt-6 border-t border-white/10">

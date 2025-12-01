@@ -7,7 +7,6 @@ import Projects from './components/Projects'
 import Contact from './components/Contact'
 import Loading from './components/Loading'
 import ScrollToTop from './components/ScrollToTop'
-import VisitorCounter from './components/VisitorCounter'
 import './App.css'
 
 function App() {
@@ -68,9 +67,6 @@ function App() {
       <Projects />
       <Contact />
       <ScrollToTop />
-      <div className="fixed bottom-4 left-4 z-50">
-        <VisitorCounter />
-      </div>
     </div>
   )
 }

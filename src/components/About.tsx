@@ -40,14 +40,15 @@ const About = () => {
             transition={{ delay: 0.4, duration: 0.8 }}
           >
             <p className="mb-4 font-light">
-              I'm a graduate student in Computer Engineering at California State University Northridge, 
-              specializing in hardware acceleration, signal processing, and machine learning systems. 
-              My research focuses on developing and optimizing real-time DSP/ML algorithms on FPGA platforms.
+            I'm a graduate student in Computer Engineering at California State University Northridge, 
+            specializing in hardware-accelerated machine learning, signal processing, 
+            and real-time DSP/ML systems. My research centers on building and 
+            optimizing low-latency emotion-recognition and sensorimotor-signal pipelines on FPGA platforms.
             </p>
             <p className="font-light">
-              With 5+ years of software engineering experience combined with expertise in SoC design, 
-              FPGA/ASIC architectures, and performance modeling, I bridge the gap between hardware and 
-              software to create efficient ML accelerators and digital signal processing systems.
+            With 5+ years of software engineering experience and a growing focus on SoC/FPGA architectures,
+            I work at the boundary between hardware and human-centered machine learning, developing systems
+            that interpret embodied, real-world signals in real time.
             </p>
           </motion.div>
 
@@ -69,8 +70,8 @@ const About = () => {
                   <span className="text-sm text-gray-400">2024 - Present</span>
                 </div>
                 <ul className="mt-3 space-y-1 text-gray-300 text-sm">
-                  <li>• Grade A in System-on-Chip (SoC) design</li>
-                  <li>• Thesis: Real-Time Speech Emotion Recognition on FPGA (in progress)</li>
+                  <li>• Thesis: Real-Time Speech Emotion Recognition using DSP/ML pipelines optimized for FPGA acceleration (in progress)</li>
+                  <li>• Areas: Embedded ML Systems, Sensorimotor Signal Processing, SoC Design</li>
                   <li>• Advisor: <a href="https://www.ecs.csun.edu/~smirzaei/" target="_blank" rel="noopener noreferrer" className="text-[#6b8e23] hover:underline">Prof. Shahnam Mirzaei</a></li>
                 </ul>
               </div>
@@ -98,7 +99,8 @@ const About = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
               <div>
                 <h4 className="font-medium mb-2">Hardware & Systems</h4>
-                <p className="text-white/80">FPGA (Xilinx Vivado), Verilog/VHDL, SoC Design, Performance Modeling, ASIC Design</p>
+                <p className="text-white/80">FPGA (Xilinx Vivado), Verilog/VHDL, SoC Design,Hardware-accelerated ML, Performance Modeling, 
+                Performance Modeling, ASIC Design, DSP Pipelines, Embedded Systems</p>
               </div>
               <div>
                 <h4 className="font-medium mb-2">ML/DSP</h4>
@@ -106,7 +108,7 @@ const About = () => {
               </div>
               <div>
                 <h4 className="font-medium mb-2">Programming</h4>
-                <p className="text-white/80">Python, C++, JavaScript, TypeScript</p>
+                <p className="text-white/80">Python, C++, JavaScript, TypeScript, MATLAB (basic)</p>
               </div>
               <div>
                 <h4 className="font-medium mb-2">Web/Other</h4>

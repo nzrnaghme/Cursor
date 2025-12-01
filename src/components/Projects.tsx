@@ -41,34 +41,37 @@ const Projects = () => {
     {
       id: 1,
       type: 'project',
-      title: 'Real-time Speech Emotion Recognition on FPGA',
+      title: 'Real-time Speech Emotion Recognition Pipeline using MFCC + CNN on FPGA',
       category: 'Research Project',
       year: '2024',
-      description: 'Implemented a speech emotion recognition pipeline (MFCC + CNN) on Xilinx ZedBoard FPGA for real-time audio classification.',
+      description: 'Built an end-to-end DSP/ML pipeline for real-time speech emotion recognition, addressing latency and compute bottlenecks in traditional SER systems through hardware-accelerated inference on Xilinx ZedBoard FPGA.',
       details: [
-        'Optimized design through quantization and efficient mapping to LUTs, BRAMs, and DSP slices',
-        'Reduced latency and power usage significantly',
-        'Achieved ~89% accuracy while performing hardware-software trade-off analysis',
-        'Analyzed throughput, latency, and resource utilization',
-        'Manuscript in preparation',
-        'Advisor: Prof. Shahnam Mirzaei'
+        'Problem: Traditional Speech Emotion Recognition (SER) systems face latency and compute bottlenecks, making real-time affect recognition difficult for embodied affective computing applications',
+        'Method: Designed and implemented an end-to-end DSP/ML pipeline including MFCC feature extraction, feature normalization, 2D CNN classification, and hardware-level optimization on Xilinx ZedBoard FPGA',
+        'Quantized CNN architecture for efficient FPGA inference with minimal accuracy loss',
+        'Mapped entire system onto hardware resources: LUTs, BRAMs, and DSP slices for optimal performance',
+        'Achieved significant improvements in real-time performance for embodied affective computing applications',
+        'Conducted comprehensive hardware-software co-design analysis: throughput, latency, and resource utilization',
+        'Research focus: real-time ML, sensorimotor cues, embedded cognition, and signal processing',
+        'Manuscript in preparation | Advisor: Prof. Shahnam Mirzaei'
       ],
       image: '/images/project-speech-emotion.png',
       hoverImage: '/images/project-speech-emotion.png',
-
     },
     {
       id: 2,
       type: 'project',
-      title: 'COVID-19 Discourse Analysis',
+      title: 'Large-scale Analysis of Emotional and Linguistic Shifts in Iranian Social Media during COVID-19',
       category: 'Research Project',
-      year: '2023',
-      description: 'Researched Iranian society\'s response to COVID-19 using social media data with large-scale sentiment analysis.',
+      year: '2021 - 2023',
+      description: 'Analyzed Iranian society\'s response to COVID-19 by measuring emotional and linguistic shifts across millions of Persian social media posts using advanced NLP techniques.',
       details: [
-        'Conducted large-scale sentiment analysis on social media data related to COVID-19',
-        'Showcased scalable data processing and natural language analysis',
-        'Built NLP-based chatbot with Google Cloud',
-        'Demo available on LinkedIn'
+        'Problem: Crisis-driven social behavior changes are hard to measure at population scale, making it difficult to understand how communities respond to unprecedented events',
+        'Method: Built comprehensive pipelines for sentiment classification, topic modeling, and temporal behavior tracking across millions of Persian posts from Iranian social media',
+        'Contribution: Identified emotional cycles and linguistic drift patterns that emerged during the pandemic',
+        'Mapped behavioral responses as a function of crisis timeline, revealing how public sentiment evolved over time',
+        'Strengthened expertise in human-centered data modeling and large-scale social media analysis',
+        'Built NLP-based chatbot with Google Cloud for scalable data processing and natural language analysis'
       ],
       hoverImage: '/images/project-covid-analysis.png',
       image: '/images/project-covid-analysis.png',
@@ -77,15 +80,19 @@ const Projects = () => {
     {
       id: 3,
       type: 'project',
-      title: 'CCTV Chatbot',
+      title: 'CCTV Chatbot - Intent-based Assistant',
       category: 'AI Application',
       year: '2022',
-      description: 'Built an AI chatbot for a CCTV shopping platform to guide users in camera selection.',
+      description: 'Designed an intent-based assistant to guide users through CCTV selection for a shopping platform, reducing customer support load while strengthening practical ML deployment skills.',
       details: [
+        'Problem: Users need personalized guidance for CCTV camera selection, but traditional support methods are resource-intensive and cannot scale effectively',
+        'Method: Built an AI chatbot using Dialogflow for NLP and Google Cloud for scalable infrastructure, implementing intent classification and dialogue logic to understand user needs',
+        'Research Value: Although applied, this project strengthened expertise in human behavior modeling (query patterns, user needs)',
+        'Enhanced skills in intent classification and dialogue logic for conversational AI systems',
+        'Gained practical experience with real-world ML deployment constraints and production-level considerations',
         'Integrated Dialogflow for NLP and Google Cloud for scalable infrastructure',
-        'Reduced customer support load by 40%',
-        'Technologies: Python, Dialogflow, Google Cloud',
-        'GitHub: CCTV Chatbot'
+        'Reduced customer support load by 40% through automated intelligent assistance',
+        'Technologies: Python, Dialogflow, Google Cloud'
       ],
       link: 'https://github.com/nzrnaghme/CCTV',
       hoverImage: '/images/project-cctv-chatbot.png',
@@ -206,7 +213,7 @@ const Projects = () => {
           className="w-full"
           ref={itemsRef}
         >
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 items-start">
             <AnimatePresence mode="wait">
               {filteredItems.map((item, index) => (
                 <motion.div
@@ -217,8 +224,16 @@ const Projects = () => {
                   exit={{ opacity: 0, scale: 0.9 }}
                   transition={{ delay: index * 0.1, duration: 0.6, ease: "easeOut" }}
                   whileHover={{ scale: 1.02, y: -5 }}
-                  onMouseEnter={() => setHoveredItem(item.id)}
-                  onMouseLeave={() => setHoveredItem(null)}
+                  onMouseEnter={() => {
+                    // Only allow one card to be hovered at a time
+                    setHoveredItem(item.id)
+                  }}
+                  onMouseLeave={() => {
+                    // Clear hover state when leaving this specific card
+                    if (hoveredItem === item.id) {
+                      setHoveredItem(null)
+                    }
+                  }}
                 >
                   {/* Image/Header Section */}
                   <div className={`h-[150px] sm:h-[180px] md:h-[200px] flex items-center justify-center relative overflow-hidden ${
@@ -311,25 +326,42 @@ const Projects = () => {
                           transition={{ duration: 0.3 }}
                           className="overflow-hidden pt-3 border-t border-white/10"
                         >
-                          <ul className="space-y-2">
-                            {item.details.map((detail, idx) => (
-                              <li key={idx} className="text-xs text-gray-300 flex items-start gap-2">
-                                <span className="text-[#6b8e23] mt-1 shrink-0">•</span>
-                                <span>{detail}</span>
-                              </li>
-                            ))}
+                          <div className="max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+                            <ul className="space-y-2">
+                            {item.details.map((detail, idx) => {
+                              const isProblemMethodOrContribution = detail.startsWith('Problem:') || detail.startsWith('Method:') || detail.startsWith('Contribution:') || detail.startsWith('Research Value:');
+                              const parts = isProblemMethodOrContribution 
+                                ? detail.split(': ') 
+                                : null;
+                              
+                              return (
+                                <li key={idx} className="text-xs text-gray-300 flex items-start gap-2">
+                                  <span className="text-[#6b8e23] mt-1 shrink-0">•</span>
+                                  <span>
+                                    {parts ? (
+                                      <>
+                                        <strong className="font-bold text-white">{parts[0]}:</strong> {parts[1]}
+                                      </>
+                                    ) : (
+                                      detail
+                                    )}
+                                  </span>
+                                </li>
+                              );
+                            })}
                           </ul>
-                          {item.link && (
-                            <a 
-                              href={item.link} 
-                              target="_blank" 
-                              rel="noopener noreferrer"
-                              className="inline-block mt-3 text-xs text-[#6b8e23] hover:underline font-medium"
-                              onClick={(e) => e.stopPropagation()}
-                            >
-                              View {item.type === 'project' ? 'Project' : 'Details'} →
-                            </a>
-                          )}
+                            {item.link && (
+                              <a 
+                                href={item.link} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="inline-block mt-3 text-xs text-[#6b8e23] hover:underline font-medium"
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                View {item.type === 'project' ? 'Project' : 'Details'} →
+                              </a>
+                            )}
+                          </div>
                         </motion.div>
                       )}
                     </AnimatePresence>
