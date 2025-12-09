@@ -130,7 +130,7 @@ const Navigation = ({ currentSection, menuOpen, setMenuOpen, scrollToSection, se
                         transition={{ delay: navItems.length * 0.05, duration: 0.2 }}
                       >
                         <motion.a
-                          href="https://drive.google.com/file/d/14QUSkB4gcI4k_3rM3Aj9xB5c4ExDuQA-/view?usp=sharing"
+                          href="https://drive.google.com/file/d/1I6n-rMPIN7j-VpM6OlpNo1K0y9bDzEzg/view?usp=sharing"
                           target="_blank"
                           rel="noopener noreferrer"
                           className="w-full py-3.5 px-5 bg-transparent border-none text-left text-sm font-medium text-black cursor-pointer uppercase tracking-wider rounded-lg transition-all relative flex items-center gap-3 hover:bg-[#f5f5f5]"
