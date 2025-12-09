@@ -79,7 +79,7 @@ const Contact = () => {
 
             <div className="mb-6">
               <motion.a
-                href="https://drive.google.com/file/d/14QUSkB4gcI4k_3rM3Aj9xB5c4ExDuQA-/view?usp=sharing"
+                href="https://drive.google.com/file/d/1I6n-rMPIN7j-VpM6OlpNo1K0y9bDzEzg/view?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block px-6 py-3 bg-[#6b8e23] text-white rounded border-none text-sm font-medium cursor-pointer uppercase tracking-wider transition-all hover:bg-[#556b2f]"
