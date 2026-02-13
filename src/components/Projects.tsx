@@ -89,6 +89,23 @@ const Projects = () => {
       image: '/images/project-cctv-chatbot.png'
       // hoverVideo: './public/cctv-chatbot-video.mp4'
     },
+    {
+      id: 7,
+      type: 'project',
+      title: 'AI Email Agent',
+      category: 'AI Application',
+      year: '2026',
+      description: 'Designed and implemented an AI-powered email automation agent to classify, prioritize, and respond to incoming Gmail messages while maintaining structured logs.',
+      details: [
+        'Problem: Manual email handling is time-consuming and inconsistent, often causing delayed replies and poor prioritization.',
+        'Method: Built an automation workflow using n8n, integrating OpenAI, Gmail API, and Airtable. The agent performs email classification, priority detection, reply generation, dynamic labeling, and structured data logging.',
+        'Contribution: Reduced manual email workload through intelligent automation and demonstrated real-world integration of LLM-based decision systems.',
+        'Next Step/Research Value: Provides a foundation for autonomous communication agents, with future expansion toward sentiment analysis, calendar automation, and adaptive priority scoring.'
+      ],
+      image: '/images/project-ai-email-agent.png',
+      hoverImage: '/images/project-ai-email-agent.png',
+      link: 'https://github.com/nzrnaghme/RespondEmailAgent'
+    },
     // Experiences
     {
       id: 4,
@@ -230,9 +247,10 @@ const Projects = () => {
                     index % 4 === 0 ? 'bg-gradient-to-br from-[#6b8e23] via-[#7b9e33] to-[#8bae43]' :
                     index % 4 === 1 ? 'bg-gradient-to-br from-[#4a5568] via-[#5a6578] to-[#6a7588]' :
                     index % 4 === 2 ? 'bg-gradient-to-br from-[#553c9a] via-[#6b4fb8] to-[#7b5fc8]' :
+                    index % 4 === 3 ? 'bg-gradient-to-br from-[#e94b716e] via-[#e94b716e] to-[#e94b716e]' :
                     'bg-gradient-to-br from-[#2d5a87] via-[#3d6a97] to-[#4d7aa7]'
                   }`}>
-                    {/* Background image - always visible with opacity 50 */}
+                    {/* Background image - little opacity when not hovering, full on hover (same as previous items) */}
                     {item.image && (
                       <img 
                         src={item.image.startsWith('/') ? item.image : `/${item.image}`}

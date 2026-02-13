@@ -166,7 +166,7 @@ const About = () => {
                 </div>
                 <div>
                   <h5 className="font-medium mb-2 opacity-90">Web & Tools</h5>
-                  <p className="text-white/80">React.js, Next.js, Vue.js, React Native, Git, JIRA, VS Code, Google Cloud, Android Studio</p>
+                  <p className="text-white/80">React.js, Next.js, Vue.js, React Native, n8n, Create AI Agent (n8n), Git, JIRA, VS Code, Google Cloud, Android Studio</p>
                 </div>
               </div>
             </div>
