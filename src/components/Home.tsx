@@ -35,7 +35,7 @@ const Home = ({ scrollToSection }: HomeProps) => {
 
       {/* Profile Image - Top Right */}
       <motion.div
-        className="absolute top-0 right-0 w-full lg:w-auto flex justify-end px-4 pt-20 z-[1] pointer-events-none"
+        className="absolute top-0 right-0 w-full lg:w-auto flex justify-end px-2 pt-6 z-[1] pointer-events-none translate-x-2 sm:translate-x-4"
         initial={{ opacity: 0, y: -50 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ delay: 0.8, duration: 1, ease: [0.6, -0.05, 0.01, 0.99] }}
@@ -44,7 +44,7 @@ const Home = ({ scrollToSection }: HomeProps) => {
           <motion.img
             src="/images/profile-photo.png"
             alt="Profile"
-            className="w-[200px] sm:w-[250px] md:w-[300px] lg:w-[400px] h-auto object-contain drop-shadow-2xl opacity-100"
+            className="w-[200px] sm:w-[190px] md:w-[300px] lg:w-[400px] h-auto object-contain drop-shadow-2xl opacity-100"
             style={{ 
               filter: 'drop-shadow(0 20px 40px rgba(0, 0, 0, 0.3))',
               mixBlendMode: 'normal'
@@ -96,7 +96,7 @@ Melody Nazar           </motion.h1>
           </motion.p>
 
           <motion.p 
-            className="text-base leading-relaxed mb-6 text-gray-300 max-w-[600px] font-light"
+            className="text-base leading-relaxed mb-6 text-gray-300 max-w-[450px] font-light"
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
             transition={{ delay: 0.7, duration: 0.8 }}
