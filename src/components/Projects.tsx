@@ -41,15 +41,15 @@ const Projects = () => {
     {
       id: 1,
       type: 'project',
-      title: 'Real-time Speech Emotion Recognition Pipeline using MFCC + CNN on FPGA',
+      title: 'Real-Time Speech Emotion Recognition Using Optimized Deep Residual Networks',
       category: 'Research Project',
       year: '2024',
-      description: 'Built an end-to-end DSP/ML pipeline for real-time speech emotion recognition, addressing latency and compute bottlenecks in traditional SER systems through hardware-accelerated inference on Xilinx ZedBoard FPGA.',
+      description: 'Designed and implemented a real-time SER system achieving 80% validation accuracy on RAVDESS+TESS (~4,900 samples), with a live desktop application running inference under 200ms per segment. Resolved training instability through gradient clipping and adaptive LR scheduling. Manuscript in preparation, May 2026',
       details: [
-        'Problem: Traditional Speech Emotion Recognition (SER) systems face latency and compute bottlenecks, making real-time affect recognition difficult for embodied affective computing applications',
-        'Method: Designed and implemented an end-to-end DSP/ML pipeline including MFCC feature extraction, feature normalization, 2D CNN classification, and hardware-level optimization on Xilinx ZedBoard FPGA. Quantized CNN architecture for efficient FPGA inference and mapped entire system onto hardware resources (LUTs, BRAMs, DSP slices)',
-        'Contribution: Achieved significant improvements in real-time performance for embodied affective computing applications. Conducted comprehensive hardware-software co-design analysis: throughput, latency, and resource utilization',
-        'Next Step/Research Value: Extending to multimodal sensorimotor signal processing (speech + gesture + physiological signals) for more robust affective computing. Manuscript in preparation | Advisor: Prof. Shahnam Mirzaei'
+        "Problem: Traditional SER systems are trained on acted, studio-controlled speech corpora that don't generalize to real-world spontaneous conditions, limiting their clinical and practical utility.",
+        'Method: Built an end-to-end pipeline converting raw 16kHz audio into 128×128 Mel-spectrograms, classified by an optimized ResNet into 4 emotional states (Neutral, Happy, Sad, Angry). Resolved training instability via gradient clipping (norm=1.0) and adaptive LR scheduling (10⁻³→10⁻⁷). Evaluated on combined RAVDESS+TESS corpus with speaker-aware 80/20 split.',
+        'Contribution: Achieved 80% validation accuracy with 81.1% recall on Angry and 78.7% on Neutral. Built a real-time desktop application with sub-200ms inference. Systematic confusion analysis revealed Happy/Sad overlap consistent with SER literature — confirming the model learned genuine acoustic emotion structure.',
+        'Next Step/Research Value: Extending to spontaneous speech corpora (IEMOCAP, PRIORI) for cross-corpus validation. Future work includes multimodal fusion, model compression for edge deployment, and clinical mental health monitoring applications.'
       ],
       image: '/images/project-speech-emotion.png',
       hoverImage: '/images/project-speech-emotion.png',

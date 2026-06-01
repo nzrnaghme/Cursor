@@ -40,15 +40,11 @@ const About = () => {
             transition={{ delay: 0.4, duration: 0.8 }}
           >
             <p className="mb-4 font-light">
-            I'm a graduate student in Computer Engineering at California State University Northridge, 
-            specializing in hardware-accelerated machine learning, signal processing, 
-            and real-time DSP/ML systems. My research centers on building and 
-            optimizing low-latency emotion-recognition and sensorimotor-signal pipelines on FPGA platforms.
+            I'm a graduate student in Computer Engineering at California State University Northridge, specializing in Speech Emotion Recognition, affective computing, and real-time ML systems. My research focuses on building deployable models that classify human emotional states from speech — investigating the gap between acted speech corpora and real-world performance.
+
             </p>
             <p className="font-light">
-            With 5+ years of software engineering experience and a growing focus on SoC/FPGA architectures,
-            I work at the boundary between hardware and human-centered machine learning, developing systems
-            that interpret embodied, real-world signals in real time.
+           With 5+ years of software engineering experience, I bring an end-to-end perspective to ML research: from signal processing and model design to live inference and deployment.
             </p>
           </motion.div>
 
@@ -67,12 +63,16 @@ const About = () => {
                     <h4 className="text-xl font-medium text-white mb-1">Master, Computer Engineering</h4>
                     <p className="text-[#6b8e23]">California State University Northridge</p>
                   </div>
-                  <span className="text-sm text-gray-400">2024 - Present</span>
+                  <span className="text-sm text-gray-400">Aug 2024 - May 2026</span>
                 </div>
                 <ul className="mt-3 space-y-1 text-gray-300 text-sm">
-                  <li>• Thesis: Real-Time Speech Emotion Recognition using DSP/ML pipelines optimized for FPGA acceleration (in progress)</li>
-                  <li>• Areas: Embedded ML Systems, Sensorimotor Signal Processing, SoC Design</li>
+                  <li>• Thesis: Real-Time Speech Emotion Recognition Using Optimized Deep Residual Networks </li>
+                  <li>• Areas: Speech Emotion Recognition, Affective Computing, Deep Learning, Signal Processing </li>
+                  <li>• Key Results: 80% validation accuracy on RAVDESS+TESS (~4,900 samples); 
+                  real-time inference under 200ms per segment on CPU </li>
+                  <li>• Manuscript in preparation — May 2026 </li>
                   <li>• Advisor: <a href="https://www.ecs.csun.edu/~smirzaei/" target="_blank" rel="noopener noreferrer" className="text-[#6b8e23] hover:underline">Prof. Shahnam Mirzaei</a></li>
+                  <li>• Presented at: 40th Annual CSU Research Competition </li>
                 </ul>
               </div>
 
@@ -84,6 +84,10 @@ const About = () => {
                   </div>
                   <span className="text-sm text-gray-400">Aug 2016 - Mar 2021</span>
                 </div>
+                <ul className="mt-3 space-y-1 text-gray-300 text-sm">
+                  <li>• Areas: Machine Learning, Artificial Intelligence, Signals & Systems, Data Structures, Algorithms</li>
+                  <li>• GPA: 3.6 / 4.0</li>
+                </ul>
               </div>
             </div>
           </motion.div>
@@ -98,13 +102,13 @@ const About = () => {
             <h3 className="text-2xl font-light mb-4 text-white">Research Interests</h3>
             <div className="p-6 bg-[#2a2a2a] rounded-lg border border-white/10">
               <ul className="space-y-2 text-lg text-gray-300 font-light leading-relaxed">
-                <li className="flex items-start gap-2">
+              <li className="flex items-start gap-2">
                   <span className="text-[#6b8e23] mt-1 shrink-0">•</span>
-                  <span>Real-time embedded ML</span>
+                  <span>Speech Emotion Recognition & Affective Computing</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-[#6b8e23] mt-1 shrink-0">•</span>
-                  <span>Speech & sensorimotor signals</span>
+                  <span>Real-time embedded ML</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-[#6b8e23] mt-1 shrink-0">•</span>
@@ -133,26 +137,24 @@ const About = () => {
             
             {/* ML/DSP/Embedded ML - Priority 1 */}
             <div className="mb-6">
-              <h4 className="font-medium mb-3 text-lg">ML/DSP/Embedded ML</h4>
+              <h4 className="font-medium mb-3 text-lg">ML & Speech Processing</h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                 <div>
-                  <h5 className="font-medium mb-2 opacity-90">Hardware-Accelerated ML & DSP</h5>
-                  <p className="text-white/80">FPGA (Xilinx Vivado), Verilog/VHDL, SoC Design, Hardware-accelerated ML, DSP Pipelines, Embedded Systems, ASIC Design, Performance Modeling</p>
+                  <h5 className="font-medium mb-2 opacity-90">Deep Learning & Audio ML</h5>
+                  <p className="text-white/80">Deep Learning (ResNet, CNN/RNN), Mel-Spectrogram Feature Extraction, Speech Signal Processing, Audio Preprocessing, TensorFlow, Keras, Real-Time Inference</p>
                 </div>
                 <div>
                   <h5 className="font-medium mb-2 opacity-90">ML & Signal Processing</h5>
-                  <p className="text-white/80">Signal Processing (Librosa, MFCCs), CNN/RNN, Quantization & Pruning, TensorFlow, NumPy, Pandas, MATLAB</p>
+                  <p className="text-white/80">Signal Processing (Librosa, MFCCs), TensorFlow, NumPy, Pandas, MATLAB, Quantization & Pruning</p>
                 </div>
               </div>
             </div>
 
             {/* Sensorimotor / Cognitive Angle - Priority 2 */}
             <div className="mb-6 pt-4 border-t border-white/20">
-              <h4 className="font-medium mb-3 text-lg">Sensorimotor / Cognitive Angle</h4>
+              <h4 className="font-medium mb-3 text-lg">Affective Computing & Human-Centered ML</h4>
               <p className="text-sm text-white/80">
-                Real-time emotion recognition, sensorimotor signal processing, embodied cognition, 
-                multimodal human signals (speech, gesture, physiological), affective computing, 
-                human-centered ML systems
+              Speech emotion recognition, affective computing, human-centered AI systems, behavioral signal modeling, multimodal emotion analysis
               </p>
             </div>
 

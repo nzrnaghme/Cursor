@@ -75,7 +75,7 @@ const Home = ({ scrollToSection }: HomeProps) => {
             animate={inView ? { opacity: 1 } : {}}
             transition={{ delay: 0.2, duration: 0.8 }}
           >
-            AI/ML Hardware-Software Engineer
+            ML Researcher | Affective Computing
           </motion.h3>
           
           <motion.h1 
@@ -92,7 +92,7 @@ Melody Nazar           </motion.h1>
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.5, duration: 0.8 }}
           >
-            Software Engineering  • Real-Time DSP/ML 
+            Speech Emotion Recognition • Real-Time AI • Human-Centered ML
           </motion.p>
 
           <motion.p 
@@ -101,9 +101,7 @@ Melody Nazar           </motion.h1>
             animate={inView ? { opacity: 1 } : {}}
             transition={{ delay: 0.7, duration: 0.8 }}
           >
-            Graduate student in Computer Engineering at CSUN focusing on real-time DSP/ML methods and hardware-accelerated inference on FPGA platforms.
-Integrating 5+ years of software engineering experience with expertise in signal processing, embedded ML systems, and data-driven modeling.
-My work sits at the intersection of machine learning, sensorimotor signals, and human cognition—building systems that interpret embodied information in real time.
+            Graduate student in Computer Engineering at CSUN focusing on building deployable systems that recognize human emotional states from speech in real time — bridging the gap between acted speech corpora and real-world clinical applications. With 5+ years of software engineering experience, I bring an end-to-end perspective to ML research: from signal processing and model design to live inference and deployment.
           </motion.p>
 
           <motion.div
