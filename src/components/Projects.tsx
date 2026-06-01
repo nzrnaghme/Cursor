@@ -43,8 +43,8 @@ const Projects = () => {
       type: 'project',
       title: 'Real-Time Speech Emotion Recognition Using Optimized Deep Residual Networks',
       category: 'Research Project',
-      year: '2024',
-      description: 'Designed and implemented a real-time SER system achieving 80% validation accuracy on RAVDESS+TESS (~4,900 samples), with a live desktop application running inference under 200ms per segment. Resolved training instability through gradient clipping and adaptive LR scheduling. Manuscript in preparation, May 2026',
+      year: 'Aug 2024 - May 2026',
+      description: 'Designed and implemented a real-time SER system achieving 80% validation accuracy on RAVDESS+TESS (~4,900 samples), with a live desktop application running inference under 200ms per segment. Resolved training instability through gradient clipping and adaptive LR scheduling. Manuscript in preparation',
       details: [
         "Problem: Traditional SER systems are trained on acted, studio-controlled speech corpora that don't generalize to real-world spontaneous conditions, limiting their clinical and practical utility.",
         'Method: Built an end-to-end pipeline converting raw 16kHz audio into 128×128 Mel-spectrograms, classified by an optimized ResNet into 4 emotional states (Neutral, Happy, Sad, Angry). Resolved training instability via gradient clipping (norm=1.0) and adaptive LR scheduling (10⁻³→10⁻⁷). Evaluated on combined RAVDESS+TESS corpus with speaker-aware 80/20 split.',
