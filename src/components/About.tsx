@@ -2,6 +2,7 @@ import { useRef } from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import ParticlesBackground from './ParticlesBackground'
+import SkillsTechnologies from './SkillsTechnologies'
 
 const About = () => {
   const { ref, inView } = useInView({
@@ -18,7 +19,7 @@ const About = () => {
         className="max-w-[1200px] mx-auto w-full relative z-10"
       >
         <motion.div 
-          className="max-w-[800px]"
+          className="max-w-[1000px]"
           ref={ref}
           initial={{ opacity: 0, y: 50 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -126,52 +127,14 @@ const About = () => {
             </div>
           </motion.div>
 
-          {/* Technical Skills - Reorganized by Priority */}
+          {/* Skills & Technologies */}
           <motion.div 
-            className="mt-8 p-8 bg-gradient-to-br from-[#6b8e23] to-[#556b2f] text-white rounded-lg shadow-lg"
+            className="mt-8 p-6 sm:p-8 bg-[#1e1e1e] rounded-xl border border-white/10 shadow-lg w-full max-w-none"
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 1.0, duration: 0.8 }}
           >
-            <h3 className="text-2xl font-light mb-4">Technical Skills</h3>
-            
-            {/* ML/DSP/Embedded ML - Priority 1 */}
-            <div className="mb-6">
-              <h4 className="font-medium mb-3 text-lg">ML & Speech Processing</h4>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <h5 className="font-medium mb-2 opacity-90">Deep Learning & Audio ML</h5>
-                  <p className="text-white/80">Deep Learning (ResNet, CNN/RNN), Mel-Spectrogram Feature Extraction, Speech Signal Processing, Audio Preprocessing, TensorFlow, Keras, Real-Time Inference</p>
-                </div>
-                <div>
-                  <h5 className="font-medium mb-2 opacity-90">ML & Signal Processing</h5>
-                  <p className="text-white/80">Signal Processing (Librosa, MFCCs), TensorFlow, NumPy, Pandas, MATLAB, Quantization & Pruning</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Sensorimotor / Cognitive Angle - Priority 2 */}
-            <div className="mb-6 pt-4 border-t border-white/20">
-              <h4 className="font-medium mb-3 text-lg">Affective Computing & Human-Centered ML</h4>
-              <p className="text-sm text-white/80">
-              Speech emotion recognition, affective computing, human-centered AI systems, behavioral signal modeling, multimodal emotion analysis
-              </p>
-            </div>
-
-            {/* Software / Web Skills - Priority 3 */}
-            <div className="pt-4 border-t border-white/20">
-              <h4 className="font-medium mb-3 text-lg">Skills (Software, Web)</h4>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <h5 className="font-medium mb-2 opacity-90">Programming Languages</h5>
-                  <p className="text-white/80">Python, C++, JavaScript, TypeScript</p>
-                </div>
-                <div>
-                  <h5 className="font-medium mb-2 opacity-90">Web & Tools</h5>
-                  <p className="text-white/80">React.js, Next.js, Vue.js, React Native, n8n, Create AI Agent (n8n), Git, JIRA, VS Code, Google Cloud, Android Studio</p>
-                </div>
-              </div>
-            </div>
+            <SkillsTechnologies />
           </motion.div>
         </motion.div>
       </motion.div>
