@@ -3,11 +3,18 @@ import { AnimatePresence } from 'framer-motion'
 import Navigation from './components/Navigation'
 import Home from './components/Home'
 import About from './components/About'
+import Research from './components/Research'
+import Publications from './components/Publications'
 import Projects from './components/Projects'
+import Experience from './components/Experience'
+import ResearchDirections from './components/ResearchDirections'
 import Contact from './components/Contact'
 import Loading from './components/Loading'
 import ScrollToTop from './components/ScrollToTop'
+import { navItems } from './data/content'
 import './App.css'
+
+const SECTION_IDS = navItems.map((item) => item.id)
 
 function App() {
   const [currentSection, setCurrentSection] = useState('home')
@@ -16,10 +23,8 @@ function App() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'about', 'projects', 'contact']
-      const scrollPosition = window.scrollY + 100
-
-      for (const section of sections) {
+      const scrollPosition = window.scrollY + 120
+      for (const section of ['home', ...SECTION_IDS]) {
         const element = document.getElementById(section)
         if (element) {
           const { offsetTop, offsetHeight } = element
@@ -31,7 +36,8 @@ function App() {
       }
     }
 
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    handleScroll()
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
@@ -39,38 +45,44 @@ function App() {
     const element = document.getElementById(sectionId)
     if (element) {
       const offset = 80
-      const elementPosition = element.getBoundingClientRect().top
-      const offsetPosition = elementPosition + window.pageYOffset - offset
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      })
+      const offsetPosition = element.getBoundingClientRect().top + window.pageYOffset - offset
+      window.scrollTo({ top: offsetPosition, behavior: 'smooth' })
     }
   }
 
   return (
     <div className="app">
-      <AnimatePresence>
-        {isLoading && <Loading />}
-      </AnimatePresence>
-      
-      <Navigation 
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[2000] focus:px-4 focus:py-2 focus:bg-[#6b8e23] focus:text-white focus:rounded-md"
+      >
+        Skip to main content
+      </a>
+
+      <AnimatePresence>{isLoading && <Loading />}</AnimatePresence>
+
+      <Navigation
         currentSection={currentSection}
         menuOpen={menuOpen}
         setMenuOpen={setMenuOpen}
         scrollToSection={scrollToSection}
         setLoading={setIsLoading}
       />
-      <Home scrollToSection={scrollToSection} />
-      <About />
-      <Projects />
-      <Contact />
+
+      <main id="main-content">
+        <Home scrollToSection={scrollToSection} />
+        <About />
+        <Research />
+        <Publications />
+        <Projects />
+        <Experience />
+        <ResearchDirections />
+        <Contact />
+      </main>
+
       <ScrollToTop />
     </div>
   )
 }
 
 export default App
-
-

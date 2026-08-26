@@ -1,165 +1,180 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
+import { identity, cv, getCvHref } from '../data/content'
 import ParticlesBackground from './ParticlesBackground'
+import { slideFromLeft, slideFromRight, staggerContainer, easeSmooth } from '../utils/motion'
 
 const Contact = () => {
-  const { ref, inView } = useInView({
-    threshold: 0.2,
-    triggerOnce: false
-  })
-
+  const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: false })
   const containerRef = useRef<HTMLDivElement>(null)
 
-  const [localTime, setLocalTime] = useState(
-    new Date().toLocaleTimeString('en-US', { 
-      hour: '2-digit', 
-      minute: '2-digit',
-      hour12: true 
-    })
-  )
+  const [localTime, setLocalTime] = useState('')
+  const [timeZone, setTimeZone] = useState('')
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setLocalTime(
-        new Date().toLocaleTimeString('en-US', { 
-          hour: '2-digit', 
-          minute: '2-digit',
-          hour12: true 
-        })
-      )
-    }, 1000)
-
+    const updateTime = () => {
+      try {
+        const now = new Date()
+        setLocalTime(
+          now.toLocaleTimeString('en-US', {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true,
+            timeZone: 'America/Los_Angeles',
+          })
+        )
+        setTimeZone(
+          Intl.DateTimeFormat('en-US', {
+            timeZone: 'America/Los_Angeles',
+            timeZoneName: 'short',
+          })
+            .formatToParts(now)
+            .find((p) => p.type === 'timeZoneName')?.value ?? 'PT'
+        )
+      } catch {
+        setLocalTime('--:--')
+        setTimeZone('America/Los_Angeles')
+      }
+    }
+    updateTime()
+    const interval = setInterval(updateTime, 1000)
     return () => clearInterval(interval)
   }, [])
 
-  const socialLinks = [
-    { name: 'Github', url: 'https://github.com/nzrnaghme' },
-    { name: 'LinkedIn', url: 'https://www.linkedin.com/in/naghme-nazar/' }
-  ]
-
+  const cvHref = getCvHref()
+  const currentYear = new Date().getFullYear()
 
   return (
-    <section id="contact" className="py-20 px-6 min-h-screen flex items-center bg-gradient-to-br from-[#252525] to-[#1a1a1a] text-white relative" ref={containerRef}>
-      <ParticlesBackground className="opacity-50" />
-      <motion.div 
-        className="max-w-[1200px] mx-auto w-full relative z-10"
-      >
-        <motion.div 
+    <section
+      id="contact"
+      className="py-20 px-6 min-h-[70vh] flex items-center bg-gradient-to-br from-[#252525] to-[#1a1a1a] text-white relative"
+      ref={containerRef}
+      aria-labelledby="contact-heading"
+    >
+      <ParticlesBackground className="opacity-40" />
+      <motion.div className="max-w-[1100px] mx-auto w-full relative z-10">
+        <motion.div
           className="mb-8"
           ref={ref}
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, ease: [0.6, -0.05, 0.01, 0.99] }}
+          transition={{ duration: 0.7, ease: easeSmooth }}
         >
-          <h2 className="text-[clamp(2rem,5vw,4rem)] font-light mb-3 tracking-[-0.02em] leading-tight text-white">Let's Connect</h2>
-          <motion.p 
-            className="text-xl text-[#6b8e23] font-light"
-            initial={{ opacity: 0 }}
-            animate={inView ? { opacity: 1 } : {}}
-            transition={{ delay: 0.2, duration: 0.8 }}
+          <h2
+            id="contact-heading"
+            className="text-[clamp(1.75rem,4vw,3rem)] font-light mb-3 tracking-[-0.02em] text-white"
           >
-            Melody Nazar
-          </motion.p>
+            Contact
+          </h2>
+          <p className="text-[#6b8e23] font-light">{identity.displayName}</p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-          <motion.div 
-            className="flex flex-col gap-6"
-            initial={{ opacity: 0, x: -50 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ delay: 0.3, duration: 0.8 }}
-          >
-            <div className="mb-6">
-              <h4 className="text-sm font-medium uppercase tracking-wider text-gray-400 mb-2">General enquiries</h4>
-              <a href="mailto:melodynzr@gmail.com" className="text-xl text-white transition-colors hover:text-[#6b8e23] inline-block font-light">
-                melodynzr@gmail.com
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8"
+          variants={staggerContainer(0.1, 0.1)}
+          initial="hidden"
+          animate={inView ? 'visible' : 'hidden'}
+        >
+          <motion.div className="flex flex-col gap-6" variants={slideFromLeft}>
+            <div>
+              <h3 className="text-sm font-medium uppercase tracking-wider text-gray-400 mb-2">
+                Email
+              </h3>
+              <a
+                href={`mailto:${identity.email}`}
+                className="text-xl text-white hover:text-[#6b8e23] font-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6b8e23] rounded-sm"
+              >
+                {identity.email}
               </a>
             </div>
 
-            <div className="mb-6">
+            <div>
               <motion.a
-                href="https://drive.google.com/file/d/1AZorZk7XdRCiORRH4z4CcgtQUvFuO29W/view?usp=drive_link"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block px-6 py-3 bg-[#6b8e23] text-white rounded border-none text-sm font-medium cursor-pointer uppercase tracking-wider transition-all hover:bg-[#556b2f]"
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
+                href={cvHref}
+                download="Naghmeh_Melody_Nazar_Research_CV.pdf"
+                className="inline-block px-6 py-3 bg-[#6b8e23] text-white text-sm font-medium uppercase tracking-wider hover:bg-[#556b2f] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white rounded-sm"
+                aria-label={`Download ${cv.label}`}
+                whileHover={{ scale: 1.04, y: -2 }}
+                whileTap={{ scale: 0.98 }}
               >
-                Download CV
+                {cv.label}
               </motion.a>
             </div>
 
-
             <div>
-              <h4 className="text-sm font-medium uppercase tracking-wider text-gray-400 mb-2">Location</h4>
-              <p className="text-base leading-relaxed text-gray-300 font-light">
-                Los Angles, California<br />
-                United State
-              </p>
+              <h3 className="text-sm font-medium uppercase tracking-wider text-gray-400 mb-2">
+                Location
+              </h3>
+              <p className="text-gray-300 font-light">{identity.location}</p>
             </div>
           </motion.div>
 
-          <motion.div 
-            className="flex flex-col gap-6"
-            initial={{ opacity: 0, x: 50 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ delay: 0.4, duration: 0.8 }}
-          >
-            <div className="mb-4">
-              <h4 className="text-sm font-medium uppercase tracking-wider text-gray-400 mb-2">Socials</h4>
-              <ul className="list-none p-0 m-0 flex flex-col">
-                {socialLinks.map((link) => (
-                  <li key={link.name} className="mb-2">
-                    <motion.a 
-                      href={link.url} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="text-base text-white transition-colors hover:text-[#6b8e23] inline-block font-light"
-                      whileHover={{ x: 5 }}
-                    >
-                      {link.name} →
-                    </motion.a>
-                  </li>
-                ))}
+          <motion.div className="flex flex-col gap-6" variants={slideFromRight}>
+            <div>
+              <h3 className="text-sm font-medium uppercase tracking-wider text-gray-400 mb-2">
+                Links
+              </h3>
+              <ul className="space-y-2">
+                <li>
+                  <a
+                    href={identity.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-300 hover:text-[#6b8e23] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6b8e23] rounded-sm"
+                  >
+                    GitHub →
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href={identity.linkedIn}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-300 hover:text-[#6b8e23] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6b8e23] rounded-sm"
+                  >
+                    LinkedIn →
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href={identity.portfolio}
+                    className="text-gray-300 hover:text-[#6b8e23] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6b8e23] rounded-sm"
+                  >
+                    {identity.portfolio.replace('https://', '')} →
+                  </a>
+                </li>
               </ul>
             </div>
 
-            <div className="p-6 border-2 border-white/10 bg-[#2a2a2a] rounded-lg">
-              <h4 className="text-sm font-medium uppercase tracking-wider text-gray-400 mb-3">Get in touch</h4>
+            <div className="p-6 border border-white/10 bg-[#2a2a2a] rounded-lg">
+              <h3 className="text-sm font-medium uppercase tracking-wider text-gray-400 mb-3">
+                Get in touch
+              </h3>
               <p className="text-sm text-gray-300 mb-4 font-light">
-                Have a question or want to discuss a project? Feel free to reach out via email.
+                For research collaborations, PhD inquiries, or project discussions.
               </p>
-              <motion.a
-                href="mailto:melodynzr@gmail.com?subject=Hello&body=Hi Melody,"
-                className="inline-block px-6 py-3 bg-[#6b8e23] text-white rounded border-none text-sm font-medium cursor-pointer uppercase tracking-wider transition-all hover:bg-[#556b2f] text-center w-full"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+              <a
+                href={`mailto:${identity.email}?subject=Research%20inquiry`}
+                className="inline-block w-full text-center px-6 py-3 bg-[#6b8e23] text-white text-sm font-medium uppercase tracking-wider hover:bg-[#556b2f] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white rounded-sm transition-transform hover:-translate-y-0.5"
               >
                 Send Email
-              </motion.a>
+              </a>
             </div>
 
-            <div className="flex flex-col gap-3 pt-6 border-t border-white/10">
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-400 uppercase tracking-wider">Version</span>
-                <span className="text-sm text-white">2025 © Edition</span>
+            <div className="flex flex-col gap-3 pt-4 border-t border-white/10 text-sm">
+              <div className="flex justify-between">
+                <span className="text-gray-400 uppercase tracking-wider">© {currentYear}</span>
+                <span className="text-white">{identity.displayName}</span>
               </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-400 uppercase tracking-wider">Local time</span>
-                <span className="text-sm text-white">{localTime}</span>
+              <div className="flex justify-between">
+                <span className="text-gray-400 uppercase tracking-wider">Local time (LA)</span>
+                <span className="text-white" aria-live="polite">
+                  {localTime} {timeZone}
+                </span>
               </div>
             </div>
           </motion.div>
-        </div>
-
-        <motion.div 
-          className="flex justify-center items-center pt-6 border-t border-white/10 text-sm text-gray-400"
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ delay: 0.6, duration: 0.8 }}
-        >
-          <p>Built with ❤️</p>
         </motion.div>
       </motion.div>
     </section>

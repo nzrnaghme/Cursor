@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
+import { navItems, cv, getCvHref } from '../data/content'
 import MusicPlayer from './MusicPlayer'
+import { easeSmooth } from '../utils/motion'
 
 interface NavigationProps {
   currentSection: string
@@ -10,8 +12,16 @@ interface NavigationProps {
   setLoading: (loading: boolean) => void
 }
 
-const Navigation = ({ currentSection, menuOpen, setMenuOpen, scrollToSection, setLoading }: NavigationProps) => {
+const Navigation = ({
+  currentSection,
+  menuOpen,
+  setMenuOpen,
+  scrollToSection,
+  setLoading,
+}: NavigationProps) => {
   const menuRef = useRef<HTMLDivElement>(null)
+  const cvHref = getCvHref()
+  const reduceMotion = useReducedMotion()
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -19,137 +29,122 @@ const Navigation = ({ currentSection, menuOpen, setMenuOpen, scrollToSection, se
         setMenuOpen(false)
       }
     }
-
-    if (menuOpen) {
-      document.addEventListener('mousedown', handleClickOutside)
-    }
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
+    if (menuOpen) document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [menuOpen, setMenuOpen])
-
-  const navItems = [
-    { id: 'home', label: 'Home' },
-    { id: 'about', label: 'About' },
-    { id: 'projects', label: 'Projects' }
-  ]
 
   const handleNavClick = (sectionId: string) => {
     setMenuOpen(false)
     setLoading(true)
-    
     setTimeout(() => {
       scrollToSection(sectionId)
-      setTimeout(() => {
-        setLoading(false)
-      }, 1000)
-    }, 300)
+      setTimeout(() => setLoading(false), reduceMotion ? 0 : 600)
+    }, reduceMotion ? 0 : 150)
   }
 
   return (
-    <>
-      <motion.nav 
-        className="fixed top-0 left-0 right-0 z-[1000] p-8 pointer-events-none"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-      >
-        <div className="max-w-[1400px] mx-auto flex justify-between items-center">
-          <div className="flex items-center pointer-events-auto">
-            <MusicPlayer />
-          </div>
-          <div className="flex items-center gap-4 pointer-events-auto relative">
-            <motion.button 
-              className="px-6 py-3 rounded-full border-none text-sm font-medium cursor-pointer uppercase tracking-wider flex items-center gap-2 transition-all relative whitespace-nowrap bg-[#6b8e23] text-white hover:bg-[#556b2f]"
-              onClick={() => {
-                setLoading(true)
-                setTimeout(() => {
-                  scrollToSection('contact')
-                  setTimeout(() => setLoading(false), 1000)
-                }, 300)
-              }}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              Let's Talk
-              <span className="w-1.5 h-1.5 rounded-full bg-current"></span>
-            </motion.button>
-            <div className="relative" ref={menuRef}>
-              <motion.button 
-                className="px-6 py-3 rounded-full border-none text-sm font-medium cursor-pointer uppercase tracking-wider flex items-center gap-2 transition-all relative whitespace-nowrap bg-[#f5f5f5] text-black hover:bg-[#e5e5e5]"
-                onClick={() => setMenuOpen(!menuOpen)}
-                aria-label="Toggle menu"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                {menuOpen ? 'Close' : 'Menu'}
-                <span className="flex gap-1">
-                  <span className="w-1 h-1 rounded-full bg-current"></span>
-                  <span className="w-1 h-1 rounded-full bg-current"></span>
-                </span>
-              </motion.button>
-
-              <AnimatePresence>
-                {menuOpen && (
-                  <motion.div
-                    className="absolute top-[calc(100%+0.5rem)] right-0 bg-white rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.15)] p-2 min-w-[180px] z-[1001] border border-black/5"
-                    initial={{ opacity: 0, y: -10, scale: 0.95 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                    transition={{ duration: 0.2, ease: "easeOut" }}
-                  >
-                    <ul className="list-none p-0 m-0 flex flex-col">
-                      {navItems.map((item, index) => (
-                        <motion.li
-                          key={item.id}
-                          initial={{ opacity: 0, x: -10 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: index * 0.05, duration: 0.2 }}
-                        >
-                          <motion.button
-                            className={`w-full py-3.5 px-5 bg-transparent border-none text-left text-sm font-medium text-black cursor-pointer uppercase tracking-wider rounded-lg transition-all relative flex items-center gap-3 ${
-                              currentSection === item.id 
-                                ? '' 
-                                : 'hover:bg-[#f5f5f5]'
-                            }`}
-                            onClick={() => handleNavClick(item.id)}
-                            whileHover={{ x: 5 }}
-                            whileTap={{ scale: 0.95 }}
-                          >
-                            {currentSection === item.id && (
-                              <span className="w-2 h-2 rounded-full bg-[#6b8e23] shrink-0"></span>
-                            )}
-                            {item.label}
-                          </motion.button>
-                        </motion.li>
-                      ))}
-                      <motion.li
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: navItems.length * 0.05, duration: 0.2 }}
-                      >
-                        <motion.a
-                          href="https://drive.google.com/file/d/1AZorZk7XdRCiORRH4z4CcgtQUvFuO29W/view?usp=drive_link"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="w-full py-3.5 px-5 bg-transparent border-none text-left text-sm font-medium text-black cursor-pointer uppercase tracking-wider rounded-lg transition-all relative flex items-center gap-3 hover:bg-[#f5f5f5]"
-                          onClick={() => setMenuOpen(false)}
-                          whileHover={{ x: 5 }}
-                          whileTap={{ scale: 0.95 }}
-                        >
-                          CV
-                        </motion.a>
-                      </motion.li>
-                    </ul>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          </div>
+    <motion.nav
+      className="fixed top-0 left-0 right-0 z-[1000] p-4 sm:p-6 pointer-events-none bg-[#1a2332]/80 backdrop-blur-sm border-b border-white/5"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      aria-label="Main navigation"
+    >
+      <div className="max-w-[1400px] mx-auto flex justify-between items-center">
+        <div className="pointer-events-auto">
+          <MusicPlayer />
         </div>
-      </motion.nav>
-    </>
+        <div className="flex items-center gap-3 pointer-events-auto relative" ref={menuRef}>
+          <div className="hidden lg:flex items-center gap-6 mr-2" aria-label="Section navigation">
+            {navItems.slice(0, -1).map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => handleNavClick(item.id)}
+                className={`text-xs uppercase tracking-wider font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6b8e23] rounded-sm ${
+                  currentSection === item.id ? 'text-[#6b8e23]' : 'text-gray-300 hover:text-white'
+                }`}
+              >
+                {item.label}
+              </button>
+            ))}
+            <a
+              href={cvHref}
+              download="Naghmeh_Melody_Nazar_Research_CV.pdf"
+              className="text-xs uppercase tracking-wider font-medium text-gray-300 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6b8e23] rounded-sm"
+            >
+              CV
+            </a>
+          </div>
+
+          <motion.button
+            type="button"
+            className="px-5 py-2.5 rounded-full text-sm font-medium uppercase tracking-wider bg-[#6b8e23] text-white hover:bg-[#556b2f] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+            onClick={() => handleNavClick('contact')}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            Contact
+          </motion.button>
+
+          <motion.button
+            type="button"
+            className="px-5 py-2.5 rounded-full text-sm font-medium uppercase tracking-wider bg-[#f5f5f5] text-black hover:bg-[#e5e5e5] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6b8e23] lg:hidden"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            {menuOpen ? 'Close' : 'Menu'}
+          </motion.button>
+
+          <AnimatePresence>
+            {menuOpen && (
+              <motion.div
+                id="mobile-menu"
+                className="absolute top-[calc(100%+0.5rem)] right-0 bg-white rounded-xl shadow-lg p-2 min-w-[240px] z-[1001] border border-black/5 lg:hidden max-h-[70vh] overflow-y-auto"
+                initial={{ opacity: 0, y: -12, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -8, scale: 0.98 }}
+                transition={{ duration: 0.25, ease: easeSmooth }}
+                role="menu"
+              >
+                <ul className="list-none p-0 m-0">
+                  {navItems.map((item) => (
+                    <li key={item.id}>
+                      <button
+                        type="button"
+                        role="menuitem"
+                        className={`w-full py-3 px-4 text-left text-sm font-medium uppercase tracking-wider rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#6b8e23] ${
+                          currentSection === item.id
+                            ? 'text-[#6b8e23] bg-[#f5f5f5]'
+                            : 'text-black hover:bg-[#f5f5f5]'
+                        }`}
+                        onClick={() => handleNavClick(item.id)}
+                      >
+                        {item.label}
+                      </button>
+                    </li>
+                  ))}
+                  <li>
+                    <a
+                      href={cvHref}
+                      download="Naghmeh_Melody_Nazar_Research_CV.pdf"
+                      role="menuitem"
+                      className="block w-full py-3 px-4 text-sm font-medium uppercase tracking-wider text-black hover:bg-[#f5f5f5] rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#6b8e23]"
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      CV — {cv.label}
+                    </a>
+                  </li>
+                </ul>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </div>
+    </motion.nav>
   )
 }
 
