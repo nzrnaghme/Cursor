@@ -10,11 +10,17 @@ import Experience from './components/Experience'
 import ResearchDirections from './components/ResearchDirections'
 import Contact from './components/Contact'
 import ScrollToTop from './components/ScrollToTop'
+import { restoreInitialSection } from './utils/sectionNavigation'
 import './App.css'
 
 function App() {
   const [currentSection, setCurrentSection] = useState('home')
   const [menuOpen, setMenuOpen] = useState(false)
+
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => restoreInitialSection(window.location.hash))
+    return () => window.cancelAnimationFrame(frame)
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => {
