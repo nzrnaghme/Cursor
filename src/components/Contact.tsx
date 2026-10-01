@@ -6,7 +6,7 @@ import ParticlesBackground from './ParticlesBackground'
 import { slideFromLeft, slideFromRight, staggerContainer, easeSmooth } from '../utils/motion'
 
 const Contact = () => {
-  const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: false })
+  const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: true })
   const containerRef = useRef<HTMLDivElement>(null)
 
   const [localTime, setLocalTime] = useState('')
@@ -48,6 +48,7 @@ const Contact = () => {
   return (
     <section
       id="contact"
+      tabIndex={-1}
       className="py-20 px-6 min-h-[70vh] flex items-center bg-gradient-to-br from-[#252525] to-[#1a1a1a] text-white relative"
       ref={containerRef}
       aria-labelledby="contact-heading"
@@ -67,7 +68,7 @@ const Contact = () => {
           >
             Contact
           </h2>
-          <p className="text-[#6b8e23] font-light">{identity.displayName}</p>
+          <p className="text-[#a9c66c] font-light">{identity.displayName}</p>
         </motion.div>
 
         <motion.div
@@ -83,7 +84,7 @@ const Contact = () => {
               </h3>
               <a
                 href={`mailto:${identity.email}`}
-                className="text-xl text-white hover:text-[#6b8e23] font-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6b8e23] rounded-sm"
+                className="text-xl text-white hover:text-[#a9c66c] font-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6b8e23] rounded-sm"
               >
                 {identity.email}
               </a>
@@ -93,7 +94,7 @@ const Contact = () => {
               <motion.a
                 href={cvHref}
                 download="Naghmeh_Melody_Nazar_Research_CV.pdf"
-                className="inline-block px-6 py-3 bg-[#6b8e23] text-white text-sm font-medium uppercase tracking-wider hover:bg-[#556b2f] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white rounded-sm"
+                className="inline-block px-6 py-3 bg-[#526d1d] text-white text-sm font-medium uppercase tracking-wider hover:bg-[#556b2f] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white rounded-sm"
                 aria-label={`Download ${cv.label}`}
                 whileHover={{ scale: 1.04, y: -2 }}
                 whileTap={{ scale: 0.98 }}
@@ -121,7 +122,7 @@ const Contact = () => {
                     href={identity.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-300 hover:text-[#6b8e23] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6b8e23] rounded-sm"
+                    className="text-gray-300 hover:text-[#a9c66c] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6b8e23] rounded-sm"
                   >
                     GitHub →
                   </a>
@@ -131,7 +132,7 @@ const Contact = () => {
                     href={identity.linkedIn}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-300 hover:text-[#6b8e23] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6b8e23] rounded-sm"
+                    className="text-gray-300 hover:text-[#a9c66c] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6b8e23] rounded-sm"
                   >
                     LinkedIn →
                   </a>
@@ -139,7 +140,7 @@ const Contact = () => {
                 <li>
                   <a
                     href={identity.portfolio}
-                    className="text-gray-300 hover:text-[#6b8e23] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6b8e23] rounded-sm"
+                    className="text-gray-300 hover:text-[#a9c66c] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6b8e23] rounded-sm"
                   >
                     {identity.portfolio.replace('https://', '')} →
                   </a>
@@ -156,7 +157,7 @@ const Contact = () => {
               </p>
               <a
                 href={`mailto:${identity.email}?subject=Research%20inquiry`}
-                className="inline-block w-full text-center px-6 py-3 bg-[#6b8e23] text-white text-sm font-medium uppercase tracking-wider hover:bg-[#556b2f] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white rounded-sm transition-transform hover:-translate-y-0.5"
+                className="inline-block w-full text-center px-6 py-3 bg-[#526d1d] text-white text-sm font-medium uppercase tracking-wider hover:bg-[#556b2f] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white rounded-sm transition-transform hover:-translate-y-0.5"
               >
                 Send Email
               </a>

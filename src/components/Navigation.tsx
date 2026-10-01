@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { navItems, cv, getCvHref } from '../data/content'
 import MusicPlayer from './MusicPlayer'
 import { easeSmooth } from '../utils/motion'
@@ -8,20 +8,16 @@ interface NavigationProps {
   currentSection: string
   menuOpen: boolean
   setMenuOpen: (open: boolean) => void
-  scrollToSection: (section: string) => void
-  setLoading: (loading: boolean) => void
 }
 
 const Navigation = ({
   currentSection,
   menuOpen,
   setMenuOpen,
-  scrollToSection,
-  setLoading,
 }: NavigationProps) => {
   const menuRef = useRef<HTMLDivElement>(null)
   const cvHref = getCvHref()
-  const reduceMotion = useReducedMotion()
+  const menuButtonRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -33,14 +29,17 @@ const Navigation = ({
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [menuOpen, setMenuOpen])
 
-  const handleNavClick = (sectionId: string) => {
-    setMenuOpen(false)
-    setLoading(true)
-    setTimeout(() => {
-      scrollToSection(sectionId)
-      setTimeout(() => setLoading(false), reduceMotion ? 0 : 600)
-    }, reduceMotion ? 0 : 150)
-  }
+  useEffect(() => {
+    if (!menuOpen) return
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setMenuOpen(false)
+        menuButtonRef.current?.focus()
+      }
+    }
+    document.addEventListener('keydown', handleEscape)
+    return () => document.removeEventListener('keydown', handleEscape)
+  }, [menuOpen, setMenuOpen])
 
   return (
     <motion.nav
@@ -53,19 +52,26 @@ const Navigation = ({
         <div className="pointer-events-auto">
           <MusicPlayer />
         </div>
-        <div className="flex items-center gap-3 pointer-events-auto relative" ref={menuRef}>
+        <div
+          className="flex items-center gap-3 pointer-events-auto relative"
+          ref={menuRef}
+          onBlur={(event) => {
+            if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setMenuOpen(false)
+          }}
+        >
           <div className="hidden lg:flex items-center gap-6 mr-2" aria-label="Section navigation">
             {navItems.slice(0, -1).map((item) => (
-              <button
+              <a
                 key={item.id}
-                type="button"
-                onClick={() => handleNavClick(item.id)}
+                href={`#${item.id}`}
+                aria-current={currentSection === item.id ? 'location' : undefined}
+                onClick={() => setMenuOpen(false)}
                 className={`text-xs uppercase tracking-wider font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6b8e23] rounded-sm ${
-                  currentSection === item.id ? 'text-[#6b8e23]' : 'text-gray-300 hover:text-white'
+                  currentSection === item.id ? 'text-[#a9c66c]' : 'text-gray-300 hover:text-white'
                 }`}
               >
                 {item.label}
-              </button>
+              </a>
             ))}
             <a
               href={cvHref}
@@ -76,17 +82,19 @@ const Navigation = ({
             </a>
           </div>
 
-          <motion.button
-            type="button"
-            className="px-5 py-2.5 rounded-full text-sm font-medium uppercase tracking-wider bg-[#6b8e23] text-white hover:bg-[#556b2f] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-            onClick={() => handleNavClick('contact')}
+          <motion.a
+            href="#contact"
+            className="px-5 py-2.5 rounded-full text-sm font-medium uppercase tracking-wider bg-[#526d1d] text-white hover:bg-[#556b2f] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+            onClick={() => setMenuOpen(false)}
+            aria-current={currentSection === 'contact' ? 'location' : undefined}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
             Contact
-          </motion.button>
+          </motion.a>
 
           <motion.button
+            ref={menuButtonRef}
             type="button"
             className="px-5 py-2.5 rounded-full text-sm font-medium uppercase tracking-wider bg-[#f5f5f5] text-black hover:bg-[#e5e5e5] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6b8e23] lg:hidden"
             onClick={() => setMenuOpen(!menuOpen)}
@@ -108,30 +116,28 @@ const Navigation = ({
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -8, scale: 0.98 }}
                 transition={{ duration: 0.25, ease: easeSmooth }}
-                role="menu"
               >
                 <ul className="list-none p-0 m-0">
                   {navItems.map((item) => (
                     <li key={item.id}>
-                      <button
-                        type="button"
-                        role="menuitem"
-                        className={`w-full py-3 px-4 text-left text-sm font-medium uppercase tracking-wider rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#6b8e23] ${
+                      <a
+                        href={`#${item.id}`}
+                        aria-current={currentSection === item.id ? 'location' : undefined}
+                        className={`block w-full py-3 px-4 text-left text-sm font-medium uppercase tracking-wider rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#6b8e23] ${
                           currentSection === item.id
-                            ? 'text-[#6b8e23] bg-[#f5f5f5]'
+                            ? 'text-[#526d1d] bg-[#f5f5f5]'
                             : 'text-black hover:bg-[#f5f5f5]'
                         }`}
-                        onClick={() => handleNavClick(item.id)}
+                        onClick={() => setMenuOpen(false)}
                       >
                         {item.label}
-                      </button>
+                      </a>
                     </li>
                   ))}
                   <li>
                     <a
                       href={cvHref}
                       download="Naghmeh_Melody_Nazar_Research_CV.pdf"
-                      role="menuitem"
                       className="block w-full py-3 px-4 text-sm font-medium uppercase tracking-wider text-black hover:bg-[#f5f5f5] rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#6b8e23]"
                       onClick={() => setMenuOpen(false)}
                     >

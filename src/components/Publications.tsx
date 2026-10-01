@@ -4,7 +4,7 @@ import SectionShell from './SectionShell'
 import { fadeUp, staggerContainer, cardHoverLift, easeSmooth } from '../utils/motion'
 
 const statusStyles: Record<string, string> = {
-  'Under review': 'bg-amber-900/30 text-amber-200 border-amber-700/40',
+  'Research manuscript': 'bg-amber-900/30 text-amber-200 border-amber-700/40',
   Presentation: 'bg-[#2a3441] text-[#7eb8c9] border-[#3d5a6e]/40',
 }
 
@@ -12,7 +12,7 @@ const Publications = () => (
   <SectionShell
     id="publications"
     title="Publications & Presentations"
-    subtitle="Only verified submissions and presentations are listed. Submissions are not styled as accepted publications."
+    subtitle="Research manuscripts and presentations."
   >
     <motion.ul
       className="space-y-4"
@@ -36,11 +36,11 @@ const Publications = () => (
             >
               {item.status}
             </span>
-            <span className="text-xs text-gray-500 uppercase tracking-wider">{item.venue}</span>
+            <span className="text-xs text-gray-400 uppercase tracking-wider">{item.venue}</span>
           </div>
           <h3 className="text-lg font-medium text-white mb-1">{item.title}</h3>
           <p className="text-gray-300 font-light">{item.detail}</p>
-          {item.note && <p className="text-sm text-gray-500 mt-2 italic">{item.note}</p>}
+          {item.note && <p className="text-sm text-gray-400 mt-2 italic">{item.note}</p>}
         </motion.li>
       ))}
     </motion.ul>

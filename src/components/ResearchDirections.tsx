@@ -7,7 +7,7 @@ const ResearchDirections = () => (
   <SectionShell
     id="directions"
     title="Research Directions"
-    subtitle="Future work — not presented as completed publications or experiments."
+    subtitle="Research questions I plan to explore in trustworthy AI, human-centered sensing, and efficient machine learning."
     className="bg-gradient-to-b from-[#1a1a1a] to-[#252525]"
   >
     <motion.div
@@ -35,7 +35,7 @@ const ResearchDirections = () => (
                 whileHover={{ x: 4 }}
                 transition={{ duration: 0.2 }}
               >
-                <span className="text-[#6b8e23] shrink-0">•</span>
+                <span className="text-[#a9c66c] shrink-0">•</span>
                 <span>{item}</span>
               </motion.li>
             ))}

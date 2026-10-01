@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState, type KeyboardEvent } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { skillGroups } from '../data/content'
 import { fadeUp, staggerContainer, easeSmooth } from '../utils/motion'
@@ -51,7 +51,7 @@ const SkillIcon = ({ name }: { name: string }) => {
   if (!meta || failed) {
     return (
       <span
-        className="w-6 h-6 shrink-0 rounded-md bg-[#6b8e23]/20 text-[#6b8e23] text-[10px] font-bold flex items-center justify-center"
+        className="w-6 h-6 shrink-0 rounded-md bg-[#6b8e23]/20 text-[#a9c66c] text-[10px] font-bold flex items-center justify-center"
         aria-hidden
       >
         {name.charAt(0)}
@@ -72,28 +72,46 @@ const SkillIcon = ({ name }: { name: string }) => {
 
 const SkillsTechnologies = () => {
   const [activeTab, setActiveTab] = useState<string>(skillGroups[0].id)
+  const tabRefs = useRef<Array<HTMLButtonElement | null>>([])
+
+  const handleTabKeyDown = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
+    let nextIndex: number
+    switch (event.key) {
+      case 'ArrowRight': nextIndex = (index + 1) % skillGroups.length; break
+      case 'ArrowLeft': nextIndex = (index - 1 + skillGroups.length) % skillGroups.length; break
+      case 'Home': nextIndex = 0; break
+      case 'End': nextIndex = skillGroups.length - 1; break
+      default: return
+    }
+    event.preventDefault()
+    setActiveTab(skillGroups[nextIndex].id)
+    tabRefs.current[nextIndex]?.focus()
+  }
 
   const activeGroup = skillGroups.find((g) => g.id === activeTab) ?? skillGroups[0]
 
   return (
     <div className="w-full">
-      <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-[#6b8e23] mb-5">
+      <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-[#a9c66c] mb-5">
         Skills & Technologies
       </h3>
 
       <div className="flex flex-wrap gap-2 mb-6" role="tablist" aria-label="Skill categories">
-        {skillGroups.map((group) => (
+        {skillGroups.map((group, index) => (
           <motion.button
             key={group.id}
             type="button"
+            ref={(element) => { tabRefs.current[index] = element }}
+            tabIndex={activeTab === group.id ? 0 : -1}
+            onKeyDown={(event) => handleTabKeyDown(event, index)}
             role="tab"
             aria-selected={activeTab === group.id}
-            aria-controls={`panel-${group.id}`}
+            aria-controls="skills-panel"
             id={`tab-${group.id}`}
             onClick={() => setActiveTab(group.id)}
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6b8e23] ${
               activeTab === group.id
-                ? 'bg-[#6b8e23] text-white shadow-md'
+                ? 'bg-[#526d1d] text-white shadow-md'
                 : 'bg-[#2a2a2a] text-gray-300 border border-white/10 hover:border-[#6b8e23]/50 hover:text-white'
             }`}
             whileHover={{ scale: 1.03 }}
@@ -108,7 +126,8 @@ const SkillsTechnologies = () => {
       <AnimatePresence mode="wait">
         <motion.div
           key={activeTab}
-          id={`panel-${activeTab}`}
+          id="skills-panel"
+          tabIndex={0}
           role="tabpanel"
           aria-labelledby={`tab-${activeTab}`}
           initial="hidden"

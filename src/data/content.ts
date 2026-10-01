@@ -7,8 +7,8 @@ export const identity = {
   headline: 'Machine Learning Researcher | Speech, Affective Computing & Responsible AI',
   tagline:
     'Speech Emotion Recognition · Real-Time ML · Human-Centered Systems',
-  bio: `I build and evaluate deployable machine-learning systems for human-centered signals. My current research studies real-time speech emotion recognition, speaker-aware evaluation, and the gap between acted corpora and real-world use.`,
-  extendedBio: `M.S. in Computer Engineering from California State University, Northridge, with several years of professional software-engineering experience. I bring an end-to-end research-engineering perspective—from signal processing and model design to reproducible evaluation and prototype deployment.`,
+  bio: `I study machine-learning methods for human-centered signals. My speech emotion recognition research explores audio preprocessing and residual neural networks, with a focus on reproducibility and the gap between acted speech and real-world use.`,
+  extendedBio: `M.S. in Computer Engineering from California State University, Northridge, with several years of professional software-engineering experience. My work connects signal processing and model design with practical software engineering.`,
   location: 'Los Angeles, CA, United States',
   email: 'melodynzr@gmail.com',
   portfolio: 'https://melodynazar.com',
@@ -36,8 +36,7 @@ export const education = [
     bullets: [
       'Thesis: Real-Time Speech Emotion Recognition Using Optimized Deep Residual Networks (ResNet)',
       'Areas: Speech Emotion Recognition, Affective Computing, Deep Learning, Signal Processing',
-      'GPA: 3.5',
-      'Submitted to IEEE SLT 2026 — under review',
+      'GPA: 3.44',
       'Presented at the 40th Annual CSU Student Research Competition',
     ],
     advisor: 'Prof. Shahnam Mirzaei',
@@ -55,31 +54,29 @@ export const education = [
 
 export const thesisCaseStudy = {
   title: 'Real-Time Speech Emotion Recognition Using Optimized Deep Residual Networks',
-  status: 'Submitted to IEEE SLT 2026 — under review',
+  status: 'Research manuscript',
   question:
-    'How reliably can a compact residual network recognize four emotional states from acted speech while supporting near-real-time desktop inference?',
+    'How can residual neural networks classify emotional states from speech, and how should their performance be evaluated across speakers and datasets?',
   data: {
     summary:
-      'Approximately 4,900 RAVDESS and TESS utterances; standardized to 16 kHz; represented as 128 × 128 Mel-spectrograms; speaker-aware train/validation/test split.',
+      'RAVDESS and TESS speech loaded at 16 kHz and represented as 128 × 128 log-Mel spectrograms. The current label mapping groups RAVDESS calm recordings with neutral.',
   },
-  model: '2D deep residual network; four classes: neutral, happy, sad, and angry.',
+  model: '2D ResNet-inspired CNN with four output labels: neutral, happy, sad, and angry.',
   training:
-    'Adam optimizer; gradient clipping (clip norm 1.0); learning-rate reduction from 1e-3 to 1e-7; early stopping; reproducible preprocessing pipeline.',
-  results: {
-    peakValidation: '80.36%',
-    heldOutMixedTest: '74.4%',
-  },
+    'Adam optimization with dropout and residual connections. Evaluation and reproducibility checks are ongoing.',
+  evaluation: 'Speaker-independent data partitions and a separate held-out test remain to be established. Performance figures are omitted pending verification of the evaluation protocol and results.',
   errorAnalysis: [
     'Happy / Neutral confusion patterns',
     'Speaker variability across the corpus',
     'Cross-corpus distribution shift',
   ],
   prototype:
-    'Near-real-time desktop CPU prototype for live inference (no published latency benchmark on this site).',
+    'Research prototype for speech emotion classification. Desktop inference and latency profiling are future validation tasks.',
   limitations: [
     'Acted speech datasets (RAVDESS, TESS)',
     'Cross-corpus distribution shift',
-    'Speaker variability not fully resolved',
+    'Speaker-independent and held-out evaluation not yet established',
+    'Latency and real-world generalization not yet established',
     'No clinical validation',
     'No claim of generalization to naturalistic or healthcare settings',
   ],
@@ -90,19 +87,20 @@ export const thesisCaseStudy = {
     { label: 'Model compression and profiling', status: 'Future work' as const },
     { label: 'Possible FPGA/SoC mapping', status: 'Future work' as const },
   ],
-  figurePlaceholder:
-    'Add verified figure: confusion matrix or Mel-spectrogram pipeline diagram from thesis materials.',
-  image: '/images/project-speech-emotion.png',
-  imageAlt: 'Speech emotion recognition research project overview',
+  figureCaption:
+    'Speech emotion recognition pipeline: audio preprocessing, log-Mel features, a ResNet-inspired CNN, and four output labels.',
+  codeAvailability: 'Source code has not been publicly released.',
+  image: '/images/speech-emotion-pipeline.svg',
+  imageAlt: 'Pipeline showing 16 kHz speech, 128 by 128 log-Mel features, a ResNet-inspired CNN, and neutral, happy, sad, and angry output labels',
 } as const
 
 export const publications = [
   {
     title: 'Manuscript based on M.S. thesis',
     detail: 'Real-Time Speech Emotion Recognition Using Optimized Deep Residual Networks',
-    venue: 'Submitted to IEEE SLT 2026',
-    status: 'Under review' as const,
-    note: 'Formal citation pending exact title and author order confirmation.',
+    venue: 'M.S. thesis research',
+    status: 'Research manuscript' as const,
+    note: '',
   },
   {
     title: 'Speech emotion recognition research',
@@ -156,6 +154,7 @@ export const projects = [
       'Built pipelines for sentiment classification, topic modeling, and temporal tracking; identified emotional cycles and linguistic drift over the crisis timeline.',
     stack: 'Python, NLP, topic modeling, Google Cloud',
     link: 'https://www.linkedin.com/posts/naghme-nazar_machinelearning-nlp-datascience-ugcPost-7361228441074962434-s89Q?utm_source=share&utm_medium=member_desktop&rcm=ACoAACbyPb0Be82yiC7g1CitYj_zttwH1PBbPNM',
+    linkLabel: 'Read the project summary on LinkedIn',
     image: '/images/project-covid-analysis.png',
     imageAlt: 'Persian COVID-19 social media analysis project',
   },
@@ -165,13 +164,14 @@ export const projects = [
     status: 'Prototype' as ProjectStatus,
     year: '2026',
     description:
-      'Workflow automation that classifies incoming email, retrieves business context, and proposes scheduling actions using structured outputs, API integrations, approval logic, and prompt refinement.',
+      'n8n prototype for classifying email, retrieving business context, and generating responses with OpenAI, Gmail, and Airtable integrations.',
     problem:
       'High email volume makes manual triage, labeling, and reply drafting inefficient and inconsistent.',
     contribution:
-      'Demonstrated practical integration of LLM-based decision systems into a real-world automation workflow with structured logging.',
+      'Connected email classification, context retrieval, and response generation in an exported n8n workflow.',
     stack: 'n8n, OpenAI, Gmail API, Airtable, JavaScript',
     link: 'https://github.com/nzrnaghme/RespondEmailAgent',
+    linkLabel: 'View the email-agent workflow on GitHub',
     image: '/images/project-ai-email-agent.png',
     imageAlt: 'n8n workflow diagram for AI email agent',
   },
@@ -188,6 +188,7 @@ export const projects = [
       'Built intent classification and dialogue logic for a production-style conversational assistant.',
     stack: 'Dialogflow, Google Cloud, NLP',
     link: 'https://github.com/nzrnaghme/CCTV',
+    linkLabel: 'View the CCTV chatbot on GitHub',
     image: '/images/project-cctv-chatbot.png',
     imageAlt: 'CCTV chatbot conversational assistant',
   },

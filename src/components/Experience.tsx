@@ -40,7 +40,7 @@ const Experience = () => (
             <div className="flex flex-wrap justify-between gap-2 mb-2">
               <div>
                 <h3 className="text-xl font-medium text-white">{role.title}</h3>
-                <p className="text-[#6b8e23] text-sm">
+                <p className="text-[#a9c66c] text-sm">
                   {role.company} · {role.location}
                 </p>
               </div>
@@ -50,7 +50,7 @@ const Experience = () => (
             <ul className="space-y-1 text-sm text-gray-400">
               {role.highlights.map((h) => (
                 <li key={h} className="flex gap-2">
-                  <span className="text-[#6b8e23]">•</span>
+                  <span className="text-[#a9c66c]">•</span>
                   <span>{h}</span>
                 </li>
               ))}
@@ -60,10 +60,10 @@ const Experience = () => (
                 href={role.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block mt-3 text-sm text-[#6b8e23] hover:underline"
+                className="inline-block mt-3 text-sm text-[#a9c66c] hover:underline"
                 whileHover={{ x: 4 }}
               >
-                View company →
+                Visit {role.company} →
               </motion.a>
             )}
           </div>

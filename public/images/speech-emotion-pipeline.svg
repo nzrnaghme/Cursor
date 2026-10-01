@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="300" viewBox="0 0 1100 300" role="img" aria-labelledby="title desc">
+  <title id="title">Speech emotion recognition pipeline</title>
+  <desc id="desc">16 kHz speech is represented as 128 by 128 log-Mel features, processed by a ResNet-inspired CNN, and classified into neutral, happy, sad, and angry output labels.</desc>
+  <rect width="1100" height="300" fill="#f6f8f6"/>
+  <g font-family="Arial, sans-serif" text-anchor="middle" fill="#253342">
+    <text x="550" y="48" font-size="23" font-weight="600">Speech emotion recognition</text>
+    <rect x="35" y="88" width="220" height="142" rx="16" fill="#e7f1f4" stroke="#98bfca" stroke-width="2"/>
+    <text x="145" y="139" font-size="21" font-weight="600">Speech audio</text>
+    <text x="145" y="179" font-size="19">16 kHz</text>
+    <rect x="305" y="88" width="220" height="142" rx="16" fill="#eef3e5" stroke="#afc58e" stroke-width="2"/>
+    <text x="415" y="139" font-size="21" font-weight="600">Log-Mel features</text>
+    <text x="415" y="179" font-size="19">128 × 128</text>
+    <rect x="575" y="88" width="220" height="142" rx="16" fill="#f0eaf4" stroke="#bea9ce" stroke-width="2"/>
+    <text x="685" y="139" font-size="21" font-weight="600">ResNet-inspired</text>
+    <text x="685" y="179" font-size="19">2D CNN</text>
+    <rect x="845" y="88" width="220" height="142" rx="16" fill="#e7f1f4" stroke="#98bfca" stroke-width="2"/>
+    <text x="955" y="129" font-size="21" font-weight="600">Output labels</text>
+    <text x="955" y="166" font-size="18">Neutral · Happy</text>
+    <text x="955" y="194" font-size="18">Sad · Angry</text>
+  </g>
+  <g stroke="#526d1d" stroke-width="3" fill="none">
+    <path d="M267 159h26m-8-7 8 7-8 7M537 159h26m-8-7 8 7-8 7M807 159h26m-8-7 8 7-8 7"/>
+  </g>
+</svg>

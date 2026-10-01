@@ -13,7 +13,7 @@ const Projects = () => (
   <SectionShell
     id="projects"
     title="Projects"
-    subtitle="Conservative summaries with problem, contribution, stack, and evidence. Thesis research is detailed in the Research section."
+    subtitle="Selected work in natural-language processing, workflow automation, and conversational systems."
     className="bg-gradient-to-b from-[#1a1a1a] to-[#252525]"
   >
     <motion.div
@@ -52,21 +52,21 @@ const Projects = () => (
               >
                 {project.status}
               </span>
-              <span className="text-xs text-gray-500">{project.year}</span>
+              <span className="text-xs text-gray-400">{project.year}</span>
             </div>
             <h3 className="text-lg font-medium text-white mb-2">{project.title}</h3>
             <p className="text-sm text-gray-300 font-light mb-4 flex-1">{project.description}</p>
             <dl className="text-xs text-gray-400 space-y-2 mb-4">
               <div>
-                <dt className="text-gray-500 uppercase tracking-wider mb-0.5">Problem</dt>
+                <dt className="text-gray-400 uppercase tracking-wider mb-0.5">Problem</dt>
                 <dd>{project.problem}</dd>
               </div>
               <div>
-                <dt className="text-gray-500 uppercase tracking-wider mb-0.5">Contribution</dt>
+                <dt className="text-gray-400 uppercase tracking-wider mb-0.5">Contribution</dt>
                 <dd>{project.contribution}</dd>
               </div>
               <div>
-                <dt className="text-gray-500 uppercase tracking-wider mb-0.5">Stack</dt>
+                <dt className="text-gray-400 uppercase tracking-wider mb-0.5">Stack</dt>
                 <dd>{project.stack}</dd>
               </div>
             </dl>
@@ -75,11 +75,11 @@ const Projects = () => (
                 href={project.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm text-[#6b8e23] mt-auto focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6b8e23] rounded-sm w-fit inline-flex items-center gap-1"
+                className="text-sm text-[#a9c66c] mt-auto focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6b8e23] rounded-sm w-fit inline-flex items-center gap-1"
                 whileHover={{ x: 4 }}
                 transition={{ duration: 0.2 }}
               >
-                View project →
+                {project.linkLabel} →
               </motion.a>
             )}
           </div>

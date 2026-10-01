@@ -13,7 +13,8 @@
     "preview": "vite preview",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist",
+    "test": "node --test tests/portfolio.test.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^9.92.7",

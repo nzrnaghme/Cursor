@@ -1,4 +1,5 @@
-import { useCallback } from 'react'
+import { useCallback, useId } from 'react'
+import { useReducedMotion } from 'framer-motion'
 import Particles from 'react-particles'
 import { loadSlim } from 'tsparticles-slim'
 import type { Engine } from 'tsparticles-engine'
@@ -8,13 +9,17 @@ interface ParticlesBackgroundProps {
 }
 
 const ParticlesBackground = ({ className = '' }: ParticlesBackgroundProps) => {
+  const particleId = `particles-${useId().replace(/:/g, '')}`
+  const reduceMotion = useReducedMotion()
   const particlesInit = useCallback(async (engine: Engine) => {
     await loadSlim(engine)
   }, [])
 
+  if (reduceMotion) return null
+
   return (
     <Particles
-      id="tsparticles"
+      id={particleId}
       init={particlesInit}
       className={`absolute inset-0 ${className}`}
       options={{
