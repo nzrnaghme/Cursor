@@ -22,11 +22,12 @@ const SectionShell = ({
   particles = true,
 }: SectionShellProps) => {
   const containerRef = useRef<HTMLDivElement>(null)
-  const { ref, inView } = useInView({ threshold: 0.12, triggerOnce: true })
+  const { ref, inView } = useInView({ threshold: 0, triggerOnce: true })
 
   return (
     <section
       id={id}
+      tabIndex={-1}
       className={`py-20 px-6 min-h-screen flex items-center relative overflow-hidden ${className}`}
       ref={containerRef}
       aria-labelledby={`${id}-heading`}

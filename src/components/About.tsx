@@ -32,27 +32,27 @@ const About = () => (
               <div className="flex flex-wrap justify-between gap-2 mb-2">
                 <div>
                   <h4 className="text-lg font-medium text-white">{entry.degree}</h4>
-                  <p className="text-[#6b8e23] text-sm">{entry.school}</p>
+                  <p className="text-[#a9c66c] text-sm">{entry.school}</p>
                 </div>
                 <span className="text-sm text-gray-400">{entry.dates}</span>
               </div>
               <ul className="mt-3 space-y-1 text-gray-300 text-sm">
                 {entry.bullets.map((bullet) => (
                   <li key={bullet} className="flex gap-2">
-                    <span className="text-[#6b8e23] shrink-0">•</span>
+                    <span className="text-[#a9c66c] shrink-0">•</span>
                     <span>{bullet}</span>
                   </li>
                 ))}
                 {'advisor' in entry && entry.advisor && (
                   <li className="flex gap-2">
-                    <span className="text-[#6b8e23] shrink-0">•</span>
+                    <span className="text-[#a9c66c] shrink-0">•</span>
                     <span>
                       Advisor:{' '}
                       <a
                         href={entry.advisorUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-[#6b8e23] hover:underline"
+                        className="text-[#a9c66c] hover:underline"
                       >
                         {entry.advisor}
                       </a>

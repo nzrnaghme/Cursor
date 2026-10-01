@@ -56,7 +56,7 @@ const MusicPlayer = () => {
     <motion.button
       type="button"
       className={`w-11 h-11 rounded-full flex items-center justify-center cursor-pointer transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6b8e23] ${
-        isPlaying ? 'bg-[#6b8e23] text-white' : 'bg-[#f5f5f5] text-black hover:bg-[#6b8e23] hover:text-white'
+        isPlaying ? 'bg-[#526d1d] text-white' : 'bg-[#f5f5f5] text-black hover:bg-[#526d1d] hover:text-white'
       }`}
       onClick={togglePlay}
       aria-label={isPlaying ? 'Pause optional background music' : 'Play optional background music'}

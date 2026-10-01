@@ -8,7 +8,7 @@ Single source of truth: `src/data/content.ts`
 |------|-----------------|
 | Name, bio, links | `identity` in `content.ts` |
 | Education dates | `education` in `content.ts` |
-| Thesis metrics | `thesisCaseStudy.results` in `content.ts` |
+| Evaluation status | `thesisCaseStudy.evaluation` in `content.ts` (add metrics only after protocol verification) |
 | Manuscript status | `thesisCaseStudy.status`, `publications` |
 | Projects | `projects` array |
 | Experience | `experience` array (verify dates before adding roles) |
@@ -18,13 +18,13 @@ Single source of truth: `src/data/content.ts`
 
 ## VERIFY WITH OWNER before publishing
 
-- [ ] Exact IEEE SLT 2026 manuscript title and author order (for formal citation)
+- [ ] Exact manuscript title and author order before adding a formal citation
 - [ ] Bahr Academy role (currently omitted — confirm title, employer, dates)
 - [ ] Verified dataset count for COVID social-media project (do not claim "millions" without evidence)
 - [ ] CCTV chatbot support-reduction metrics (removed from site)
 - [ ] Golrang / Erole performance improvement percentages (conservative highlights only in Experience)
 - [ ] Reproducible latency benchmark if adding inference timing claims
-- [ ] Official transcript if publishing GPA
+- [ ] Verify future GPA changes with the owner (currently 3.44, owner-confirmed)
 
 ## Deployment
 

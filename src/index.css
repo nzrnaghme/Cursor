@@ -29,6 +29,11 @@
     @apply font-sans antialiased bg-[#1a1a1a] text-white leading-relaxed overflow-x-hidden;
   }
 
+  section[id],
+  #main-content {
+    scroll-margin-top: 6rem;
+  }
+
   #root {
     @apply min-h-screen;
   }
