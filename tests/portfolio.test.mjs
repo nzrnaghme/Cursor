@@ -76,3 +76,36 @@ test('core small-text color pairs exceed WCAG AA contrast', () => {
     assert.ok((light + 0.05) / (dark + 0.05) >= 4.5, `${foreground} on ${background}`)
   }
 })
+
+const navigationSource = await read('src/utils/sectionNavigation.ts')
+const navigationJavascript = ts.transpileModule(navigationSource, {
+  compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2020 },
+}).outputText
+const { restoreInitialSection } = await import(`data:text/javascript;base64,${Buffer.from(navigationJavascript).toString('base64')}`)
+
+test('a bookmarked section scrolls and receives focus after mounting', () => {
+  const calls = []
+  restoreInitialSection('#research', (id) => {
+    assert.equal(id, 'research')
+    return {
+      scrollIntoView: (options) => calls.push(['scroll', options]),
+      focus: (options) => calls.push(['focus', options]),
+    }
+  })
+  assert.deepEqual(calls, [
+    ['scroll', { behavior: 'instant', block: 'start' }],
+    ['focus', { preventScroll: true }],
+  ])
+})
+
+test('empty, malformed, and unknown section hashes are harmless', () => {
+  const unexpected = () => assert.fail('An invalid hash should not be looked up')
+  for (const hash of ['', '#', 'research', '#%ZZ']) restoreInitialSection(hash, unexpected)
+  assert.doesNotThrow(() => restoreInitialSection('#missing-section', () => null))
+})
+
+test('URL-encoded section hashes resolve correctly', () => {
+  let foundId
+  restoreInitialSection('#research%2Dheading', (id) => { foundId = id; return null })
+  assert.equal(foundId, 'research-heading')
+})
