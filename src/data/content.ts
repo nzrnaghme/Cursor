@@ -310,4 +310,3 @@ export const seo = {
   ogImage: '/images/profile-photo.png',
   themeColor: '#1a2332',
 } as const
-

@@ -120,4 +120,3 @@ test('URL-encoded section hashes resolve correctly', () => {
   restoreInitialSection('#research%2Dheading', (id) => { foundId = id; return null })
   assert.equal(foundId, 'research-heading')
 })
-
