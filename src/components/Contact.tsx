@@ -1,12 +1,13 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import { identity, cv, getAccessibleCvHref } from '../data/content'
+import { identity, cv, getAccessibleCvHref, getCvHref } from '../data/content'
 import { slideFromLeft, slideFromRight, staggerContainer, easeSmooth } from '../utils/motion'
 
 const Contact = () => {
   const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: true })
 
-  const cvHref = getAccessibleCvHref()
+  const cvHref = getCvHref()
+  const accessibleCvHref = getAccessibleCvHref()
   const currentYear = new Date().getFullYear()
 
   return (
@@ -54,18 +55,25 @@ const Contact = () => {
               </a>
             </div>
 
-            <div>
+            <div className="flex flex-wrap items-center gap-4">
               <motion.a
                 href={cvHref}
-                target="_blank"
-                rel="noopener noreferrer"
+                download="Naghmeh_Melody_Nazar_Research_CV.pdf"
                 className="inline-block px-6 py-3 bg-[#526d1d] text-white text-sm font-medium uppercase tracking-wider hover:bg-[#556b2f] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white rounded-sm"
-                aria-label={`Open accessible HTML ${cv.label} in a new tab`}
+                aria-label={`Download ${cv.label} as a PDF`}
                 whileHover={{ scale: 1.04, y: -2 }}
                 whileTap={{ scale: 0.98 }}
               >
-                View {cv.label}
+                Download {cv.label}
               </motion.a>
+              <a
+                href={accessibleCvHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-11 items-center text-sm text-gray-300 hover:text-[#bddb80] underline underline-offset-4"
+              >
+                Accessible HTML version
+              </a>
             </div>
 
             <div>

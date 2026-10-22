@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { navItems, cv, getAccessibleCvHref, identity } from '../data/content'
+import { navItems, cv, getCvHref, identity } from '../data/content'
 import { easeSmooth } from '../utils/motion'
 
 interface NavigationProps {
@@ -15,7 +15,7 @@ const Navigation = ({
   setMenuOpen,
 }: NavigationProps) => {
   const menuRef = useRef<HTMLDivElement>(null)
-  const cvHref = getAccessibleCvHref()
+  const cvHref = getCvHref()
   const menuButtonRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
@@ -79,8 +79,7 @@ const Navigation = ({
             ))}
             <a
               href={cvHref}
-              target="_blank"
-              rel="noopener noreferrer"
+              download="Naghmeh_Melody_Nazar_Research_CV.pdf"
               className="min-h-11 inline-flex items-center text-xs uppercase tracking-wider font-medium text-gray-300 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6b8e23] rounded-sm"
             >
               CV
@@ -142,8 +141,7 @@ const Navigation = ({
                   <li>
                     <a
                       href={cvHref}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      download="Naghmeh_Melody_Nazar_Research_CV.pdf"
                       className="block w-full py-3 px-4 text-sm font-medium uppercase tracking-wider text-black hover:bg-[#f5f5f5] rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#6b8e23]"
                       onClick={() => setMenuOpen(false)}
                     >

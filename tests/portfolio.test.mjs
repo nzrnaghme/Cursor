@@ -62,6 +62,7 @@ test('section navigation uses real anchors without an artificial loading state',
   assert.doesNotMatch(app + nav, /setLoading|setIsLoading|<Loading|scrollToSection/)
   assert.match(nav, /href=\{`#\$\{item\.id\}`\}/)
   assert.match(home, /href="#agent-security"/)
+  assert.match(home + nav, /download="Naghmeh_Melody_Nazar_Research_CV\.pdf"/)
   assert.match(nav, /event\.key === 'Escape'/)
   assert.match(nav, /aria-current=/)
   assert.match(app, /IntersectionObserver/)

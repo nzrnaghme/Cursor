@@ -1,10 +1,11 @@
 import { motion, useReducedMotion } from 'framer-motion'
-import { identity, cv, getAccessibleCvHref, researchSnapshot } from '../data/content'
+import { identity, cv, getAccessibleCvHref, getCvHref, researchSnapshot } from '../data/content'
 import { fadeUp, staggerContainer, easeSmooth } from '../utils/motion'
 
 const Home = () => {
   const reduceMotion = useReducedMotion()
-  const cvHref = getAccessibleCvHref()
+  const cvHref = getCvHref()
+  const accessibleCvHref = getAccessibleCvHref()
 
   return (
     <section
@@ -58,15 +59,14 @@ const Home = () => {
               </motion.a>
               <motion.a
                 href={cvHref}
-                target="_blank"
-                rel="noopener noreferrer"
+                download="Naghmeh_Melody_Nazar_Research_CV.pdf"
                 className="min-h-11 px-5 py-3 text-sm font-semibold text-white border border-white/30 hover:border-[#a9c66c] hover:bg-white/5 rounded-md inline-flex items-center"
-                aria-label={`Open accessible HTML ${cv.label} in a new tab`}
+                aria-label={`Download ${cv.label} as a PDF`}
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.98 }}
                 transition={{ duration: 0.2 }}
               >
-                View research CV
+                Download research CV
               </motion.a>
               <a
                 href={`mailto:${identity.email}?subject=Fall%202027%20PhD%20research%20inquiry`}
@@ -89,6 +89,7 @@ const Home = () => {
               {[
                 { label: 'GitHub ↗', href: identity.github },
                 { label: 'LinkedIn ↗', href: identity.linkedIn },
+                { label: 'Accessible HTML CV ↗', href: accessibleCvHref },
               ].map((link) => (
                 <a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer" className="min-h-11 inline-flex items-center text-gray-300 hover:text-[#bddb80]">
                   {link.label}
