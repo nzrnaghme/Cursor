@@ -15,7 +15,7 @@ test('education and thesis status match the current reviewed content', () => {
   assert.equal(content.education[0].degree, 'M.S. in Computer Engineering')
   assert.equal(content.thesisCaseStudy.status, 'M.S. thesis research')
   assert.match(content.thesisCaseStudy.evaluation, /80\.36% validation accuracy/)
-  assert.match(content.thesisCaseStudy.evaluation, /74\.4% on a held-out mixed test set/)
+  assert.match(content.thesisCaseStudy.evaluation, /74\.4% held-out test accuracy/)
   assert.doesNotMatch(source, /under review|4,900|approval logic/i)
   assert.doesNotMatch(content.identity.bio, /real-time|rigorous/i)
   assert.match(content.thesisCaseStudy.codeAvailability, /not been publicly released/)
@@ -32,7 +32,8 @@ test('research uses implementation descriptors and reports the verified evaluati
 test('applicant profile is evidence-aware and institution-neutral', () => {
   const profile = content.aboutParagraphs.join(' ')
   assert.match(profile, /MCP-SafetyBench/)
-  assert.match(profile, /candidate pre-execution safeguard, not as a validated defense/)
+  assert.match(profile, /candidate pre-execution risk-gating baseline/)
+  assert.match(profile, /no validated defense results are claimed/)
   assert.doesNotMatch(profile, /Prof\. Rudner|Vector's/i)
   assert.match(content.identity.headline, /Agent Security & Speech ML/)
   assert.match(content.agentSecurityStudy.status, /In progress/)
@@ -46,6 +47,31 @@ test('project links describe their destination', () => {
     assert.ok(project.linkLabel.length > 15)
     assert.match(project.linkLabel, /GitHub|LinkedIn/)
   }
+})
+
+test('faculty-outreach CV is ATS-readable and keeps evidence guardrails', async () => {
+  const cvHtml = await read('public/Naghmeh_Melody_Nazar_Research_CV.html')
+  const cvGenerator = await read('scripts/generate_research_cv.py')
+  const headings = [
+    'Research focus',
+    'Research experience',
+    'Research outputs &amp; presentation',
+    'Education',
+    'Professional experience',
+    'Technical skills',
+  ]
+  const positions = headings.map((heading) => cvHtml.indexOf(`>${heading}</h2>`))
+  assert.ok(positions.every((position) => position >= 0))
+  assert.deepEqual([...positions].sort((a, b) => a - b), positions)
+  assert.match(cvHtml, /large language model \(LLM\) agents/)
+  assert.match(cvHtml, /untrusted tool metadata, user input, and tool outputs/)
+  assert.match(cvHtml, /80\.36% validation accuracy/)
+  assert.match(cvHtml, /74\.4% held-out test accuracy/)
+  assert.match(cvHtml, /no validated defense results are claimed/)
+  assert.match(cvHtml, /github\.com\/nzrnaghme\/RespondEmailAgent/)
+  assert.match(cvHtml, /download="Naghmeh_Melody_Nazar_Research_CV\.pdf"/)
+  assert.doesNotMatch(cvHtml, /GPA: 3\.44|Persian COVID-19/)
+  assert.match(cvGenerator, /source of truth for both formats/)
 })
 
 test('all local content assets exist', async () => {

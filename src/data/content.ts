@@ -18,7 +18,7 @@ export const identity = {
 
 export const aboutParagraphs = [
   `I completed my M.S. in Computer Engineering at California State University, Northridge in August 2026. My thesis developed a 2D ResNet-inspired CNN for four-class speech emotion recognition using RAVDESS and TESS, with explicit reporting of evaluation limits.`,
-  `My current independent research examines how untrusted content in emails, documents, or tool outputs can redirect an LLM agent's tool calls. I am analyzing MCP-SafetyBench and evaluating confidence or uncertainty gating as a candidate pre-execution safeguard, not as a validated defense.`,
+  `My current independent research examines how untrusted content in emails, documents, or tool outputs can redirect an LLM agent's tool calls. I am mapping MCP-SafetyBench attack paths and designing an evaluation of a candidate pre-execution risk-gating baseline; no validated defense results are claimed.`,
   `For Fall 2027, I am seeking PhD supervision on trustworthy tool-using agents, scalable oversight, and robust machine-learning evaluation. Before my M.S., I worked for several years as a professional software engineer, experience that helps me turn research questions into testable systems.`,
 ] as const
 
@@ -58,7 +58,7 @@ export const agentSecurityStudy = {
   workCompleted:
     'Analysis to date covers MCP-SafetyBench scenarios and attack paths, with attention to the transition from untrusted context to tool selection and arguments.',
   defenseHypothesis:
-    'Confidence or uncertainty gating before tool execution is being evaluated as a candidate baseline. It is not yet a validated defense.',
+    'A pre-execution risk-gating baseline is being specified for evaluation. Planned measures include attack success, benign completion, false-block rate, and calibration; no validated defense results are claimed.',
   evaluationPlan: [
     'Attack success rate under adversarial content',
     'Benign task completion rate',
@@ -108,7 +108,7 @@ export const thesisCaseStudy = {
   model: '2D ResNet-inspired CNN with four output labels: neutral, happy, sad, and angry.',
   training:
     'Adam optimization with dropout and residual connections, supported by a reproducible preprocessing and evaluation pipeline.',
-  evaluation: 'On the current split, the model achieved 80.36% validation accuracy and 74.4% on a held-out mixed test set. Speaker-independent and cross-corpus performance remain to be evaluated.',
+  evaluation: 'On the current mixed-corpus split, the model achieved 80.36% validation accuracy and 74.4% held-out test accuracy. The split does not establish speaker-independent or cross-corpus generalization.',
   errorAnalysis: [
     'Happy / Neutral confusion patterns',
     'Speaker variability across the corpus',

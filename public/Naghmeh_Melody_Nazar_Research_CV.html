@@ -3,15 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="robots" content="noindex" />
-    <meta name="description" content="Accessible research CV for Naghmeh (Melody) Nazar, a Fall 2027 PhD applicant working on agent security and speech machine learning." />
-    <title>Naghmeh (Melody) Nazar — Research CV</title>
+    <meta name="robots" content="index, follow" />
+    <meta name="description" content="Research CV for Naghmeh (Melody) Nazar, a Fall 2027 PhD applicant studying AI safety, tool-using agent security, and speech machine learning." />
+    <title>Naghmeh (Melody) Nazar - Research CV</title>
     <style>
       :root { color-scheme: light; --navy: #17324d; --teal: #087f76; --ink: #202b3a; --muted: #526274; --rule: #cad6df; }
       * { box-sizing: border-box; }
       html { scroll-behavior: smooth; }
       body { margin: 0; background: #eef3f5; color: var(--ink); font: 16px/1.6 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-      a { color: #05665f; text-underline-offset: 0.18em; }
+      a { color: #05665f; text-underline-offset: 0.18em; overflow-wrap: anywhere; }
       a:hover { color: var(--navy); }
       :focus-visible { outline: 3px solid #526d1d; outline-offset: 3px; }
       .skip { position: absolute; left: 1rem; top: -5rem; padding: 0.7rem 1rem; background: #fff; z-index: 2; }
@@ -46,102 +46,56 @@
     <div class="page">
       <header>
         <h1>Naghmeh (Melody) Nazar</h1>
-        <p class="focus">Trustworthy AI Agents · Speech Machine Learning · Robust Evaluation</p>
+        <p class="focus">FALL 2027 PhD APPLICANT | AI SAFETY &amp; TOOL-USING AGENT SECURITY | SPEECH ML</p>
         <ul class="contact" aria-label="Contact details">
           <li>Los Angeles, CA</li>
+          <li><a href="tel:+18183367271">(818) 336-7271</a></li>
           <li><a href="mailto:melodynzr@gmail.com">melodynzr@gmail.com</a></li>
-          <li><a href="https://linkedin.com/in/naghme-nazar">LinkedIn</a></li>
-          <li><a href="https://github.com/nzrnaghme">GitHub</a></li>
+          <li><a href="https://melodynazar.com" target="_blank" rel="noreferrer">melodynazar.com</a></li>
+          <li><a href="https://linkedin.com/in/naghme-nazar" target="_blank" rel="noreferrer">linkedin.com/in/naghme-nazar</a></li>
+          <li><a href="https://github.com/nzrnaghme" target="_blank" rel="noreferrer">github.com/nzrnaghme</a></li>
         </ul>
         <nav class="actions" aria-label="CV actions">
           <ul>
-            <li><a href="/Naghmeh_Melody_Nazar_Research_CV.pdf">Download PDF CV</a></li>
+            <li><a href="/Naghmeh_Melody_Nazar_Research_CV.pdf" download="Naghmeh_Melody_Nazar_Research_CV.pdf">Download PDF CV</a></li>
             <li><a href="/">Return to research portfolio</a></li>
           </ul>
         </nav>
       </header>
 
       <main id="cv-content" tabindex="-1">
-        <section aria-labelledby="profile-heading">
-          <h2 id="profile-heading">Research profile</h2>
-          <p>Fall 2027 PhD applicant with an M.S. in Computer Engineering from California State University, Northridge. Current independent research examines indirect prompt injection in tool-using LLM agents and candidate pre-execution safeguards. Prior research developed a four-class speech-emotion model, with emphasis on transparent reporting of evaluation limits.</p>
+        <section aria-labelledby="focus-heading">
+          <h2 id="focus-heading">Research focus</h2>
+          <p>Fall 2027 PhD applicant studying pre-execution safeguards for indirect prompt injection from untrusted email, documents, and tool outputs in tool-using large language model (LLM) agents. Current independent work maps selected MCP-SafetyBench attack paths involving untrusted tool metadata, user input, and tool outputs and is designing an evaluation using attack success, benign task completion, false-block rate, and calibration. M.S. thesis: four-class speech emotion recognition on RAVDESS and TESS, with explicit limits on speaker-independent and cross-corpus claims. Brings 3+ years of production software engineering experience to building testable AI systems.</p>
+          <p><strong>Research interests:</strong> LLM agent security, AI safety, indirect prompt injection, scalable oversight, adversarial evaluation, speech processing, affective computing</p>
         </section>
 
         <section aria-labelledby="research-heading">
           <h2 id="research-heading">Research experience</h2>
-          <article>
-            <div class="role"><h3>Independent Research — Security of Tool-Using LLM Agents</h3><time datetime="2026">2026–present</time></div>
-            <ul>
-              <li>Analyzing how untrusted email, document, and tool-output content can redirect an agent’s proposed tool calls before execution.</li>
-              <li>Conducting a structured analysis of the <a href="https://proceedings.iclr.cc/paper_files/paper/2026/hash/d46f127a80dc58cbc0732a717285c43a-Abstract-Conference.html">MCP-SafetyBench benchmark (Zong et al., ICLR 2026)</a>, mapping attack paths from untrusted context to tool selection and arguments.</li>
-              <li>Evaluating confidence or uncertainty gating as a candidate baseline, not a validated defense; planned measures include attack success, benign completion, false-block rate, and calibration.</li>
-            </ul>
-          </article>
-          <article>
-            <div class="role"><h3>M.S. Thesis — Speech Emotion Recognition, CSUN</h3><time>2024–2026</time></div>
-            <ul>
-              <li>Developed a 2D ResNet-inspired CNN for neutral, happy, sad, and angry speech labels using RAVDESS and TESS.</li>
-              <li>Processed speech at 16 kHz into 128 × 128 log-Mel spectrograms and trained with Adam, dropout, and residual connections.</li>
-              <li>On the current split, achieved 80.36% validation accuracy and 74.4% on a held-out mixed test set.</li>
-              <li>Speaker-independent and cross-corpus performance, desktop latency, and real-world generalization remain to be evaluated; no clinical validation is claimed.</li>
-            </ul>
-          </article>
-        </section>
-
-        <section aria-labelledby="education-heading">
-          <h2 id="education-heading">Education</h2>
-          <article>
-            <div class="role"><h3>M.S. in Computer Engineering, California State University, Northridge</h3><time>Aug 2024–Aug 2026</time></div>
-            <p class="note">GPA: 3.44/4.0 · Thesis advisor: Prof. Shahnam Mirzaei</p>
-          </article>
-          <article>
-            <div class="role"><h3>B.S. in Computer Engineering, University of Science and Technology of Mazandaran</h3><time>Aug 2016–Mar 2021</time></div>
-          </article>
+          <article><div class="role"><h3>Independent Research - Pre-Execution Safeguards for Tool-Using LLM Agents</h3><time>Current</time></div><ul><li>Mapping selected MCP-SafetyBench attack paths (Zong et al., ICLR 2026) involving untrusted tool metadata, user input, and tool outputs as they propagate to proposed tool selection and arguments. <a href="https://proceedings.iclr.cc/paper_files/paper/2026/hash/d46f127a80dc58cbc0732a717285c43a-Abstract-Conference.html" target="_blank" rel="noreferrer">MCP-SafetyBench paper</a></li><li>Designing an evaluation of a candidate pre-execution risk-gating baseline; planned measures include attack success, benign task completion, false-block rate, and calibration. Analysis and experiment design are in progress; no validated defense results are claimed.</li><li>Built an n8n email-and-scheduling agent and documented where untrusted messages and generated actions require validation or human approval. <a href="https://github.com/nzrnaghme/RespondEmailAgent" target="_blank" rel="noreferrer">github.com/nzrnaghme/RespondEmailAgent</a></li></ul></article><article><div class="role"><h3>M.S. Thesis - Speech Emotion Recognition, CSUN</h3><time>Aug 2026</time></div><ul><li>Developed a four-class 2D ResNet-inspired CNN on RAVDESS and TESS using 16 kHz audio and 128 x 128 log-Mel spectrograms.</li><li>On the current mixed-corpus split, achieved 80.36% validation accuracy and 74.4% held-out test accuracy; the split does not establish speaker-independent or cross-corpus generalization.</li><li>Desktop latency and naturalistic-speech generalization remain unmeasured; no deployment or clinical-validation claim is made.</li></ul></article>
         </section>
 
         <section aria-labelledby="outputs-heading">
           <h2 id="outputs-heading">Research outputs &amp; presentation</h2>
-          <ul>
-            <li>M.S. thesis research: <cite>Real-Time Speech Emotion Recognition Using Optimized Deep Residual Networks</cite>. Thesis PDF available on request.</li>
-            <li>Presented the speech emotion recognition research at the 40th Annual CSU Student Research Competition. Materials available on request.</li>
-          </ul>
+          <ul><li>M.S. thesis - &quot;Real-Time Speech Emotion Recognition Using Optimized Deep Residual Networks,&quot; California State University, Northridge, Aug 2026. PDF available on request.</li><li>Presenter - 40th Annual CSU Student Research Competition: M.S. speech emotion recognition research, 2026. Presentation materials available on request.</li></ul>
         </section>
 
-        <section aria-labelledby="engineering-heading">
-          <h2 id="engineering-heading">Selected engineering evidence</h2>
-          <article>
-            <div class="role"><h3>GenAI Email &amp; Scheduling Agent</h3><time datetime="2026">2026</time></div>
-            <p>Built an n8n tool-using email prototype and documented incomplete validation and approval boundaries around untrusted messages and generated actions.</p>
-          </article>
-          <article>
-            <div class="role"><h3>Persian COVID-19 Social Behavior Analysis</h3><time>2021–2023</time></div>
-            <p>Built sentiment, topic-modeling, and temporal-analysis pipelines to explore changes in Persian social-media posts.</p>
-          </article>
+        <section aria-labelledby="education-heading">
+          <h2 id="education-heading">Education</h2>
+          <article><div class="role"><h3>M.S. in Computer Engineering, California State University, Northridge</h3><time>Aug 2024 - Aug 2026</time></div><p class="note">Thesis advisor: Prof. Shahnam Mirzaei</p></article><article><div class="role"><h3>B.S. in Computer Engineering, University of Science and Technology of Mazandaran</h3><time>Aug 2016 - Mar 2021</time></div></article>
         </section>
 
         <section aria-labelledby="experience-heading">
           <h2 id="experience-heading">Professional experience</h2>
-          <article>
-            <div class="role"><h3>Senior Frontend Developer, Golrang Industrial Group — Tehran, Iran</h3><time>Jul 2022–Jul 2024</time></div>
-            <p>Developed production React, React Native, Vue.js, and TypeScript applications; improved maintainability through profiling, caching, testing, and code review.</p>
-          </article>
-          <article>
-            <div class="role"><h3>React Developer, Erole.ir — Tehran, Iran</h3><time>Jun 2021–Jun 2022</time></div>
-            <p>Built React/Redux applications and integrated REST APIs and SignalR-based real-time features.</p>
-          </article>
+          <article><div class="role"><h3>Senior Frontend Developer, Golrang Industrial Group - Tehran, Iran</h3><time>Jul 2022 - Jul 2024</time></div><ul><li>Architected cross-platform applications with React Native and React.js PWA; contributed UI implementation, state management, caching, performance optimization, and code review.</li></ul></article><article><div class="role"><h3>React Developer, Erole.ir - Tehran, Iran</h3><time>Jun 2021 - Jun 2022</time></div><ul><li>Built React and Redux applications and integrated REST APIs and SignalR-based real-time features.</li></ul></article>
         </section>
 
-        <section aria-labelledby="methods-heading">
-          <h2 id="methods-heading">Methods &amp; technical foundation</h2>
-          <div class="methods">
-            <p><strong>Research &amp; evaluation:</strong> experimental design, error analysis, threat modeling, reproducible evaluation, Git, Linux</p>
-            <p><strong>Machine learning:</strong> Python, TensorFlow, Keras, scikit-learn, NumPy, Pandas, CNNs, ResNet</p>
-            <p><strong>Signals &amp; language:</strong> audio preprocessing, Mel-spectrograms, MFCCs, time-frequency analysis, NLP, topic modeling</p>
-            <p><strong>Engineering:</strong> C++, JavaScript, TypeScript, React, Vue.js, Node.js, REST APIs</p>
-          </div>
+        <section aria-labelledby="skills-heading">
+          <h2 id="skills-heading">Technical skills</h2>
+          <div class="methods"><p><strong>Agent-security study:</strong> indirect prompt injection, attack-path analysis, tool-call risk evaluation design</p><p><strong>Speech and machine learning:</strong> Python, TensorFlow, Keras, scikit-learn, NumPy, Pandas, 2D CNN/ResNet, log-Mel spectrograms, MFCCs</p><p><strong>Engineering:</strong> C++, JavaScript, TypeScript, n8n, React, React Native, Node.js, REST APIs, Git, Linux</p></div>
         </section>
       </main>
-      <footer>This HTML CV is the accessible counterpart to the downloadable PDF and was last updated in October 2026.</footer>
+      <footer>This accessible HTML CV and the downloadable PDF share one versioned content source. Last updated October 2026.</footer>
     </div>
   </body>
 </html>
