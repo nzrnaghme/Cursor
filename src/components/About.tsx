@@ -1,12 +1,12 @@
 import { motion } from 'framer-motion'
-import { education, identity } from '../data/content'
+import { aboutParagraphs, education, identity } from '../data/content'
 import SectionShell from './SectionShell'
 import SkillsTechnologies from './SkillsTechnologies'
 import AnimatedCard from './AnimatedCard'
 import { fadeUp, staggerContainer } from '../utils/motion'
 
 const About = () => (
-  <SectionShell id="about" title="About" subtitle={identity.extendedBio}>
+  <SectionShell id="about" title="Background & Methods" subtitle={identity.extendedBio}>
     <motion.div
       className="space-y-8"
       variants={staggerContainer(0.1, 0.05)}
@@ -15,8 +15,12 @@ const About = () => (
       viewport={{ once: true, margin: '-50px' }}
     >
       <motion.div variants={fadeUp}>
-        <AnimatedCard className="p-6 bg-[#2a2a2a] rounded-xl border border-white/10 text-gray-300 font-light leading-relaxed" hover={false}>
-          <p>{identity.bio}</p>
+        <AnimatedCard className="p-6 sm:p-8 bg-[#2a2a2a] rounded-xl border border-white/10 text-gray-200 leading-[1.7]" hover={false}>
+          <div className="space-y-4">
+            {aboutParagraphs.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+          </div>
         </AnimatedCard>
       </motion.div>
 
@@ -28,6 +32,7 @@ const About = () => (
               key={entry.degree}
               className="p-6 bg-[#2a2a2a] rounded-xl border border-white/10 hover:border-[#6b8e23]/25"
               delay={index * 0.08}
+              hover={false}
             >
               <div className="flex flex-wrap justify-between gap-2 mb-2">
                 <div>

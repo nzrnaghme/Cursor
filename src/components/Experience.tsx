@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { experience } from '../data/content'
 import SectionShell from './SectionShell'
-import { fadeUp, staggerContainer, cardHoverLift, easeSmooth } from '../utils/motion'
+import { fadeUp, staggerContainer } from '../utils/motion'
 
 const Experience = () => (
   <SectionShell
@@ -21,19 +21,15 @@ const Experience = () => (
         <motion.article
           key={role.id}
           className="p-6 bg-[#2a2a2a] rounded-xl border border-white/10 flex flex-col sm:flex-row gap-6 transition-colors hover:border-[#6b8e23]/25"
-          variants={{ ...fadeUp, ...cardHoverLift }}
-          whileHover="hover"
-          initial="rest"
-          transition={{ delay: index * 0.1, ease: easeSmooth }}
+          variants={fadeUp}
+          transition={{ delay: index * 0.1 }}
         >
           {role.image && (
-            <motion.img
+            <img
               src={role.image}
               alt={role.imageAlt}
               className="w-full sm:w-32 h-24 object-cover rounded-lg opacity-80 shrink-0"
               loading="lazy"
-              whileHover={{ scale: 1.03, opacity: 1 }}
-              transition={{ duration: 0.3 }}
             />
           )}
           <div className="flex-1 min-w-0">

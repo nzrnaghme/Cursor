@@ -10,20 +10,35 @@ const javascript = ts.transpileModule(source, {
 const content = await import(`data:text/javascript;base64,${Buffer.from(javascript).toString('base64')}`)
 const read = (path) => readFile(new URL(`../${path}`, import.meta.url), 'utf8')
 
-test('education and manuscript status match the current reviewed content', () => {
+test('education and thesis status match the current reviewed content', () => {
   assert.ok(content.education[0].bullets.includes('GPA: 3.44'))
   assert.equal(content.education[0].degree, 'M.S. in Computer Engineering')
-  assert.equal(content.thesisCaseStudy.status, 'Research manuscript')
-  assert.doesNotMatch(source, /under review|80\.36|74\.4|4,900|approval logic/i)
+  assert.equal(content.thesisCaseStudy.status, 'M.S. thesis research')
+  assert.match(content.thesisCaseStudy.evaluation, /80\.36% validation accuracy/)
+  assert.match(content.thesisCaseStudy.evaluation, /74\.4% held-out test accuracy/)
+  assert.doesNotMatch(source, /under review|4,900|approval logic/i)
+  assert.doesNotMatch(content.identity.bio, /real-time|rigorous/i)
   assert.match(content.thesisCaseStudy.codeAvailability, /not been publicly released/)
 })
 
-test('research uses implementation descriptors and keeps future evaluation qualified', () => {
+test('research uses implementation descriptors and reports the verified evaluation', () => {
   assert.match(content.thesisCaseStudy.model, /ResNet-inspired/)
   assert.match(content.thesisCaseStudy.data.summary, /16 kHz/)
   assert.match(content.thesisCaseStudy.data.summary, /128 × 128 log-Mel/)
-  assert.match(content.thesisCaseStudy.evaluation, /pending verification/)
+  assert.match(content.thesisCaseStudy.limitations.join(' '), /not evidence of speaker-independent or cross-corpus generalization/)
   assert.doesNotMatch(source, /figurePlaceholder|Add verified figure|Formal citation pending/)
+})
+
+test('applicant profile is evidence-aware and institution-neutral', () => {
+  const profile = content.aboutParagraphs.join(' ')
+  assert.match(profile, /MCP-SafetyBench/)
+  assert.match(profile, /candidate pre-execution risk-gating baseline/)
+  assert.match(profile, /no validated defense results are claimed/)
+  assert.doesNotMatch(profile, /Prof\. Rudner|Vector's/i)
+  assert.match(content.identity.headline, /Agent Security & Speech ML/)
+  assert.match(content.agentSecurityStudy.status, /In progress/)
+  assert.match(content.agentSecurityStudy.artifactStatus, /no public results or code are claimed yet/i)
+  assert.match(content.agentSecurityStudy.benchmarkUrl, /^https:\/\/proceedings\.iclr\.cc\//)
 })
 
 test('project links describe their destination', () => {
@@ -34,8 +49,33 @@ test('project links describe their destination', () => {
   }
 })
 
+test('faculty-outreach CV is ATS-readable and keeps evidence guardrails', async () => {
+  const cvHtml = await read('public/Naghmeh_Melody_Nazar_Research_CV.html')
+  const cvGenerator = await read('scripts/generate_research_cv.py')
+  const headings = [
+    'Research focus',
+    'Research experience',
+    'Research outputs &amp; presentation',
+    'Education',
+    'Professional experience',
+    'Technical skills',
+  ]
+  const positions = headings.map((heading) => cvHtml.indexOf(`>${heading}</h2>`))
+  assert.ok(positions.every((position) => position >= 0))
+  assert.deepEqual([...positions].sort((a, b) => a - b), positions)
+  assert.match(cvHtml, /large language model \(LLM\) agents/)
+  assert.match(cvHtml, /untrusted tool metadata, user input, and tool outputs/)
+  assert.match(cvHtml, /80\.36% validation accuracy/)
+  assert.match(cvHtml, /74\.4% held-out test accuracy/)
+  assert.match(cvHtml, /no validated defense results are claimed/)
+  assert.match(cvHtml, /github\.com\/nzrnaghme\/RespondEmailAgent/)
+  assert.match(cvHtml, /download="Naghmeh_Melody_Nazar_Research_CV\.pdf"/)
+  assert.doesNotMatch(cvHtml, /GPA: 3\.44|Persian COVID-19/)
+  assert.match(cvGenerator, /source of truth for both formats/)
+})
+
 test('all local content assets exist', async () => {
-  const paths = [content.getCvHref(), content.thesisCaseStudy.image,
+  const paths = [content.getCvHref(), content.getAccessibleCvHref(), content.thesisCaseStudy.image,
     ...content.projects.map((project) => project.image),
     ...content.experience.map((role) => role.image)]
   for (const path of paths) await access(new URL(`../public${path}`, import.meta.url))
@@ -47,18 +87,28 @@ test('section navigation uses real anchors without an artificial loading state',
   const home = await read('src/components/Home.tsx')
   assert.doesNotMatch(app + nav, /setLoading|setIsLoading|<Loading|scrollToSection/)
   assert.match(nav, /href=\{`#\$\{item\.id\}`\}/)
-  assert.match(home, /href="#research"/)
+  assert.match(home, /href="#agent-security"/)
+  assert.match(home + nav, /download="Naghmeh_Melody_Nazar_Research_CV\.pdf"/)
   assert.match(nav, /event\.key === 'Escape'/)
   assert.match(nav, /aria-current=/)
+  assert.match(app, /IntersectionObserver/)
   assert.match(await read('src/index.css'), /scroll-margin-top: 6rem/)
 })
 
-test('short viewports and reduced motion have explicit safeguards', async () => {
-  assert.match(await read('src/components/SectionShell.tsx'), /threshold: 0, triggerOnce: true/)
-  assert.match(await read('src/components/Home.tsx'), /threshold: 0, triggerOnce: true/)
+test('the research-first layout avoids decorative runtime overhead', async () => {
+  const sectionShell = await read('src/components/SectionShell.tsx')
+  const home = await read('src/components/Home.tsx')
+  const contact = await read('src/components/Contact.tsx')
+  const research = await read('src/components/Research.tsx')
+  assert.match(sectionShell, /threshold: 0, triggerOnce: true/)
+  assert.doesNotMatch(sectionShell, /min-h-screen|ParticlesBackground/)
+  assert.doesNotMatch(home + contact, /ParticlesBackground|MusicPlayer/)
+  assert.doesNotMatch(contact, /aria-live|setInterval/)
+  assert.match(research, /width="1100"/)
+  assert.match(research, /height="300"/)
   assert.match(await read('src/App.tsx'), /reducedMotion="user"/)
-  assert.match(await read('src/components/ParticlesBackground.tsx'), /if \(reduceMotion\) return null/)
-  assert.match(await read('src/components/SkillsTechnologies.tsx'), /case 'ArrowRight'/)
+  assert.match(home, /useReducedMotion/)
+  assert.doesNotMatch(await read('src/components/SkillsTechnologies.tsx'), /cdn\.simpleicons|role="tab"/)
 })
 
 const luminance = (hex) => {

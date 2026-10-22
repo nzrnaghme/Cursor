@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { navItems, cv, getCvHref } from '../data/content'
-import MusicPlayer from './MusicPlayer'
+import { navItems, cv, getCvHref, identity } from '../data/content'
 import { easeSmooth } from '../utils/motion'
 
 interface NavigationProps {
@@ -49,9 +48,14 @@ const Navigation = ({
       aria-label="Main navigation"
     >
       <div className="max-w-[1400px] mx-auto flex justify-between items-center">
-        <div className="pointer-events-auto">
-          <MusicPlayer />
-        </div>
+        <a
+          href="#home"
+          className="pointer-events-auto min-h-11 inline-flex items-center text-sm font-semibold tracking-wide text-white hover:text-[#bddb80] rounded-sm"
+          aria-label={`${identity.displayName}, back to introduction`}
+        >
+          <span className="hidden sm:inline">{identity.displayName}</span>
+          <span className="sm:hidden">{identity.shortName}</span>
+        </a>
         <div
           className="flex items-center gap-3 pointer-events-auto relative"
           ref={menuRef}
@@ -60,13 +64,13 @@ const Navigation = ({
           }}
         >
           <div className="hidden lg:flex items-center gap-6 mr-2" aria-label="Section navigation">
-            {navItems.slice(0, -1).map((item) => (
+            {navItems.filter((item) => item.desktop).map((item) => (
               <a
                 key={item.id}
                 href={`#${item.id}`}
                 aria-current={currentSection === item.id ? 'location' : undefined}
                 onClick={() => setMenuOpen(false)}
-                className={`text-xs uppercase tracking-wider font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6b8e23] rounded-sm ${
+                className={`min-h-11 inline-flex items-center text-xs uppercase tracking-wider font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6b8e23] rounded-sm ${
                   currentSection === item.id ? 'text-[#a9c66c]' : 'text-gray-300 hover:text-white'
                 }`}
               >
@@ -76,7 +80,7 @@ const Navigation = ({
             <a
               href={cvHref}
               download="Naghmeh_Melody_Nazar_Research_CV.pdf"
-              className="text-xs uppercase tracking-wider font-medium text-gray-300 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6b8e23] rounded-sm"
+              className="min-h-11 inline-flex items-center text-xs uppercase tracking-wider font-medium text-gray-300 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6b8e23] rounded-sm"
             >
               CV
             </a>
