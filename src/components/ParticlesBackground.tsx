@@ -18,103 +18,87 @@ const ParticlesBackground = ({ className = '' }: ParticlesBackgroundProps) => {
   if (reduceMotion) return null
 
   return (
-    <Particles
-      id={particleId}
-      init={particlesInit}
-      className={`absolute inset-0 ${className}`}
-      options={{
-        background: {
-          color: {
-            value: 'transparent',
+    <div className={`absolute inset-0 pointer-events-none ${className}`} aria-hidden="true">
+      <Particles
+        id={particleId}
+        init={particlesInit}
+        className="absolute inset-0"
+        options={{
+          fullScreen: {
+            enable: false,
           },
-        },
-        fpsLimit: 120,
-        interactivity: {
-          events: {
-            onClick: {
+          background: {
+            color: {
+              value: 'transparent',
+            },
+          },
+          fpsLimit: 40,
+          pauseOnBlur: true,
+          pauseOnOutsideViewport: true,
+          interactivity: {
+            events: {
+              onClick: {
+                enable: false,
+                mode: 'push',
+              },
+              onHover: {
+                enable: false,
+                mode: 'repulse',
+              },
+              resize: true,
+            },
+          },
+          particles: {
+            color: {
+              value: '#7eb8c9',
+            },
+            links: {
+              color: '#a9c66c',
+              distance: 150,
               enable: true,
-              mode: 'push',
+              opacity: 0.18,
+              width: 1,
             },
-            onHover: {
+            collisions: {
+              enable: false,
+            },
+            move: {
+              direction: 'none',
               enable: true,
-              mode: 'repulse',
+              outModes: {
+                default: 'bounce',
+              },
+              random: false,
+              speed: 0.35,
+              straight: false,
             },
-            resize: true,
-          },
-          modes: {
-            push: {
-              quantity: 4,
+            number: {
+              density: {
+                enable: true,
+                area: 1000,
+              },
+              value: 24,
             },
-            repulse: {
-              distance: 100,
-              duration: 0.4,
+            opacity: {
+              value: 0.28,
+              animation: {
+                enable: false,
+              },
             },
-          },
-        },
-        particles: {
-          color: {
-            value: '#6b8e23', // Olive green
-          },
-          links: {
-            color: '#6b8e23', // Olive green
-            distance: 150,
-            enable: true,
-            opacity: 0.3,
-            width: 1,
-          },
-          collisions: {
-            enable: true,
-          },
-          move: {
-            direction: 'none',
-            enable: true,
-            outModes: {
-              default: 'bounce',
+            shape: {
+              type: 'circle',
             },
-            random: false,
-            speed: 1,
-            straight: false,
-          },
-          number: {
-            density: {
-              enable: true,
-              area: 800,
-            },
-            value: 50,
-          },
-          opacity: {
-            value: 0.4,
-            random: {
-              enable: true,
-              minimumValue: 0.2,
-            },
-            animation: {
-              enable: true,
-              speed: 0.5,
-              minimumValue: 0.2,
-              sync: false,
+            size: {
+              value: 1.5,
+              animation: {
+                enable: false,
+              },
             },
           },
-          shape: {
-            type: 'circle',
-          },
-          size: {
-            value: 2,
-            random: {
-              enable: true,
-              minimumValue: 1,
-            },
-            animation: {
-              enable: true,
-              speed: 2,
-              minimumValue: 1,
-              sync: false,
-            },
-          },
-        },
-        detectRetina: true,
-      }}
-    />
+          detectRetina: true,
+        }}
+      />
+    </div>
   )
 }
 
