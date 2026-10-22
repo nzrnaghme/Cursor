@@ -1,138 +1,124 @@
-import { useRef } from 'react'
-import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
-import { useInView } from 'react-intersection-observer'
-import { identity, cv, getCvHref } from '../data/content'
-import ParticlesBackground from './ParticlesBackground'
+import { motion, useReducedMotion } from 'framer-motion'
+import { identity, cv, getAccessibleCvHref, researchSnapshot } from '../data/content'
 import { fadeUp, staggerContainer, easeSmooth } from '../utils/motion'
 
 const Home = () => {
-  const { ref, inView } = useInView({ threshold: 0, triggerOnce: true })
-  const containerRef = useRef<HTMLDivElement>(null)
   const reduceMotion = useReducedMotion()
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start start', 'end start'],
-  })
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
-  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.92])
-  const cvHref = getCvHref()
+  const cvHref = getAccessibleCvHref()
 
   return (
     <section
       id="home"
       tabIndex={-1}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#1a2332] via-[#1a1a1a] to-[#1f1f1f] text-white"
-      ref={containerRef}
+      className="relative min-h-[88vh] flex items-center overflow-hidden bg-[#15212d] text-white"
       aria-label="Introduction"
     >
-      <motion.div className="absolute inset-0 z-0" style={reduceMotion ? undefined : { opacity, scale }} aria-hidden="true">
-        <ParticlesBackground className="z-0" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-[#2d5a6e]/15 z-[1]" />
-      </motion.div>
+      <div className="absolute inset-0" aria-hidden>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_24%,rgba(126,184,201,0.13),transparent_34%),radial-gradient(circle_at_82%_68%,rgba(107,142,35,0.13),transparent_32%)]" />
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#1a1a1a] to-transparent" />
+      </div>
 
-      <div className="relative z-[2] max-w-[1100px] w-full px-6 pt-28 pb-8 sm:pt-32" ref={ref}>
+      <div className="relative z-10 max-w-[1120px] w-full mx-auto px-6 pt-28 pb-16 sm:pt-32">
         <motion.div
-          className="grid grid-cols-1 sm:grid-cols-[minmax(0,1fr)_180px] lg:grid-cols-[minmax(0,1fr)_280px] gap-x-8 lg:gap-x-12 gap-y-5 items-start"
-          variants={staggerContainer(0.08, 0.08)}
-          initial="hidden"
-          animate={inView ? 'visible' : 'hidden'}
+          className="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_240px] lg:grid-cols-[minmax(0,1fr)_290px] gap-10 lg:gap-16 items-start"
+          variants={staggerContainer(0.07, 0.05)}
+          initial={reduceMotion ? false : 'hidden'}
+          animate="visible"
         >
-          <motion.div className="min-w-0 sm:col-start-1 sm:row-start-1" variants={fadeUp}>
-            <p className="text-xs sm:text-sm font-medium uppercase tracking-wider mb-5 text-[#7eb8c9]">
+          <div className="min-w-0">
+            <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-3 mb-6">
+              <span className="inline-flex items-center gap-2 rounded-full border border-[#6b8e23]/50 bg-[#29361f]/80 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-[#c9e58d]">
+                <span className="h-2 w-2 rounded-full bg-[#a9c66c]" aria-hidden />
+                Open to Fall 2027 PhD opportunities
+              </span>
+            </motion.div>
+
+            <motion.p variants={fadeUp} className="text-xs sm:text-sm font-semibold uppercase tracking-[0.18em] text-[#9fd1df] mb-4">
               {identity.eyebrow}
-            </p>
-            <h1 className="text-[clamp(1.85rem,5.5vw,3.25rem)] font-light leading-tight mb-3 tracking-[-0.03em] text-white">
+            </motion.p>
+            <motion.h1 variants={fadeUp} className="text-[clamp(2.2rem,6vw,4.25rem)] font-semibold leading-[1.03] tracking-[-0.045em] text-white">
               {identity.displayName}
-            </h1>
-            <p className="text-[clamp(1rem,2.2vw,1.25rem)] leading-relaxed text-[#a9c66c] font-light">
+            </motion.h1>
+            <motion.p variants={fadeUp} className="mt-4 text-[clamp(1.1rem,2.4vw,1.45rem)] leading-snug text-[#bddb80] font-medium max-w-[760px]">
               {identity.headline}
-            </p>
-          </motion.div>
+            </motion.p>
+            <motion.p variants={fadeUp} className="mt-5 text-base sm:text-lg leading-[1.7] text-gray-200 max-w-[720px]">
+              {identity.bio}
+            </motion.p>
 
-          <motion.div
-            className="justify-self-center sm:col-start-2 sm:row-start-1 sm:row-span-4 sm:pt-4"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={inView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ delay: 0.2, duration: 0.6, ease: easeSmooth }}
-          >
-            <motion.img
-              src="/images/profile-photo.png"
-              alt="Portrait of Naghmeh (Melody) Nazar"
-              width={832}
-              height={1248}
-              className="w-[104px] sm:w-[180px] lg:w-[280px] h-auto object-contain drop-shadow-2xl"
-              loading="eager"
-              whileHover={{ scale: 1.02 }}
-              transition={{ duration: 0.3 }}
-            />
-          </motion.div>
-
-          <motion.p className="text-base leading-relaxed text-gray-300 max-w-[640px] font-light sm:col-start-1 sm:row-start-2" variants={fadeUp}>
-            {identity.bio}
-          </motion.p>
-
-          <motion.div className="flex flex-wrap gap-3 sm:col-start-1 sm:row-start-3" variants={fadeUp}>
-            <motion.a
-              href="#research"
-              className="px-5 py-3 text-sm font-medium uppercase tracking-wider bg-[#526d1d] text-white hover:bg-[#455b18] rounded-sm inline-flex items-center"
-              whileHover={{ scale: 1.04, y: -2 }}
-              whileTap={{ scale: 0.98 }}
-              transition={{ duration: 0.2 }}
-            >
-              View Research
-            </motion.a>
-            <motion.a
-              href={cvHref}
-              download="Naghmeh_Melody_Nazar_Research_CV.pdf"
-              className="px-5 py-3 text-sm font-medium uppercase tracking-wider bg-transparent text-white border-2 border-white/30 hover:border-[#6b8e23] hover:bg-[#526d1d] rounded-sm inline-flex items-center"
-              aria-label={`Download ${cv.label}`}
-              whileHover={{ scale: 1.04, y: -2 }}
-              whileTap={{ scale: 0.98 }}
-              transition={{ duration: 0.2 }}
-            >
-              Download Research CV
-            </motion.a>
-          </motion.div>
-
-          <motion.nav className="flex flex-wrap gap-x-4 gap-y-2 text-sm sm:col-start-1 sm:row-start-4" aria-label="Contact links" variants={fadeUp}>
-            {[
-              { label: 'GitHub →', href: identity.github },
-              { label: 'LinkedIn →', href: identity.linkedIn },
-              { label: 'Email →', href: `mailto:${identity.email}` },
-            ].map((link) => (
+            <motion.div variants={fadeUp} className="mt-7 flex flex-wrap gap-3">
               <motion.a
-                key={link.label}
-                href={link.href}
-                target={link.href.startsWith('mailto') ? undefined : '_blank'}
-                rel={link.href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
-                className="text-gray-300 hover:text-[#a9c66c] rounded-sm py-1"
-                whileHover={{ x: 4 }}
+                href="#agent-security"
+                className="min-h-11 px-5 py-3 text-sm font-semibold bg-[#526d1d] text-white hover:bg-[#607e25] rounded-md inline-flex items-center"
+                whileHover={{ y: -2 }}
+                whileTap={{ scale: 0.98 }}
                 transition={{ duration: 0.2 }}
               >
-                {link.label}
+                View current research plan
               </motion.a>
-            ))}
-          </motion.nav>
-        </motion.div>
+              <motion.a
+                href={cvHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="min-h-11 px-5 py-3 text-sm font-semibold text-white border border-white/30 hover:border-[#a9c66c] hover:bg-white/5 rounded-md inline-flex items-center"
+                aria-label={`Open accessible HTML ${cv.label} in a new tab`}
+                whileHover={{ y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.2 }}
+              >
+                View research CV
+              </motion.a>
+              <a
+                href={`mailto:${identity.email}?subject=Fall%202027%20PhD%20research%20inquiry`}
+                className="min-h-11 px-3 py-3 text-sm font-semibold text-[#9fd1df] hover:text-white inline-flex items-center underline underline-offset-4 decoration-[#4f7182]"
+              >
+                Email me
+              </a>
+            </motion.div>
 
-        <motion.a
-          href="#research"
-          className="mt-8 mx-auto w-fit flex flex-col items-center gap-1 text-gray-400 text-xs uppercase hover:text-[#a9c66c] rounded-sm"
-          aria-label="Scroll to research section"
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ delay: 0.7, duration: 0.4 }}
-        >
-          <span>Scroll to research</span>
-          <motion.span
-            className="text-2xl text-[#a9c66c]"
-            aria-hidden="true"
-            animate={reduceMotion ? undefined : { y: [0, 6, 0] }}
-            transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+            <motion.dl variants={fadeUp} className="mt-9 grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-[820px]" aria-label="Research snapshot">
+              {researchSnapshot.map((item) => (
+                <div key={item.label} className="rounded-lg border border-white/10 bg-white/[0.035] p-4">
+                  <dt className="mt-1 text-xs leading-relaxed text-gray-400">{item.label}</dt>
+                  <dd className="mt-2 text-xl font-semibold text-white">{item.value}</dd>
+                </div>
+              ))}
+            </motion.dl>
+
+            <motion.nav variants={fadeUp} className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-sm" aria-label="Profile links">
+              {[
+                { label: 'GitHub ↗', href: identity.github },
+                { label: 'LinkedIn ↗', href: identity.linkedIn },
+              ].map((link) => (
+                <a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer" className="min-h-11 inline-flex items-center text-gray-300 hover:text-[#bddb80]">
+                  {link.label}
+                </a>
+              ))}
+            </motion.nav>
+          </div>
+
+          <motion.aside
+            className="hidden md:block justify-self-end pt-14"
+            variants={fadeUp}
+            aria-label="Portrait"
           >
-            ↓
-          </motion.span>
-        </motion.a>
+            <div className="relative">
+              <div className="absolute -inset-3 rounded-2xl border border-[#7eb8c9]/20 bg-[#7eb8c9]/5" aria-hidden />
+              <motion.img
+                src="/images/profile-photo.png"
+                alt="Portrait of Naghmeh (Melody) Nazar"
+                width={832}
+                height={1248}
+                className="relative w-[180px] sm:w-[220px] lg:w-[280px] h-auto object-contain rounded-xl drop-shadow-2xl"
+                loading="eager"
+                transition={{ duration: 0.3, ease: easeSmooth }}
+              />
+            </div>
+            <p className="mt-5 text-center md:text-left text-sm leading-relaxed text-gray-400 max-w-[280px]">
+              Los Angeles · M.S. Computer Engineering
+            </p>
+          </motion.aside>
+        </motion.div>
       </div>
     </section>
   )

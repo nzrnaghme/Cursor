@@ -23,18 +23,18 @@ function App() {
   }, [])
 
   useEffect(() => {
-    const handleScroll = () => {
-      const sections = document.querySelectorAll<HTMLElement>('main section[id]')
-      let activeSection = 'home'
-      for (const section of sections) {
-        if (section.getBoundingClientRect().top <= 120) activeSection = section.id
-      }
-      setCurrentSection(activeSection)
-    }
-
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    handleScroll()
-    return () => window.removeEventListener('scroll', handleScroll)
+    const sections = document.querySelectorAll<HTMLElement>('main section[id]')
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
+        if (visible?.target.id) setCurrentSection(visible.target.id)
+      },
+      { rootMargin: '-20% 0px -65% 0px', threshold: [0, 0.1, 0.25] },
+    )
+    sections.forEach((section) => observer.observe(section))
+    return () => observer.disconnect()
   }, [])
 
   return (
@@ -55,12 +55,12 @@ function App() {
 
         <main id="main-content" tabIndex={-1}>
           <Home />
-          <About />
           <Research />
           <Publications />
-          <Projects />
-          <Experience />
           <ResearchDirections />
+          <Experience />
+          <Projects />
+          <About />
           <Contact />
         </main>
 

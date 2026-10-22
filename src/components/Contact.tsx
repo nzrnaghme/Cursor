@@ -1,59 +1,21 @@
-import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import { identity, cv, getCvHref } from '../data/content'
-import ParticlesBackground from './ParticlesBackground'
+import { identity, cv, getAccessibleCvHref } from '../data/content'
 import { slideFromLeft, slideFromRight, staggerContainer, easeSmooth } from '../utils/motion'
 
 const Contact = () => {
   const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: true })
-  const containerRef = useRef<HTMLDivElement>(null)
 
-  const [localTime, setLocalTime] = useState('')
-  const [timeZone, setTimeZone] = useState('')
-
-  useEffect(() => {
-    const updateTime = () => {
-      try {
-        const now = new Date()
-        setLocalTime(
-          now.toLocaleTimeString('en-US', {
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: true,
-            timeZone: 'America/Los_Angeles',
-          })
-        )
-        setTimeZone(
-          Intl.DateTimeFormat('en-US', {
-            timeZone: 'America/Los_Angeles',
-            timeZoneName: 'short',
-          })
-            .formatToParts(now)
-            .find((p) => p.type === 'timeZoneName')?.value ?? 'PT'
-        )
-      } catch {
-        setLocalTime('--:--')
-        setTimeZone('America/Los_Angeles')
-      }
-    }
-    updateTime()
-    const interval = setInterval(updateTime, 1000)
-    return () => clearInterval(interval)
-  }, [])
-
-  const cvHref = getCvHref()
+  const cvHref = getAccessibleCvHref()
   const currentYear = new Date().getFullYear()
 
   return (
     <section
       id="contact"
       tabIndex={-1}
-      className="py-20 px-6 min-h-[70vh] flex items-center bg-gradient-to-br from-[#252525] to-[#1a1a1a] text-white relative"
-      ref={containerRef}
+      className="py-20 sm:py-24 px-6 bg-gradient-to-br from-[#252525] to-[#1a1a1a] text-white relative"
       aria-labelledby="contact-heading"
     >
-      <ParticlesBackground className="opacity-40" />
       <motion.div className="max-w-[1100px] mx-auto w-full relative z-10">
         <motion.div
           className="mb-8"
@@ -66,9 +28,11 @@ const Contact = () => {
             id="contact-heading"
             className="text-[clamp(1.75rem,4vw,3rem)] font-light mb-3 tracking-[-0.02em] text-white"
           >
-            Contact
+            Start a conversation
           </h2>
-          <p className="text-[#a9c66c] font-light">{identity.displayName}</p>
+          <p className="text-gray-300 max-w-[680px] leading-relaxed">
+            I welcome conversations about Fall 2027 PhD opportunities, trustworthy AI agents, speech ML, and research collaboration.
+          </p>
         </motion.div>
 
         <motion.div
@@ -93,13 +57,14 @@ const Contact = () => {
             <div>
               <motion.a
                 href={cvHref}
-                download="Naghmeh_Melody_Nazar_Research_CV.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-block px-6 py-3 bg-[#526d1d] text-white text-sm font-medium uppercase tracking-wider hover:bg-[#556b2f] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white rounded-sm"
-                aria-label={`Download ${cv.label}`}
+                aria-label={`Open accessible HTML ${cv.label} in a new tab`}
                 whileHover={{ scale: 1.04, y: -2 }}
                 whileTap={{ scale: 0.98 }}
               >
-                {cv.label}
+                View {cv.label}
               </motion.a>
             </div>
 
@@ -163,16 +128,10 @@ const Contact = () => {
               </a>
             </div>
 
-            <div className="flex flex-col gap-3 pt-4 border-t border-white/10 text-sm">
+            <div className="pt-4 border-t border-white/10 text-sm">
               <div className="flex justify-between">
                 <span className="text-gray-400 uppercase tracking-wider">© {currentYear}</span>
                 <span className="text-white">{identity.displayName}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-400 uppercase tracking-wider">Local time (LA)</span>
-                <span className="text-white" aria-live="polite">
-                  {localTime} {timeZone}
-                </span>
               </div>
             </div>
           </motion.div>

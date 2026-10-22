@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { projects, type ProjectStatus } from '../data/content'
 import SectionShell from './SectionShell'
-import { fadeUp, staggerContainer, cardHoverLift, easeSmooth } from '../utils/motion'
+import { fadeUp, staggerContainer } from '../utils/motion'
 
 const statusColors: Record<ProjectStatus, string> = {
   Research: 'bg-[#2a3441] text-[#7eb8c9] border-[#3d5a6e]/40',
@@ -12,8 +12,8 @@ const statusColors: Record<ProjectStatus, string> = {
 const Projects = () => (
   <SectionShell
     id="projects"
-    title="Projects"
-    subtitle="Selected work in natural-language processing, workflow automation, and conversational systems."
+    title="Selected Engineering Work"
+    subtitle="Systems work that informs how I think about tool use, untrusted inputs, and reliable implementation."
     className="bg-gradient-to-b from-[#1a1a1a] to-[#252525]"
   >
     <motion.div
@@ -23,25 +23,21 @@ const Projects = () => (
       whileInView="visible"
       viewport={{ once: true, margin: '-50px' }}
     >
-      {projects.map((project, index) => (
+      {projects.slice(0, 2).map((project, index) => (
         <motion.article
           key={project.id}
           className="flex flex-col bg-[#2a2a2a] rounded-xl border border-white/10 overflow-hidden"
-          variants={{ ...fadeUp, ...cardHoverLift }}
+          variants={fadeUp}
           custom={index}
-          transition={{ delay: index * 0.08, ease: easeSmooth }}
-          whileHover="hover"
-          initial="rest"
+          transition={{ delay: index * 0.08 }}
         >
           {project.image && (
             <div className="overflow-hidden">
-              <motion.img
+              <img
                 src={project.image}
                 alt={project.imageAlt}
                 className="w-full h-44 object-cover opacity-70"
                 loading="lazy"
-                whileHover={{ scale: 1.05, opacity: 0.85 }}
-                transition={{ duration: 0.4, ease: easeSmooth }}
               />
             </div>
           )}
@@ -55,7 +51,7 @@ const Projects = () => (
               <span className="text-xs text-gray-400">{project.year}</span>
             </div>
             <h3 className="text-lg font-medium text-white mb-2">{project.title}</h3>
-            <p className="text-sm text-gray-300 font-light mb-4 flex-1">{project.description}</p>
+            <p className="text-sm text-gray-300 mb-4 flex-1 leading-relaxed">{project.description}</p>
             <dl className="text-xs text-gray-400 space-y-2 mb-4">
               <div>
                 <dt className="text-gray-400 uppercase tracking-wider mb-0.5">Problem</dt>

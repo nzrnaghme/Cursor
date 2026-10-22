@@ -1,7 +1,6 @@
-import { ReactNode, useRef } from 'react'
+import { ReactNode } from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import ParticlesBackground from './ParticlesBackground'
 import { fadeUp, staggerContainer, easeSmooth } from '../utils/motion'
 
 interface SectionShellProps {
@@ -10,7 +9,6 @@ interface SectionShellProps {
   subtitle?: string
   children: ReactNode
   className?: string
-  particles?: boolean
 }
 
 const SectionShell = ({
@@ -19,20 +17,16 @@ const SectionShell = ({
   subtitle,
   children,
   className = 'bg-gradient-to-b from-[#252525] to-[#1a1a1a]',
-  particles = true,
 }: SectionShellProps) => {
-  const containerRef = useRef<HTMLDivElement>(null)
   const { ref, inView } = useInView({ threshold: 0, triggerOnce: true })
 
   return (
     <section
       id={id}
       tabIndex={-1}
-      className={`py-20 px-6 min-h-screen flex items-center relative overflow-hidden ${className}`}
-      ref={containerRef}
+      className={`py-20 sm:py-24 px-6 relative overflow-hidden ${className}`}
       aria-labelledby={`${id}-heading`}
     >
-      {particles && <ParticlesBackground className="opacity-40" />}
       <motion.div
         className="max-w-[1100px] mx-auto w-full relative z-10"
         ref={ref}
@@ -47,9 +41,9 @@ const SectionShell = ({
           >
             {title}
             <motion.span
-              className="absolute -bottom-1 left-0 h-0.5 bg-[#6b8e23] rounded-full"
-              initial={{ width: 0 }}
-              animate={inView ? { width: '100%' } : { width: 0 }}
+              className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#6b8e23] rounded-full origin-left"
+              initial={{ scaleX: 0 }}
+              animate={inView ? { scaleX: 1 } : { scaleX: 0 }}
               transition={{ duration: 0.7, delay: 0.2, ease: easeSmooth }}
               aria-hidden
             />

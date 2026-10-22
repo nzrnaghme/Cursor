@@ -3,12 +3,12 @@
 export const identity = {
   displayName: 'Naghmeh (Melody) Nazar',
   shortName: 'Melody',
-  eyebrow: 'M.S. in Computer Engineering · PhD Applicant for Fall 2027',
-  headline: 'Machine Learning Researcher | Speech ML & Trustworthy AI',
+  eyebrow: 'M.S. Computer Engineering · CSUN, 2026',
+  headline: 'Machine Learning Researcher | Agent Security & Speech ML',
   tagline:
-    'Speech Emotion Recognition · Trustworthy AI Agents · Scalable Oversight',
-  bio: `I work at the intersection of speech machine learning and trustworthy AI. My M.S. thesis built a real-time speech emotion recognition system with deep residual networks, reaching 80.36% validation accuracy and 74.4% on a held-out mixed test set, with an emphasis on rigorous, reproducible evaluation.`,
-  extendedBio: `PhD applicant for Fall 2027 researching speech ML, trustworthy AI agents, and scalable oversight.`,
+    'Indirect Prompt Injection · Pre-Execution Safeguards · Robust Evaluation',
+  bio: `I study how machine-learning systems fail under adversarial inputs and distribution shift. My current independent work analyzes indirect prompt injection in tool-using LLM agents; my M.S. thesis developed and evaluated a four-class speech-emotion model on RAVDESS and TESS.`,
+  extendedBio: `My M.S. work focused on speech ML; my current work studies tool-using-agent security. Professional engineering experience helps me turn research questions into reproducible systems.`,
   location: 'Los Angeles, CA, United States',
   email: 'melodynzr@gmail.com',
   portfolio: 'https://melodynazar.com',
@@ -17,15 +17,23 @@ export const identity = {
 } as const
 
 export const aboutParagraphs = [
-  `I completed my M.S. in Computer Engineering at California State University, Northridge in August 2026. My thesis built a real-time speech emotion recognition system with deep residual networks, reaching 80.36% validation accuracy and 74.4% on a held-out mixed test set, with an emphasis on rigorous, reproducible evaluation.`,
-  `My current independent research examines the security of tool-using LLM agents: how untrusted content in emails, documents, or tool outputs can redirect an agent's tool calls, and how that behavior can be caught before execution. This work includes a structured analysis of MCP-SafetyBench and defense ideas such as confidence gating before tool use.`,
-  `I am especially interested in Prof. Rudner's work on trustworthy AI agents and scalable oversight, and in Vector's AI safety and security community. Before my M.S., I worked for several years as a professional software engineer.`,
+  `I completed my M.S. in Computer Engineering at California State University, Northridge in August 2026. My thesis developed a 2D ResNet-inspired CNN for four-class speech emotion recognition using RAVDESS and TESS, with explicit reporting of evaluation limits.`,
+  `My current independent research examines how untrusted content in emails, documents, or tool outputs can redirect an LLM agent's tool calls. I am analyzing MCP-SafetyBench and evaluating confidence or uncertainty gating as a candidate pre-execution safeguard, not as a validated defense.`,
+  `For Fall 2027, I am seeking PhD supervision on trustworthy tool-using agents, scalable oversight, and robust machine-learning evaluation. Before my M.S., I worked for several years as a professional software engineer, experience that helps me turn research questions into testable systems.`,
+] as const
+
+export const researchSnapshot = [
+  { value: 'Current study', label: 'Agent-security analysis & experiment design' },
+  { value: 'M.S. thesis', label: 'Four-class speech ML on RAVDESS + TESS' },
+  { value: '3+ years', label: 'Production software engineering' },
 ] as const
 
 /** Prefer same-domain PDF when present in public/; fallback until owner adds file. */
 export const cv = {
-  label: 'Research CV (PDF)',
+  label: 'Research CV',
+  pdfLabel: 'Research CV (PDF)',
   localPath: '/Naghmeh_Melody_Nazar_Research_CV.pdf',
+  accessiblePath: '/Naghmeh_Melody_Nazar_Research_CV.html',
   fallbackUrl:
     'https://drive.google.com/file/d/1AZorZk7XdRCiORRH4z4CcgtQUvFuO29W/view?usp=drive_link',
 } as const
@@ -33,6 +41,36 @@ export const cv = {
 export function getCvHref(): string {
   return cv.localPath
 }
+
+export function getAccessibleCvHref(): string {
+  return cv.accessiblePath
+}
+
+export const agentSecurityStudy = {
+  title: 'Pre-Execution Safeguards for Tool-Using LLM Agents',
+  status: 'Independent research · In progress',
+  summary:
+    'A structured investigation of how indirect prompt injection can move from untrusted context into an agent\'s proposed tool calls—and what signals could stop unsafe actions before execution.',
+  question:
+    'When an agent reads untrusted email, documents, or tool output, what pre-execution signals indicate that a proposed tool call was induced by malicious instructions?',
+  threatModel:
+    'Indirect prompt injection delivered through content the agent is expected to read, followed by a side-effecting or otherwise high-impact tool call.',
+  workCompleted:
+    'Analysis to date covers MCP-SafetyBench scenarios and attack paths, with attention to the transition from untrusted context to tool selection and arguments.',
+  defenseHypothesis:
+    'Confidence or uncertainty gating before tool execution is being evaluated as a candidate baseline. It is not yet a validated defense.',
+  evaluationPlan: [
+    'Attack success rate under adversarial content',
+    'Benign task completion rate',
+    'False-block rate for safe tool calls',
+    'Calibration of the pre-execution risk signal',
+  ],
+  artifactStatus:
+    'Research analysis and experiment design are in progress; no public results or code are claimed yet.',
+  benchmarkUrl:
+    'https://proceedings.iclr.cc/paper_files/paper/2026/hash/d46f127a80dc58cbc0732a717285c43a-Abstract-Conference.html',
+  benchmarkLabel: 'MCP-SafetyBench (Zong et al., ICLR 2026) — external benchmark analyzed',
+} as const
 
 export const education = [
   {
@@ -60,7 +98,7 @@ export const education = [
 
 export const thesisCaseStudy = {
   title: 'Real-Time Speech Emotion Recognition Using Optimized Deep Residual Networks',
-  status: 'Research manuscript',
+  status: 'M.S. thesis research',
   question:
     'How can residual neural networks classify emotional states from speech, and how should their performance be evaluated across speakers and datasets?',
   data: {
@@ -70,18 +108,18 @@ export const thesisCaseStudy = {
   model: '2D ResNet-inspired CNN with four output labels: neutral, happy, sad, and angry.',
   training:
     'Adam optimization with dropout and residual connections, supported by a reproducible preprocessing and evaluation pipeline.',
-  evaluation: '80.36% validation accuracy and 74.4% accuracy on a held-out mixed test set.',
+  evaluation: 'On the current split, the model achieved 80.36% validation accuracy and 74.4% on a held-out mixed test set. Speaker-independent and cross-corpus performance remain to be evaluated.',
   errorAnalysis: [
     'Happy / Neutral confusion patterns',
     'Speaker variability across the corpus',
     'Cross-corpus distribution shift',
   ],
   prototype:
-    'Research prototype for speech emotion classification. Desktop inference and latency profiling are future validation tasks.',
+    'Research prototype toward practical speech-emotion inference. Desktop latency profiling remains future work; no real-time deployment claim is made.',
   limitations: [
     'Acted speech datasets (RAVDESS, TESS)',
     'Cross-corpus distribution shift',
-    'A held-out mixed test set does not by itself establish cross-corpus generalization',
+    'The held-out mixed test set is not evidence of speaker-independent or cross-corpus generalization',
     'Real-world latency and generalization remain to be established',
     'No clinical validation',
     'No claim of generalization to naturalistic or healthcare settings',
@@ -102,44 +140,44 @@ export const thesisCaseStudy = {
 
 export const publications = [
   {
-    title: 'Manuscript based on M.S. thesis',
+    title: 'M.S. thesis research',
     detail: 'Real-Time Speech Emotion Recognition Using Optimized Deep Residual Networks',
-    venue: 'M.S. thesis research',
-    status: 'Research manuscript' as const,
-    note: '',
+    venue: 'CSUN · August 2026',
+    status: 'Thesis' as const,
+    note: 'Thesis PDF available on request.',
   },
   {
-    title: 'Speech emotion recognition research',
-    detail: '40th Annual CSU Student Research Competition',
-    venue: 'Presentation',
+    title: '40th Annual CSU Student Research Competition',
+    detail: 'Presentation of the M.S. speech emotion recognition research',
+    venue: 'Presenter · 2026',
     status: 'Presentation' as const,
-    note: '',
+    note: 'Presentation materials available on request.',
   },
 ] as const
 
 export const researchDirections = [
   {
-    title: 'Trustworthy agentic AI',
+    title: 'Pre-execution agent safeguards',
     items: [
       'Indirect prompt injection through emails, documents, and tool outputs',
-      'MCP-SafetyBench analysis and confidence gating before tool use',
-      'Scalable oversight, recovery, and auditability',
+      'Risk and uncertainty signals before side-effecting tool calls',
+      'Safety-utility trade-offs and calibrated intervention',
     ],
   },
   {
-    title: 'Robust human-centered sensing',
+    title: 'Robust evaluation under shift',
     items: [
-      'Speech and multimodal signals',
-      'Domain shift and subgroup-aware evaluation',
-      'Responsible health AI',
+      'Speaker-independent and cross-corpus speech evaluation',
+      'Subgroup-aware error analysis',
+      'Reproducible protocols and transparent limitations',
     ],
   },
   {
-    title: 'Efficient real-time ML',
+    title: 'Oversight, recovery & auditability',
     items: [
-      'Model compression and profiling',
-      'Embedded inference',
-      'Future FPGA/SoC mapping (not completed)',
+      'Human approval for high-impact actions',
+      'Recovery after unsafe or ambiguous behavior',
+      'Action provenance and scalable oversight',
     ],
   },
 ] as const
@@ -147,6 +185,23 @@ export const researchDirections = [
 export type ProjectStatus = 'Research' | 'Prototype' | 'Software Project'
 
 export const projects = [
+  {
+    id: 'email-agent',
+    title: 'GenAI Email & Scheduling Agent',
+    status: 'Prototype' as ProjectStatus,
+    year: '2026',
+    description:
+      'Built an n8n tool-using email prototype, then examined where untrusted messages, generated content, and missing approval boundaries can create risk.',
+    problem:
+      'Email automation combines untrusted input with tools that can draft messages, retrieve records, and schedule actions.',
+    contribution:
+      'Connected classification and response-generation steps, documented incomplete validation and approval boundaries, and used the workflow to motivate agent-security questions.',
+    stack: 'n8n, OpenAI, Gmail API, Airtable, JavaScript',
+    link: 'https://github.com/nzrnaghme/RespondEmailAgent',
+    linkLabel: 'Inspect the email-agent workflow on GitHub',
+    image: '/images/project-ai-email-agent.png',
+    imageAlt: 'n8n workflow diagram for an AI email agent',
+  },
   {
     id: 'covid-nlp',
     title: 'Persian COVID-19 Social Behavior Analysis',
@@ -157,29 +212,12 @@ export const projects = [
     problem:
       'Crisis-driven social behavior is difficult to measure at scale without structured NLP pipelines for Persian text.',
     contribution:
-      'Built pipelines for sentiment classification, topic modeling, and temporal tracking; identified emotional cycles and linguistic drift over the crisis timeline.',
+      'Built pipelines for sentiment classification, topic modeling, and temporal tracking to explore changes across the crisis timeline.',
     stack: 'Python, NLP, topic modeling, Google Cloud',
     link: 'https://www.linkedin.com/posts/naghme-nazar_machinelearning-nlp-datascience-ugcPost-7361228441074962434-s89Q?utm_source=share&utm_medium=member_desktop&rcm=ACoAACbyPb0Be82yiC7g1CitYj_zttwH1PBbPNM',
     linkLabel: 'Read the project summary on LinkedIn',
     image: '/images/project-covid-analysis.png',
     imageAlt: 'Persian COVID-19 social media analysis project',
-  },
-  {
-    id: 'email-agent',
-    title: 'GenAI Email & Scheduling Agent',
-    status: 'Prototype' as ProjectStatus,
-    year: '2026',
-    description:
-      'n8n prototype for classifying email, retrieving business context, and generating responses with OpenAI, Gmail, and Airtable integrations.',
-    problem:
-      'High email volume makes manual triage, labeling, and reply drafting inefficient and inconsistent.',
-    contribution:
-      'Connected email classification, context retrieval, and response generation in an exported n8n workflow.',
-    stack: 'n8n, OpenAI, Gmail API, Airtable, JavaScript',
-    link: 'https://github.com/nzrnaghme/RespondEmailAgent',
-    linkLabel: 'View the email-agent workflow on GitHub',
-    image: '/images/project-ai-email-agent.png',
-    imageAlt: 'n8n workflow diagram for AI email agent',
   },
   {
     id: 'cctv-chatbot',
@@ -266,8 +304,8 @@ export const skillGroups = [
   },
   {
     id: 'research-tools',
-    label: 'Research Tools',
-    skills: ['SciPy', 'Librosa', 'Jupyter', 'Google Colab', 'Git', 'Linux'],
+    label: 'Research & Evaluation',
+    skills: ['Experimental design', 'Error analysis', 'Threat modeling', 'Reproducible evaluation', 'Git', 'Linux'],
   },
   {
     id: 'engineering',
@@ -282,30 +320,22 @@ export const skillGroups = [
       'REST APIs',
     ],
   },
-  {
-    id: 'systems',
-    label: 'Systems / Future Direction',
-    skills: [
-      'Real-time inference',
-      'SoC coursework',
-      'FPGA/SoC familiarity (not deployed)',
-    ],
-  },
 ] as const
 
 export const navItems = [
-  { id: 'about', label: 'About' },
-  { id: 'research', label: 'Research' },
-  { id: 'publications', label: 'Publications & Presentations' },
-  { id: 'projects', label: 'Projects' },
-  { id: 'experience', label: 'Experience' },
-  { id: 'contact', label: 'Contact' },
+  { id: 'research', label: 'Research', desktop: true },
+  { id: 'publications', label: 'Outputs', desktop: true },
+  { id: 'directions', label: 'Agenda', desktop: true },
+  { id: 'experience', label: 'Experience', desktop: true },
+  { id: 'projects', label: 'Engineering', desktop: false },
+  { id: 'about', label: 'Background', desktop: true },
+  { id: 'contact', label: 'Contact', desktop: false },
 ] as const
 
 export const seo = {
   title: 'Naghmeh (Melody) Nazar | Speech ML & Trustworthy AI Researcher',
   description:
-    'Research portfolio of Naghmeh (Melody) Nazar, a Fall 2027 PhD applicant working on speech machine learning, trustworthy AI agents, and scalable oversight.',
+    'Research portfolio of Naghmeh (Melody) Nazar, a Fall 2027 PhD applicant studying indirect prompt injection, tool-using AI agents, and robust speech ML evaluation.',
   canonical: 'https://melodynazar.com',
   ogImage: '/images/profile-photo.png',
   themeColor: '#1a2332',
