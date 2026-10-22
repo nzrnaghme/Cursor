@@ -1,6 +1,7 @@
 import { motion, useReducedMotion } from 'framer-motion'
 import { identity, cv, getAccessibleCvHref, getCvHref, researchSnapshot } from '../data/content'
 import { fadeUp, staggerContainer, easeSmooth } from '../utils/motion'
+import ParticlesBackground from './ParticlesBackground'
 
 const Home = () => {
   const reduceMotion = useReducedMotion()
@@ -15,8 +16,9 @@ const Home = () => {
       aria-label="Introduction"
     >
       <div className="absolute inset-0" aria-hidden>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_24%,rgba(126,184,201,0.13),transparent_34%),radial-gradient(circle_at_82%_68%,rgba(107,142,35,0.13),transparent_32%)]" />
-        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#1a1a1a] to-transparent" />
+        <ParticlesBackground />
+        <div className="absolute inset-0 z-[1] bg-[radial-gradient(circle_at_18%_24%,rgba(126,184,201,0.13),transparent_34%),radial-gradient(circle_at_82%_68%,rgba(107,142,35,0.13),transparent_32%)]" />
+        <div className="absolute inset-x-0 bottom-0 z-[2] h-40 bg-gradient-to-t from-[#1a1a1a] to-transparent" />
       </div>
 
       <div className="relative z-10 max-w-[1120px] w-full mx-auto px-6 pt-28 pb-16 sm:pt-32">
@@ -49,13 +51,13 @@ const Home = () => {
 
             <motion.div variants={fadeUp} className="mt-7 flex flex-wrap gap-3">
               <motion.a
-                href="#agent-security"
+                href="#research"
                 className="min-h-11 px-5 py-3 text-sm font-semibold bg-[#526d1d] text-white hover:bg-[#607e25] rounded-md inline-flex items-center"
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.98 }}
                 transition={{ duration: 0.2 }}
               >
-                View current research plan
+                View research experience
               </motion.a>
               <motion.a
                 href={cvHref}

@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { navItems, cv, getCvHref, identity } from '../data/content'
 import { easeSmooth } from '../utils/motion'
+import MusicPlayer from './MusicPlayer'
 
 interface NavigationProps {
   currentSection: string
@@ -86,9 +87,11 @@ const Navigation = ({
             </a>
           </div>
 
+          <MusicPlayer />
+
           <motion.a
             href="#contact"
-            className="px-5 py-2.5 rounded-full text-sm font-medium uppercase tracking-wider bg-[#526d1d] text-white hover:bg-[#556b2f] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+            className="hidden lg:inline-flex px-5 py-2.5 rounded-full text-sm font-medium uppercase tracking-wider bg-[#526d1d] text-white hover:bg-[#556b2f] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             onClick={() => setMenuOpen(false)}
             aria-current={currentSection === 'contact' ? 'location' : undefined}
             whileHover={{ scale: 1.02 }}

@@ -32,7 +32,7 @@ const Contact = () => {
             Start a conversation
           </h2>
           <p className="text-gray-300 max-w-[680px] leading-relaxed">
-            I welcome conversations about Fall 2027 PhD opportunities, trustworthy AI agents, speech ML, and research collaboration.
+            I welcome conversations about Fall 2027 PhD opportunities, speech and multimodal learning, trustworthy AI, and research collaboration.
           </p>
         </motion.div>
 

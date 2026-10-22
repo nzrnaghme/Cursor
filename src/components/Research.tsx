@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { agentSecurityStudy, thesisCaseStudy } from '../data/content'
+import { thesisCaseStudy } from '../data/content'
 import SectionShell from './SectionShell'
 import { fadeUp, staggerContainer } from '../utils/motion'
 
@@ -27,8 +27,8 @@ const EvidenceBlock = ({ title, children }: { title: string; children: React.Rea
 const Research = () => (
   <SectionShell
     id="research"
-    title="Selected Research"
-    subtitle="My M.S. work focused on speech ML; my current work studies the security of tool-using agents. Across both, I focus on failure analysis, distribution shift, and evaluation before deployment."
+    title="Research Experience"
+    subtitle="My completed M.S. thesis examined speech emotion recognition with a ResNet-inspired model and explicit reporting of evaluation limits."
     className="bg-gradient-to-b from-[#15212d] to-[#1a1a1a]"
   >
     <motion.div
@@ -38,56 +38,6 @@ const Research = () => (
       whileInView="visible"
       viewport={{ once: true, margin: '-50px' }}
     >
-      <motion.article
-        id="agent-security"
-        tabIndex={-1}
-        className="scroll-mt-28 rounded-2xl border border-[#4f7182]/45 bg-[#202a34] p-6 sm:p-8"
-        variants={fadeUp}
-        aria-labelledby="agent-security-title"
-      >
-        <div className="flex flex-wrap items-center gap-2 mb-5">
-          <StatusBadge tone="green">Current research</StatusBadge>
-          <StatusBadge>{agentSecurityStudy.status}</StatusBadge>
-        </div>
-
-        <h3 id="agent-security-title" className="text-2xl sm:text-3xl font-semibold tracking-[-0.02em] text-white max-w-[800px]">
-          {agentSecurityStudy.title}
-        </h3>
-        <p className="mt-4 text-base sm:text-lg text-gray-200 leading-relaxed max-w-[820px]">
-          {agentSecurityStudy.summary}
-        </p>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-7">
-          <EvidenceBlock title="Research question">{agentSecurityStudy.question}</EvidenceBlock>
-          <EvidenceBlock title="Threat model">{agentSecurityStudy.threatModel}</EvidenceBlock>
-          <EvidenceBlock title="Analysis to date">{agentSecurityStudy.workCompleted}</EvidenceBlock>
-          <EvidenceBlock title="Defense hypothesis">{agentSecurityStudy.defenseHypothesis}</EvidenceBlock>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-[1.35fr_1fr] gap-4 mt-4">
-          <EvidenceBlock title="Planned evaluation">
-            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-2">
-              {agentSecurityStudy.evaluationPlan.map((item) => (
-                <li key={item} className="flex gap-2">
-                  <span className="text-[#a9c66c]" aria-hidden>•</span>
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </EvidenceBlock>
-          <EvidenceBlock title="Evidence status">{agentSecurityStudy.artifactStatus}</EvidenceBlock>
-        </div>
-
-        <a
-          href={agentSecurityStudy.benchmarkUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-6 inline-flex min-h-11 items-center text-sm font-semibold text-[#bddb80] hover:text-white underline decoration-[#6b8e23] underline-offset-4 rounded-sm"
-        >
-          {agentSecurityStudy.benchmarkLabel} ↗
-        </a>
-      </motion.article>
-
       <motion.article
         id="speech-ml"
         className="scroll-mt-28 rounded-2xl border border-white/10 bg-[#232323] p-6 sm:p-8"
