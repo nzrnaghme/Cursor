@@ -33,7 +33,7 @@ PDF_OUTPUT = PUBLIC / "Naghmeh_Melody_Nazar_Research_CV.pdf"
 HTML_OUTPUT = PUBLIC / "Naghmeh_Melody_Nazar_Research_CV.html"
 
 NAME = "Naghmeh (Melody) Nazar"
-FOCUS = "FALL 2027 PhD APPLICANT | AI SAFETY & TOOL-USING AGENT SECURITY | SPEECH ML"
+FOCUS = "FALL 2027 PhD APPLICANT | SPEECH ML | TRUSTWORTHY AI & AGENT SECURITY INTERESTS"
 LOCATION = "Los Angeles, CA"
 PHONE_DISPLAY = "(818) 336-7271"
 PHONE_HREF = "+18183367271"
@@ -43,14 +43,14 @@ LINKEDIN = "https://linkedin.com/in/naghme-nazar"
 GITHUB = "https://github.com/nzrnaghme"
 
 RESEARCH_FOCUS = (
-    "Fall 2027 PhD applicant studying pre-execution safeguards for indirect prompt injection "
-    "from untrusted email, documents, and tool outputs in tool-using large language model (LLM) "
-    "agents. Current independent work maps selected MCP-SafetyBench attack paths involving "
-    "untrusted tool metadata, user input, and tool outputs and is designing an evaluation using "
-    "attack success, benign task completion, false-block rate, and "
-    "calibration. M.S. thesis: four-class speech emotion recognition on RAVDESS and TESS, with "
-    "explicit limits on speaker-independent and cross-corpus claims. Brings 3+ years of "
-    "production software engineering experience to building testable AI systems."
+    "Fall 2027 PhD applicant with completed M.S. research in speech ML and developing interests "
+    "in trustworthy AI and tool-using agent security. Independently studying selected attack "
+    "patterns documented in MCP-SafetyBench - external work by Zong et al. (ICLR 2026) - and "
+    "considering how pre-execution safeguards could be evaluated. This exploration has no "
+    "benchmark authorship, implemented defense, or validated results. M.S. thesis: four-class "
+    "speech emotion recognition on RAVDESS and TESS, with explicit limits on speaker-independent "
+    "and cross-corpus claims. Brings 3+ years of production software engineering experience to "
+    "building testable AI systems."
 )
 
 RESEARCH_INTERESTS = (
@@ -66,24 +66,23 @@ PROTOTYPE_URL = "https://github.com/nzrnaghme/RespondEmailAgent"
 
 RESEARCH_EXPERIENCE = [
     {
-        "title": "Independent Research - Pre-Execution Safeguards for Tool-Using LLM Agents",
-        "date": "Current",
+        "title": "Independent Exploration - Safety of Tool-Using LLM Agents",
+        "date": "Ongoing",
         "bullets": [
             {
                 "text": (
-                    "Mapping selected MCP-SafetyBench attack paths (Zong et al., ICLR 2026) "
-                    "involving untrusted tool metadata, user input, and tool outputs as they "
-                    "propagate to proposed tool selection and arguments."
+                    "Studying selected attack patterns documented in MCP-SafetyBench (Zong et al., "
+                    "ICLR 2026), an external benchmark, to understand how untrusted context can "
+                    "affect tool selection and arguments."
                 ),
                 "link": BENCHMARK_URL,
-                "link_label": "MCP-SafetyBench paper",
+                "link_label": "External reference: MCP-SafetyBench paper",
             },
             {
                 "text": (
-                    "Designing an evaluation of a candidate pre-execution risk-gating baseline; "
-                    "planned measures include attack success, benign task completion, false-block "
-                    "rate, and calibration. Analysis and experiment design are in progress; no "
-                    "validated defense results are claimed."
+                    "Considering how a pre-execution risk check could be evaluated using attack "
+                    "success, benign task completion, false-block rate, and calibration; no "
+                    "experiments, defense implementation, or validated results are claimed."
                 )
             },
             {
@@ -176,8 +175,8 @@ PROFESSIONAL_EXPERIENCE = [
 
 TECHNICAL_SKILLS = [
     (
-        "Agent-security study",
-        "indirect prompt injection, attack-path analysis, tool-call risk evaluation design",
+        "Topics explored independently",
+        "indirect prompt injection, tool-call risk, human-approval boundaries",
     ),
     (
         "Speech and machine learning",
@@ -331,7 +330,7 @@ def pdf_metadata(canvas, _doc):
     canvas.setTitle(f"{NAME} - Research CV")
     canvas.setAuthor(NAME)
     canvas.setSubject(
-        "Fall 2027 PhD applicant research CV: AI safety, tool-using agent security, and speech ML"
+        "Fall 2027 PhD applicant CV: speech ML research and trustworthy AI interests"
     )
     canvas.setKeywords(
         "AI safety, LLM agent security, indirect prompt injection, scalable oversight, "
@@ -349,8 +348,7 @@ def add_pdf_language_metadata() -> None:
             "/Title": f"{NAME} - Research CV",
             "/Author": NAME,
             "/Subject": (
-                "Fall 2027 PhD applicant research CV: AI safety, tool-using agent security, "
-                "and speech machine learning"
+                "Fall 2027 PhD applicant CV: speech ML research and trustworthy AI interests"
             ),
             "/Keywords": (
                 "AI safety; LLM agent security; indirect prompt injection; scalable oversight; "
@@ -391,7 +389,7 @@ def generate_pdf() -> None:
         )
     )
 
-    story.extend(section("Research Experience"))
+    story.extend(section("Research Experience & Independent Exploration"))
     for index, entry in enumerate(RESEARCH_EXPERIENCE):
         if index:
             story.append(Spacer(1, 2))
@@ -492,7 +490,7 @@ def generate_html() -> None:
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="index, follow" />
-    <meta name="description" content="Research CV for {html_escape(NAME)}, a Fall 2027 PhD applicant studying AI safety, tool-using agent security, and speech machine learning." />
+    <meta name="description" content="Research CV for {html_escape(NAME)}, a Fall 2027 PhD applicant with completed speech-ML research and interests in trustworthy AI and tool-using agent security." />
     <title>{html_escape(NAME)} - Research CV</title>
     <style>
       :root {{ color-scheme: light; --navy: #17324d; --teal: #087f76; --ink: #202b3a; --muted: #526274; --rule: #cad6df; }}
@@ -559,7 +557,7 @@ def generate_html() -> None:
         </section>
 
         <section aria-labelledby="research-heading">
-          <h2 id="research-heading">Research experience</h2>
+          <h2 id="research-heading">Research experience &amp; independent exploration</h2>
           {research_html}
         </section>
 

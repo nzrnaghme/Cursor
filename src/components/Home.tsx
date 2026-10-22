@@ -57,7 +57,7 @@ const Home = () => {
                 whileTap={{ scale: 0.98 }}
                 transition={{ duration: 0.2 }}
               >
-                View current research plan
+                Explore current interests
               </motion.a>
               <motion.a
                 href={cvHref}

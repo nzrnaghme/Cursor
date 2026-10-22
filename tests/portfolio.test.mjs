@@ -32,12 +32,14 @@ test('research uses implementation descriptors and reports the verified evaluati
 test('applicant profile is evidence-aware and institution-neutral', () => {
   const profile = content.aboutParagraphs.join(' ')
   assert.match(profile, /MCP-SafetyBench/)
-  assert.match(profile, /candidate pre-execution risk-gating baseline/)
-  assert.match(profile, /no validated defense results are claimed/)
+  assert.match(profile, /external work by Zong et al\., ICLR 2026/)
+  assert.match(profile, /This is exploratory work/)
+  assert.match(profile, /do not claim authorship of MCP-SafetyBench/)
   assert.doesNotMatch(profile, /Prof\. Rudner|Vector's/i)
-  assert.match(content.identity.headline, /Agent Security & Speech ML/)
-  assert.match(content.agentSecurityStudy.status, /In progress/)
-  assert.match(content.agentSecurityStudy.artifactStatus, /no public results or code are claimed yet/i)
+  assert.match(content.identity.headline, /Agent Security Interests/)
+  assert.equal(content.agentSecurityStudy.status, 'Independent exploration · Ongoing')
+  assert.match(content.agentSecurityStudy.artifactStatus, /not a publication or formal lab project/i)
+  assert.match(content.agentSecurityStudy.benchmarkLabel, /^External reference:/)
   assert.match(content.agentSecurityStudy.benchmarkUrl, /^https:\/\/proceedings\.iclr\.cc\//)
 })
 
@@ -54,7 +56,7 @@ test('faculty-outreach CV is ATS-readable and keeps evidence guardrails', async 
   const cvGenerator = await read('scripts/generate_research_cv.py')
   const headings = [
     'Research focus',
-    'Research experience',
+    'Research experience &amp; independent exploration',
     'Research outputs &amp; presentation',
     'Education',
     'Professional experience',
@@ -63,14 +65,16 @@ test('faculty-outreach CV is ATS-readable and keeps evidence guardrails', async 
   const positions = headings.map((heading) => cvHtml.indexOf(`>${heading}</h2>`))
   assert.ok(positions.every((position) => position >= 0))
   assert.deepEqual([...positions].sort((a, b) => a - b), positions)
-  assert.match(cvHtml, /large language model \(LLM\) agents/)
-  assert.match(cvHtml, /untrusted tool metadata, user input, and tool outputs/)
+  assert.match(cvHtml, /external work by Zong et al\. \(ICLR 2026\)/)
+  assert.match(cvHtml, /Independent Exploration - Safety of Tool-Using LLM Agents/)
+  assert.match(cvHtml, /External reference: MCP-SafetyBench paper/)
+  assert.match(cvHtml, /no experiments, defense implementation, or validated results are claimed/)
   assert.match(cvHtml, /80\.36% validation accuracy/)
   assert.match(cvHtml, /74\.4% held-out test accuracy/)
-  assert.match(cvHtml, /no validated defense results are claimed/)
   assert.match(cvHtml, /github\.com\/nzrnaghme\/RespondEmailAgent/)
   assert.match(cvHtml, /download="Naghmeh_Melody_Nazar_Research_CV\.pdf"/)
   assert.doesNotMatch(cvHtml, /GPA: 3\.44|Persian COVID-19/)
+  assert.doesNotMatch(cvHtml, /Independent Research - Pre-Execution Safeguards/)
   assert.match(cvGenerator, /source of truth for both formats/)
 })
 

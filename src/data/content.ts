@@ -4,11 +4,11 @@ export const identity = {
   displayName: 'Naghmeh (Melody) Nazar',
   shortName: 'Melody',
   eyebrow: 'M.S. Computer Engineering · CSUN, 2026',
-  headline: 'Machine Learning Researcher | Agent Security & Speech ML',
+  headline: 'Speech ML Researcher | Trustworthy AI & Agent Security Interests',
   tagline:
-    'Indirect Prompt Injection · Pre-Execution Safeguards · Robust Evaluation',
-  bio: `I study how machine-learning systems fail under adversarial inputs and distribution shift. My current independent work analyzes indirect prompt injection in tool-using LLM agents; my M.S. thesis developed and evaluated a four-class speech-emotion model on RAVDESS and TESS.`,
-  extendedBio: `My M.S. work focused on speech ML; my current work studies tool-using-agent security. Professional engineering experience helps me turn research questions into reproducible systems.`,
+    'Speech ML · Trustworthy AI · Tool-Using Agent Safety',
+  bio: `My research background is in speech machine learning, and I am independently exploring how untrusted content can affect tool-using LLM agents. My M.S. thesis developed and evaluated a four-class speech-emotion model on RAVDESS and TESS.`,
+  extendedBio: `My completed research focuses on speech ML. I am also developing my interests in trustworthy AI and the security of tool-using agents through independent reading and technical exploration.`,
   location: 'Los Angeles, CA, United States',
   email: 'melodynzr@gmail.com',
   portfolio: 'https://melodynazar.com',
@@ -18,12 +18,12 @@ export const identity = {
 
 export const aboutParagraphs = [
   `I completed my M.S. in Computer Engineering at California State University, Northridge in August 2026. My thesis developed a 2D ResNet-inspired CNN for four-class speech emotion recognition using RAVDESS and TESS, with explicit reporting of evaluation limits.`,
-  `My current independent research examines how untrusted content in emails, documents, or tool outputs can redirect an LLM agent's tool calls. I am mapping MCP-SafetyBench attack paths and designing an evaluation of a candidate pre-execution risk-gating baseline; no validated defense results are claimed.`,
+  `I am independently exploring how untrusted content in emails, documents, or tool outputs can redirect an LLM agent's tool calls. As part of that exploration, I am studying selected attack patterns documented in MCP-SafetyBench—external work by Zong et al., ICLR 2026—and considering how pre-execution safeguards might be evaluated. This is exploratory work; I do not claim authorship of MCP-SafetyBench or validated defense results.`,
   `For Fall 2027, I am seeking PhD supervision on trustworthy tool-using agents, scalable oversight, and robust machine-learning evaluation. Before my M.S., I worked for several years as a professional software engineer, experience that helps me turn research questions into testable systems.`,
 ] as const
 
 export const researchSnapshot = [
-  { value: 'Current study', label: 'Agent-security analysis & experiment design' },
+  { value: 'Independent exploration', label: 'Tool-using agent safety & oversight' },
   { value: 'M.S. thesis', label: 'Four-class speech ML on RAVDESS + TESS' },
   { value: '3+ years', label: 'Production software engineering' },
 ] as const
@@ -47,18 +47,18 @@ export function getAccessibleCvHref(): string {
 }
 
 export const agentSecurityStudy = {
-  title: 'Pre-Execution Safeguards for Tool-Using LLM Agents',
-  status: 'Independent research · In progress',
+  title: 'Exploring Safety for Tool-Using LLM Agents',
+  status: 'Independent exploration · Ongoing',
   summary:
-    'A structured investigation of how indirect prompt injection can move from untrusted context into an agent\'s proposed tool calls—and what signals could stop unsafe actions before execution.',
+    'A self-directed exploration of how untrusted content can influence an agent\'s proposed tool calls and how safeguards might identify risky actions before execution.',
   question:
     'When an agent reads untrusted email, documents, or tool output, what pre-execution signals indicate that a proposed tool call was induced by malicious instructions?',
   threatModel:
     'Indirect prompt injection delivered through content the agent is expected to read, followed by a side-effecting or otherwise high-impact tool call.',
   workCompleted:
-    'Analysis to date covers MCP-SafetyBench scenarios and attack paths, with attention to the transition from untrusted context to tool selection and arguments.',
+    'I am studying selected scenarios and attack patterns documented in MCP-SafetyBench, an external benchmark by Zong et al., to understand how untrusted context can affect tool selection and arguments.',
   defenseHypothesis:
-    'A pre-execution risk-gating baseline is being specified for evaluation. Planned measures include attack success, benign completion, false-block rate, and calibration; no validated defense results are claimed.',
+    'One direction I am considering is a pre-execution risk check. Possible evaluation measures include attack success, benign completion, false-block rate, and calibration; I have not produced or validated a defense.',
   evaluationPlan: [
     'Attack success rate under adversarial content',
     'Benign task completion rate',
@@ -66,10 +66,10 @@ export const agentSecurityStudy = {
     'Calibration of the pre-execution risk signal',
   ],
   artifactStatus:
-    'Research analysis and experiment design are in progress; no public results or code are claimed yet.',
+    'Self-directed reading and problem formulation are in progress. This is not a publication or formal lab project, and there are no public experimental results or defense implementation.',
   benchmarkUrl:
     'https://proceedings.iclr.cc/paper_files/paper/2026/hash/d46f127a80dc58cbc0732a717285c43a-Abstract-Conference.html',
-  benchmarkLabel: 'MCP-SafetyBench (Zong et al., ICLR 2026) — external benchmark analyzed',
+  benchmarkLabel: 'External reference: MCP-SafetyBench — Zong et al., ICLR 2026',
 } as const
 
 export const education = [
@@ -333,9 +333,9 @@ export const navItems = [
 ] as const
 
 export const seo = {
-  title: 'Naghmeh (Melody) Nazar | Speech ML & Trustworthy AI Researcher',
+  title: 'Naghmeh (Melody) Nazar | Speech ML & Trustworthy AI Interests',
   description:
-    'Research portfolio of Naghmeh (Melody) Nazar, a Fall 2027 PhD applicant studying indirect prompt injection, tool-using AI agents, and robust speech ML evaluation.',
+    'Research portfolio of Naghmeh (Melody) Nazar, a Fall 2027 PhD applicant with completed work in speech ML and interests in trustworthy AI, indirect prompt injection, and tool-using agent safety.',
   canonical: 'https://melodynazar.com',
   ogImage: '/images/profile-photo.png',
   themeColor: '#1a2332',

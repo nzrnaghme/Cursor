@@ -27,8 +27,8 @@ const EvidenceBlock = ({ title, children }: { title: string; children: React.Rea
 const Research = () => (
   <SectionShell
     id="research"
-    title="Selected Research"
-    subtitle="My M.S. work focused on speech ML; my current work studies the security of tool-using agents. Across both, I focus on failure analysis, distribution shift, and evaluation before deployment."
+    title="Research & Current Interests"
+    subtitle="My completed research is in speech ML. I am also independently exploring the security of tool-using agents, with interests in failure analysis, oversight, and evaluation before deployment."
     className="bg-gradient-to-b from-[#15212d] to-[#1a1a1a]"
   >
     <motion.div
@@ -46,7 +46,7 @@ const Research = () => (
         aria-labelledby="agent-security-title"
       >
         <div className="flex flex-wrap items-center gap-2 mb-5">
-          <StatusBadge tone="green">Current research</StatusBadge>
+          <StatusBadge tone="green">Current interest</StatusBadge>
           <StatusBadge>{agentSecurityStudy.status}</StatusBadge>
         </div>
 
@@ -58,14 +58,14 @@ const Research = () => (
         </p>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-7">
-          <EvidenceBlock title="Research question">{agentSecurityStudy.question}</EvidenceBlock>
+          <EvidenceBlock title="Question I am exploring">{agentSecurityStudy.question}</EvidenceBlock>
           <EvidenceBlock title="Threat model">{agentSecurityStudy.threatModel}</EvidenceBlock>
-          <EvidenceBlock title="Analysis to date">{agentSecurityStudy.workCompleted}</EvidenceBlock>
-          <EvidenceBlock title="Defense hypothesis">{agentSecurityStudy.defenseHypothesis}</EvidenceBlock>
+          <EvidenceBlock title="What I am studying">{agentSecurityStudy.workCompleted}</EvidenceBlock>
+          <EvidenceBlock title="Possible direction">{agentSecurityStudy.defenseHypothesis}</EvidenceBlock>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-[1.35fr_1fr] gap-4 mt-4">
-          <EvidenceBlock title="Planned evaluation">
+          <EvidenceBlock title="Possible evaluation measures">
             <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-2">
               {agentSecurityStudy.evaluationPlan.map((item) => (
                 <li key={item} className="flex gap-2">
@@ -75,7 +75,7 @@ const Research = () => (
               ))}
             </ul>
           </EvidenceBlock>
-          <EvidenceBlock title="Evidence status">{agentSecurityStudy.artifactStatus}</EvidenceBlock>
+          <EvidenceBlock title="Current status">{agentSecurityStudy.artifactStatus}</EvidenceBlock>
         </div>
 
         <a
