@@ -14,16 +14,27 @@ test('education and manuscript status match the current reviewed content', () =>
   assert.ok(content.education[0].bullets.includes('GPA: 3.44'))
   assert.equal(content.education[0].degree, 'M.S. in Computer Engineering')
   assert.equal(content.thesisCaseStudy.status, 'Research manuscript')
-  assert.doesNotMatch(source, /under review|80\.36|74\.4|4,900|approval logic/i)
+  assert.match(content.thesisCaseStudy.evaluation, /80\.36% validation accuracy/)
+  assert.match(content.thesisCaseStudy.evaluation, /74\.4% accuracy on a held-out mixed test set/)
+  assert.doesNotMatch(source, /under review|4,900|approval logic/i)
   assert.match(content.thesisCaseStudy.codeAvailability, /not been publicly released/)
 })
 
-test('research uses implementation descriptors and keeps future evaluation qualified', () => {
+test('research uses implementation descriptors and reports the verified evaluation', () => {
   assert.match(content.thesisCaseStudy.model, /ResNet-inspired/)
   assert.match(content.thesisCaseStudy.data.summary, /16 kHz/)
   assert.match(content.thesisCaseStudy.data.summary, /128 × 128 log-Mel/)
-  assert.match(content.thesisCaseStudy.evaluation, /pending verification/)
+  assert.match(content.thesisCaseStudy.limitations.join(' '), /does not by itself establish cross-corpus generalization/)
   assert.doesNotMatch(source, /figurePlaceholder|Add verified figure|Formal citation pending/)
+})
+
+test('applicant profile includes trustworthy-agent research and institutional fit', () => {
+  const profile = content.aboutParagraphs.join(' ')
+  assert.match(profile, /MCP-SafetyBench/)
+  assert.match(profile, /confidence gating before tool use/)
+  assert.match(profile, /Prof\. Rudner/)
+  assert.match(profile, /Vector's AI safety and security community/)
+  assert.match(content.identity.eyebrow, /PhD Applicant for Fall 2027/)
 })
 
 test('project links describe their destination', () => {
@@ -109,3 +120,4 @@ test('URL-encoded section hashes resolve correctly', () => {
   restoreInitialSection('#research%2Dheading', (id) => { foundId = id; return null })
   assert.equal(foundId, 'research-heading')
 })
+

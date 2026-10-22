@@ -4,17 +4,23 @@ export const identity = {
   displayName: 'Naghmeh (Melody) Nazar',
   shortName: 'Melody',
   eyebrow: 'M.S. in Computer Engineering · PhD Applicant for Fall 2027',
-  headline: 'Machine Learning Researcher | Speech, Affective Computing & Responsible AI',
+  headline: 'Machine Learning Researcher | Speech ML & Trustworthy AI',
   tagline:
-    'Speech Emotion Recognition · Real-Time ML · Human-Centered Systems',
-  bio: `I study machine-learning methods for human-centered signals. My speech emotion recognition research explores audio preprocessing and residual neural networks, with a focus on reproducibility and the gap between acted speech and real-world use.`,
-  extendedBio: `M.S. in Computer Engineering from California State University, Northridge, with several years of professional software-engineering experience. My work connects signal processing and model design with practical software engineering.`,
+    'Speech Emotion Recognition · Trustworthy AI Agents · Scalable Oversight',
+  bio: `I work at the intersection of speech machine learning and trustworthy AI. My M.S. thesis built a real-time speech emotion recognition system with deep residual networks, reaching 80.36% validation accuracy and 74.4% on a held-out mixed test set, with an emphasis on rigorous, reproducible evaluation.`,
+  extendedBio: `PhD applicant for Fall 2027 researching speech ML, trustworthy AI agents, and scalable oversight.`,
   location: 'Los Angeles, CA, United States',
   email: 'melodynzr@gmail.com',
   portfolio: 'https://melodynazar.com',
   linkedIn: 'https://linkedin.com/in/naghme-nazar',
   github: 'https://github.com/nzrnaghme',
 } as const
+
+export const aboutParagraphs = [
+  `I completed my M.S. in Computer Engineering at California State University, Northridge in August 2026. My thesis built a real-time speech emotion recognition system with deep residual networks, reaching 80.36% validation accuracy and 74.4% on a held-out mixed test set, with an emphasis on rigorous, reproducible evaluation.`,
+  `My current independent research examines the security of tool-using LLM agents: how untrusted content in emails, documents, or tool outputs can redirect an agent's tool calls, and how that behavior can be caught before execution. This work includes a structured analysis of MCP-SafetyBench and defense ideas such as confidence gating before tool use.`,
+  `I am especially interested in Prof. Rudner's work on trustworthy AI agents and scalable oversight, and in Vector's AI safety and security community. Before my M.S., I worked for several years as a professional software engineer.`,
+] as const
 
 /** Prefer same-domain PDF when present in public/; fallback until owner adds file. */
 export const cv = {
@@ -63,8 +69,8 @@ export const thesisCaseStudy = {
   },
   model: '2D ResNet-inspired CNN with four output labels: neutral, happy, sad, and angry.',
   training:
-    'Adam optimization with dropout and residual connections. Evaluation and reproducibility checks are ongoing.',
-  evaluation: 'Speaker-independent data partitions and a separate held-out test remain to be established. Performance figures are omitted pending verification of the evaluation protocol and results.',
+    'Adam optimization with dropout and residual connections, supported by a reproducible preprocessing and evaluation pipeline.',
+  evaluation: '80.36% validation accuracy and 74.4% accuracy on a held-out mixed test set.',
   errorAnalysis: [
     'Happy / Neutral confusion patterns',
     'Speaker variability across the corpus',
@@ -75,8 +81,8 @@ export const thesisCaseStudy = {
   limitations: [
     'Acted speech datasets (RAVDESS, TESS)',
     'Cross-corpus distribution shift',
-    'Speaker-independent and held-out evaluation not yet established',
-    'Latency and real-world generalization not yet established',
+    'A held-out mixed test set does not by itself establish cross-corpus generalization',
+    'Real-world latency and generalization remain to be established',
     'No clinical validation',
     'No claim of generalization to naturalistic or healthcare settings',
   ],
@@ -115,9 +121,9 @@ export const researchDirections = [
   {
     title: 'Trustworthy agentic AI',
     items: [
-      'Memory and RAG poisoning',
-      'Provenance and consistency-based defenses',
-      'Recovery and auditability',
+      'Indirect prompt injection through emails, documents, and tool outputs',
+      'MCP-SafetyBench analysis and confidence gating before tool use',
+      'Scalable oversight, recovery, and auditability',
     ],
   },
   {
@@ -297,10 +303,11 @@ export const navItems = [
 ] as const
 
 export const seo = {
-  title: 'Naghmeh (Melody) Nazar | ML Researcher in Speech & Affective Computing',
+  title: 'Naghmeh (Melody) Nazar | Speech ML & Trustworthy AI Researcher',
   description:
-    'Research portfolio of Naghmeh (Melody) Nazar, an M.S. in Computer Engineering working on speech emotion recognition, affective computing, responsible AI, and real-time machine learning.',
+    'Research portfolio of Naghmeh (Melody) Nazar, a Fall 2027 PhD applicant working on speech machine learning, trustworthy AI agents, and scalable oversight.',
   canonical: 'https://melodynazar.com',
   ogImage: '/images/profile-photo.png',
   themeColor: '#1a2332',
 } as const
+

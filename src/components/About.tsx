@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { education, identity } from '../data/content'
+import { aboutParagraphs, education, identity } from '../data/content'
 import SectionShell from './SectionShell'
 import SkillsTechnologies from './SkillsTechnologies'
 import AnimatedCard from './AnimatedCard'
@@ -16,7 +16,11 @@ const About = () => (
     >
       <motion.div variants={fadeUp}>
         <AnimatedCard className="p-6 bg-[#2a2a2a] rounded-xl border border-white/10 text-gray-300 font-light leading-relaxed" hover={false}>
-          <p>{identity.bio}</p>
+          <div className="space-y-4">
+            {aboutParagraphs.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+          </div>
         </AnimatedCard>
       </motion.div>
 
@@ -75,3 +79,4 @@ const About = () => (
 )
 
 export default About
+
