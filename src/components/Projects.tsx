@@ -13,7 +13,7 @@ const Projects = () => (
   <SectionShell
     id="projects"
     title="Selected Engineering Work"
-    subtitle="Systems work that informs how I think about tool use, untrusted inputs, and reliable implementation."
+    subtitle="Selected systems that reflect my experience building practical ML and software workflows."
     className="bg-gradient-to-b from-[#1a1a1a] to-[#252525]"
   >
     <motion.div

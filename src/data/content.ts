@@ -4,11 +4,11 @@ export const identity = {
   displayName: 'Naghmeh (Melody) Nazar',
   shortName: 'Melody',
   eyebrow: 'M.S. Computer Engineering · CSUN, 2026',
-  headline: 'Speech ML Researcher | Trustworthy AI & Agent Security Interests',
+  headline: 'Machine Learning Researcher | Speech, Multimodal & Trustworthy AI',
   tagline:
-    'Speech ML · Trustworthy AI · Tool-Using Agent Safety',
-  bio: `My research background is in speech machine learning, and I am independently exploring how untrusted content can affect tool-using LLM agents. My M.S. thesis developed and evaluated a four-class speech-emotion model on RAVDESS and TESS.`,
-  extendedBio: `My completed research focuses on speech ML. I am also developing my interests in trustworthy AI and the security of tool-using agents through independent reading and technical exploration.`,
+    'Speech ML · Multimodal Learning · Robust Evaluation',
+  bio: `I am a Fall 2027 PhD applicant with an M.S. in Computer Engineering and research experience in speech emotion recognition. My broader interests include speech and multimodal learning, trustworthy and robust machine learning, human-centered AI, and the safety of emerging AI systems.`,
+  extendedBio: `My completed research focuses on speech ML. I am interested in doctoral research spanning multimodal learning, trustworthy and robust machine learning, affective computing, human-centered AI, and safe AI systems.`,
   location: 'Los Angeles, CA, United States',
   email: 'melodynzr@gmail.com',
   portfolio: 'https://melodynazar.com',
@@ -18,13 +18,13 @@ export const identity = {
 
 export const aboutParagraphs = [
   `I completed my M.S. in Computer Engineering at California State University, Northridge in August 2026. My thesis developed a 2D ResNet-inspired CNN for four-class speech emotion recognition using RAVDESS and TESS, with explicit reporting of evaluation limits.`,
-  `I am independently exploring how untrusted content in emails, documents, or tool outputs can redirect an LLM agent's tool calls. As part of that exploration, I am studying selected attack patterns documented in MCP-SafetyBench—external work by Zong et al., ICLR 2026—and considering how pre-execution safeguards might be evaluated. This is exploratory work; I do not claim authorship of MCP-SafetyBench or validated defense results.`,
-  `For Fall 2027, I am seeking PhD supervision on trustworthy tool-using agents, scalable oversight, and robust machine-learning evaluation. Before my M.S., I worked for several years as a professional software engineer, experience that helps me turn research questions into testable systems.`,
+  `My broader research interests include speech and multimodal learning, trustworthy and robust machine learning, affective computing, human-centered AI, and the safe design of emerging AI systems. I am especially interested in careful evaluation under distribution shift and in methods that make model behavior more transparent and reliable.`,
+  `For Fall 2027, I am seeking PhD supervision where these interests can connect with a faculty member's research program. Before my M.S., I worked for more than three years as a professional software engineer, experience that helps me turn research questions into testable systems.`,
 ] as const
 
 export const researchSnapshot = [
-  { value: 'Independent exploration', label: 'Tool-using agent safety & oversight' },
-  { value: 'M.S. thesis', label: 'Four-class speech ML on RAVDESS + TESS' },
+  { value: 'Completed research', label: 'Four-class speech ML on RAVDESS + TESS' },
+  { value: 'Broader interests', label: 'Trustworthy, robust & multimodal ML' },
   { value: '3+ years', label: 'Production software engineering' },
 ] as const
 
@@ -45,32 +45,6 @@ export function getCvHref(): string {
 export function getAccessibleCvHref(): string {
   return cv.accessiblePath
 }
-
-export const agentSecurityStudy = {
-  title: 'Exploring Safety for Tool-Using LLM Agents',
-  status: 'Independent exploration · Ongoing',
-  summary:
-    'A self-directed exploration of how untrusted content can influence an agent\'s proposed tool calls and how safeguards might identify risky actions before execution.',
-  question:
-    'When an agent reads untrusted email, documents, or tool output, what pre-execution signals indicate that a proposed tool call was induced by malicious instructions?',
-  threatModel:
-    'Indirect prompt injection delivered through content the agent is expected to read, followed by a side-effecting or otherwise high-impact tool call.',
-  workCompleted:
-    'I am studying selected scenarios and attack patterns documented in MCP-SafetyBench, an external benchmark by Zong et al., to understand how untrusted context can affect tool selection and arguments.',
-  defenseHypothesis:
-    'One direction I am considering is a pre-execution risk check. Possible evaluation measures include attack success, benign completion, false-block rate, and calibration; I have not produced or validated a defense.',
-  evaluationPlan: [
-    'Attack success rate under adversarial content',
-    'Benign task completion rate',
-    'False-block rate for safe tool calls',
-    'Calibration of the pre-execution risk signal',
-  ],
-  artifactStatus:
-    'Self-directed reading and problem formulation are in progress. This is not a publication or formal lab project, and there are no public experimental results or defense implementation.',
-  benchmarkUrl:
-    'https://proceedings.iclr.cc/paper_files/paper/2026/hash/d46f127a80dc58cbc0732a717285c43a-Abstract-Conference.html',
-  benchmarkLabel: 'External reference: MCP-SafetyBench — Zong et al., ICLR 2026',
-} as const
 
 export const education = [
   {
@@ -157,27 +131,27 @@ export const publications = [
 
 export const researchDirections = [
   {
-    title: 'Pre-execution agent safeguards',
-    items: [
-      'Indirect prompt injection through emails, documents, and tool outputs',
-      'Risk and uncertainty signals before side-effecting tool calls',
-      'Safety-utility trade-offs and calibrated intervention',
-    ],
-  },
-  {
-    title: 'Robust evaluation under shift',
+    title: 'Speech & multimodal learning',
     items: [
       'Speaker-independent and cross-corpus speech evaluation',
-      'Subgroup-aware error analysis',
-      'Reproducible protocols and transparent limitations',
+      'Multimodal learning from speech, language, and behavioral signals',
+      'Naturalistic data and deployment-aware model design',
     ],
   },
   {
-    title: 'Oversight, recovery & auditability',
+    title: 'Trustworthy & human-centered ML',
     items: [
-      'Human approval for high-impact actions',
-      'Recovery after unsafe or ambiguous behavior',
-      'Action provenance and scalable oversight',
+      'Calibration and uncertainty-aware decision support',
+      'Subgroup-aware error analysis and distribution shift',
+      'Reproducible evaluation and transparent limitations',
+    ],
+  },
+  {
+    title: 'Safe & reliable AI systems',
+    items: [
+      'Human oversight for high-impact AI-assisted actions',
+      'Validation and recovery for uncertain system behavior',
+      'Safety of emerging tool-using and agentic systems',
     ],
   },
 ] as const
@@ -191,11 +165,11 @@ export const projects = [
     status: 'Prototype' as ProjectStatus,
     year: '2026',
     description:
-      'Built an n8n tool-using email prototype, then examined where untrusted messages, generated content, and missing approval boundaries can create risk.',
+      'Built an n8n workflow that classifies incoming messages, drafts responses, and supports scheduling across connected services.',
     problem:
-      'Email automation combines untrusted input with tools that can draft messages, retrieve records, and schedule actions.',
+      'Email triage and scheduling require several repetitive steps across messaging, data, and calendar tools.',
     contribution:
-      'Connected classification and response-generation steps, documented incomplete validation and approval boundaries, and used the workflow to motivate agent-security questions.',
+      'Integrated classification, response generation, record lookup, and scheduling while documenting validation and human-approval boundaries for generated actions.',
     stack: 'n8n, OpenAI, Gmail API, Airtable, JavaScript',
     link: 'https://github.com/nzrnaghme/RespondEmailAgent',
     linkLabel: 'Inspect the email-agent workflow on GitHub',
@@ -305,7 +279,7 @@ export const skillGroups = [
   {
     id: 'research-tools',
     label: 'Research & Evaluation',
-    skills: ['Experimental design', 'Error analysis', 'Threat modeling', 'Reproducible evaluation', 'Git', 'Linux'],
+    skills: ['Experimental design', 'Error analysis', 'Cross-corpus evaluation', 'Reproducible evaluation', 'Git', 'Linux'],
   },
   {
     id: 'engineering',
@@ -333,9 +307,9 @@ export const navItems = [
 ] as const
 
 export const seo = {
-  title: 'Naghmeh (Melody) Nazar | Speech ML & Trustworthy AI Interests',
+  title: 'Naghmeh (Melody) Nazar | Speech, Multimodal & Trustworthy AI',
   description:
-    'Research portfolio of Naghmeh (Melody) Nazar, a Fall 2027 PhD applicant with completed work in speech ML and interests in trustworthy AI, indirect prompt injection, and tool-using agent safety.',
+    'Research portfolio of Naghmeh (Melody) Nazar, a Fall 2027 PhD applicant with completed work in speech emotion recognition and broader interests in multimodal, trustworthy, robust, and human-centered AI.',
   canonical: 'https://melodynazar.com',
   ogImage: '/images/profile-photo.png',
   themeColor: '#1a2332',

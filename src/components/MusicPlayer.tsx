@@ -5,19 +5,30 @@ const MusicPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false)
   const [isAvailable, setIsAvailable] = useState(true)
   const audioRef = useRef<HTMLAudioElement>(null)
+  const playPendingRef = useRef(false)
+  const cancelPendingPlayRef = useRef(false)
 
   useEffect(() => {
     const audio = audioRef.current
     if (!audio) return
 
-    audio.src = '/relaxing-piano.mp3'
-    audio.loop = true
     audio.volume = 0.35
-    audio.preload = 'none'
 
     const handleError = () => setIsAvailable(false)
-    const handlePlay = () => setIsPlaying(true)
-    const handlePause = () => setIsPlaying(false)
+    const handlePlay = () => {
+      playPendingRef.current = false
+      if (cancelPendingPlayRef.current) {
+        cancelPendingPlayRef.current = false
+        audio.pause()
+        return
+      }
+      setIsPlaying(true)
+    }
+    const handlePause = () => {
+      playPendingRef.current = false
+      cancelPendingPlayRef.current = false
+      setIsPlaying(false)
+    }
     const handleVisibilityChange = () => {
       if (document.hidden) audio.pause()
     }
@@ -40,13 +51,33 @@ const MusicPlayer = () => {
     const audio = audioRef.current
     if (!audio || !isAvailable) return
 
+    if (!audio.paused) {
+      audio.pause()
+      return
+    }
+
+    if (playPendingRef.current) {
+      cancelPendingPlayRef.current = true
+      audio.pause()
+      return
+    }
+
+    if (!audio.getAttribute('src')) {
+      audio.src = `${import.meta.env.BASE_URL}relaxing-piano.mp3`
+    }
+
+    playPendingRef.current = true
+    cancelPendingPlayRef.current = false
+
     try {
-      if (isPlaying) {
+      await audio.play()
+      if (cancelPendingPlayRef.current) {
+        cancelPendingPlayRef.current = false
         audio.pause()
-      } else {
-        await audio.play()
       }
     } catch {
+      playPendingRef.current = false
+      cancelPendingPlayRef.current = false
       setIsPlaying(false)
     }
   }

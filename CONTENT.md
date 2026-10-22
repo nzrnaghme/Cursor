@@ -13,7 +13,7 @@ Single source of truth: `src/data/content.ts`
 | Projects | `projects` array |
 | Experience | `experience` array (verify dates before adding roles) |
 | Skills | `skillGroups` |
-| CV download | `public/Naghmeh_Melody_Nazar_Research_CV.pdf` (research/health-AI CV) |
+| CV download | `public/Naghmeh_Melody_Nazar_Research_CV.pdf` (general faculty-outreach CV) |
 | SEO title/description | `seo` in `content.ts` and `index.html` |
 
 ## VERIFY WITH OWNER before publishing

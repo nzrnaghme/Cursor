@@ -33,7 +33,7 @@ PDF_OUTPUT = PUBLIC / "Naghmeh_Melody_Nazar_Research_CV.pdf"
 HTML_OUTPUT = PUBLIC / "Naghmeh_Melody_Nazar_Research_CV.html"
 
 NAME = "Naghmeh (Melody) Nazar"
-FOCUS = "FALL 2027 PhD APPLICANT | SPEECH ML | TRUSTWORTHY AI & AGENT SECURITY INTERESTS"
+FOCUS = "FALL 2027 PHD APPLICANT | SPEECH ML | MULTIMODAL & TRUSTWORTHY AI"
 LOCATION = "Los Angeles, CA"
 PHONE_DISPLAY = "(818) 336-7271"
 PHONE_HREF = "+18183367271"
@@ -43,58 +43,23 @@ LINKEDIN = "https://linkedin.com/in/naghme-nazar"
 GITHUB = "https://github.com/nzrnaghme"
 
 RESEARCH_FOCUS = (
-    "Fall 2027 PhD applicant with completed M.S. research in speech ML and developing interests "
-    "in trustworthy AI and tool-using agent security. Independently studying selected attack "
-    "patterns documented in MCP-SafetyBench - external work by Zong et al. (ICLR 2026) - and "
-    "considering how pre-execution safeguards could be evaluated. This exploration has no "
-    "benchmark authorship, implemented defense, or validated results. M.S. thesis: four-class "
-    "speech emotion recognition on RAVDESS and TESS, with explicit limits on speaker-independent "
-    "and cross-corpus claims. Brings 3+ years of production software engineering experience to "
-    "building testable AI systems."
+    "Fall 2027 PhD applicant with an M.S. in Computer Engineering and completed research in "
+    "speech emotion recognition. Developed a four-class 2D ResNet-inspired CNN on RAVDESS and "
+    "TESS, achieving 80.36% validation accuracy and 74.4% on a held-out mixed test set, with "
+    "explicit limits on speaker-independent and cross-corpus claims. Broader interests include "
+    "speech and multimodal learning, trustworthy and robust machine learning, affective computing, "
+    "human-centered AI, and the safety of emerging AI systems. Brings 3+ years of production "
+    "software engineering experience to building testable research systems."
 )
 
 RESEARCH_INTERESTS = (
-    "LLM agent security, AI safety, indirect prompt injection, scalable oversight, adversarial "
-    "evaluation, speech processing, affective computing"
+    "speech processing, multimodal learning, trustworthy and robust machine learning, affective "
+    "computing, human-centered AI, AI safety"
 )
 
-BENCHMARK_URL = (
-    "https://proceedings.iclr.cc/paper_files/paper/2026/hash/"
-    "d46f127a80dc58cbc0732a717285c43a-Abstract-Conference.html"
-)
 PROTOTYPE_URL = "https://github.com/nzrnaghme/RespondEmailAgent"
 
 RESEARCH_EXPERIENCE = [
-    {
-        "title": "Independent Exploration - Safety of Tool-Using LLM Agents",
-        "date": "Ongoing",
-        "bullets": [
-            {
-                "text": (
-                    "Studying selected attack patterns documented in MCP-SafetyBench (Zong et al., "
-                    "ICLR 2026), an external benchmark, to understand how untrusted context can "
-                    "affect tool selection and arguments."
-                ),
-                "link": BENCHMARK_URL,
-                "link_label": "External reference: MCP-SafetyBench paper",
-            },
-            {
-                "text": (
-                    "Considering how a pre-execution risk check could be evaluated using attack "
-                    "success, benign task completion, false-block rate, and calibration; no "
-                    "experiments, defense implementation, or validated results are claimed."
-                )
-            },
-            {
-                "text": (
-                    "Built an n8n email-and-scheduling agent and documented where untrusted messages "
-                    "and generated actions require validation or human approval."
-                ),
-                "link": PROTOTYPE_URL,
-                "link_label": "github.com/nzrnaghme/RespondEmailAgent",
-            },
-        ],
-    },
     {
         "title": "M.S. Thesis - Speech Emotion Recognition, CSUN",
         "date": "Aug 2026",
@@ -120,6 +85,29 @@ RESEARCH_EXPERIENCE = [
             },
         ],
     },
+]
+
+SELECTED_ENGINEERING_PROJECTS = [
+    {
+        "title": "GenAI Email & Scheduling Agent",
+        "date": "2026",
+        "bullets": [
+            {
+                "text": (
+                    "Built an n8n workflow combining email classification, response generation, "
+                    "and scheduling across OpenAI, Gmail, and Airtable."
+                ),
+                "link": PROTOTYPE_URL,
+                "link_label": "github.com/nzrnaghme/RespondEmailAgent",
+            },
+            {
+                "text": (
+                    "Documented validation and human-approval boundaries for generated messages "
+                    "and calendar actions."
+                )
+            },
+        ],
+    }
 ]
 
 RESEARCH_OUTPUTS = [
@@ -175,15 +163,15 @@ PROFESSIONAL_EXPERIENCE = [
 
 TECHNICAL_SKILLS = [
     (
-        "Topics explored independently",
-        "indirect prompt injection, tool-call risk, human-approval boundaries",
-    ),
-    (
         "Speech and machine learning",
         (
             "Python, TensorFlow, Keras, scikit-learn, NumPy, Pandas, 2D CNN/ResNet, "
             "log-Mel spectrograms, MFCCs"
         ),
+    ),
+    (
+        "Research and evaluation",
+        "experimental design, error analysis, cross-corpus evaluation, reproducible workflows",
     ),
     (
         "Engineering",
@@ -330,11 +318,11 @@ def pdf_metadata(canvas, _doc):
     canvas.setTitle(f"{NAME} - Research CV")
     canvas.setAuthor(NAME)
     canvas.setSubject(
-        "Fall 2027 PhD applicant CV: speech ML research and trustworthy AI interests"
+        "Fall 2027 PhD applicant CV: speech ML research and interests in multimodal and trustworthy AI"
     )
     canvas.setKeywords(
-        "AI safety, LLM agent security, indirect prompt injection, scalable oversight, "
-        "adversarial evaluation, speech processing, affective computing, PhD applicant"
+        "speech processing, multimodal learning, trustworthy machine learning, robust evaluation, "
+        "affective computing, human-centered AI, AI safety, PhD applicant"
     )
 
 
@@ -348,11 +336,11 @@ def add_pdf_language_metadata() -> None:
             "/Title": f"{NAME} - Research CV",
             "/Author": NAME,
             "/Subject": (
-                "Fall 2027 PhD applicant CV: speech ML research and trustworthy AI interests"
+                "Fall 2027 PhD applicant CV: speech ML research and interests in multimodal and trustworthy AI"
             ),
             "/Keywords": (
-                "AI safety; LLM agent security; indirect prompt injection; scalable oversight; "
-                "adversarial evaluation; speech processing; affective computing"
+                "speech processing; multimodal learning; trustworthy machine learning; robust "
+                "evaluation; affective computing; human-centered AI; AI safety"
             ),
         }
     )
@@ -389,7 +377,7 @@ def generate_pdf() -> None:
         )
     )
 
-    story.extend(section("Research Experience & Independent Exploration"))
+    story.extend(section("Research Experience"))
     for index, entry in enumerate(RESEARCH_EXPERIENCE):
         if index:
             story.append(Spacer(1, 2))
@@ -405,6 +393,17 @@ def generate_pdf() -> None:
     story.extend(section("Research Outputs & Presentation"))
     for item in RESEARCH_OUTPUTS:
         story.append(pdf_bullet({"text": item}))
+
+    story.extend(section("Selected Engineering Project"))
+    for entry in SELECTED_ENGINEERING_PROJECTS:
+        story.append(
+            KeepTogether(
+                [
+                    role_line(entry["title"], entry["date"]),
+                    *[pdf_bullet(item) for item in entry["bullets"]],
+                ]
+            )
+        )
 
     story.extend(section("Education"))
     for entry in EDUCATION:
@@ -474,6 +473,7 @@ def html_role(entry: dict[str, object]) -> str:
 
 def generate_html() -> None:
     research_html = "".join(html_role(entry) for entry in RESEARCH_EXPERIENCE)
+    projects_html = "".join(html_role(entry) for entry in SELECTED_ENGINEERING_PROJECTS)
     outputs_html = "<ul>" + "".join(
         f"<li>{html_escape(item)}</li>" for item in RESEARCH_OUTPUTS
     ) + "</ul>"
@@ -490,7 +490,7 @@ def generate_html() -> None:
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="index, follow" />
-    <meta name="description" content="Research CV for {html_escape(NAME)}, a Fall 2027 PhD applicant with completed speech-ML research and interests in trustworthy AI and tool-using agent security." />
+    <meta name="description" content="Research CV for {html_escape(NAME)}, a Fall 2027 PhD applicant with completed speech-ML research and interests in multimodal, trustworthy, and human-centered AI." />
     <title>{html_escape(NAME)} - Research CV</title>
     <style>
       :root {{ color-scheme: light; --navy: #17324d; --teal: #087f76; --ink: #202b3a; --muted: #526274; --rule: #cad6df; }}
@@ -557,13 +557,18 @@ def generate_html() -> None:
         </section>
 
         <section aria-labelledby="research-heading">
-          <h2 id="research-heading">Research experience &amp; independent exploration</h2>
+          <h2 id="research-heading">Research experience</h2>
           {research_html}
         </section>
 
         <section aria-labelledby="outputs-heading">
           <h2 id="outputs-heading">Research outputs &amp; presentation</h2>
           {outputs_html}
+        </section>
+
+        <section aria-labelledby="projects-heading">
+          <h2 id="projects-heading">Selected engineering project</h2>
+          {projects_html}
         </section>
 
         <section aria-labelledby="education-heading">

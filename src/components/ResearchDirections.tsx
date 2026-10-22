@@ -7,7 +7,7 @@ const ResearchDirections = () => (
   <SectionShell
     id="directions"
     title="PhD Research Agenda"
-    subtitle="Questions I hope to pursue in doctoral research, informed by my independent exploration of agent security and my completed work in speech ML."
+    subtitle="Questions I hope to pursue in doctoral research, building on my completed speech-ML work and broader interests in trustworthy, multimodal, and human-centered AI."
     className="bg-gradient-to-b from-[#1a1a1a] to-[#252525]"
   >
     <motion.div

@@ -31,16 +31,14 @@ test('research uses implementation descriptors and reports the verified evaluati
 
 test('applicant profile is evidence-aware and institution-neutral', () => {
   const profile = content.aboutParagraphs.join(' ')
-  assert.match(profile, /MCP-SafetyBench/)
-  assert.match(profile, /external work by Zong et al\., ICLR 2026/)
-  assert.match(profile, /This is exploratory work/)
-  assert.match(profile, /do not claim authorship of MCP-SafetyBench/)
+  assert.match(profile, /speech and multimodal learning/)
+  assert.match(profile, /trustworthy and robust machine learning/)
+  assert.match(profile, /human-centered AI/)
   assert.doesNotMatch(profile, /Prof\. Rudner|Vector's/i)
-  assert.match(content.identity.headline, /Agent Security Interests/)
-  assert.equal(content.agentSecurityStudy.status, 'Independent exploration · Ongoing')
-  assert.match(content.agentSecurityStudy.artifactStatus, /not a publication or formal lab project/i)
-  assert.match(content.agentSecurityStudy.benchmarkLabel, /^External reference:/)
-  assert.match(content.agentSecurityStudy.benchmarkUrl, /^https:\/\/proceedings\.iclr\.cc\//)
+  assert.match(content.identity.headline, /Speech, Multimodal & Trustworthy AI/)
+  assert.equal('agentSecurityStudy' in content, false)
+  assert.doesNotMatch(source, /MCP-SafetyBench|Zong et al\.|Indirect Prompt Injection/)
+  assert.match(content.researchDirections.flatMap((track) => track.items).join(' '), /tool-using and agentic systems/)
 })
 
 test('project links describe their destination', () => {
@@ -56,8 +54,9 @@ test('faculty-outreach CV is ATS-readable and keeps evidence guardrails', async 
   const cvGenerator = await read('scripts/generate_research_cv.py')
   const headings = [
     'Research focus',
-    'Research experience &amp; independent exploration',
+    'Research experience',
     'Research outputs &amp; presentation',
+    'Selected engineering project',
     'Education',
     'Professional experience',
     'Technical skills',
@@ -65,10 +64,9 @@ test('faculty-outreach CV is ATS-readable and keeps evidence guardrails', async 
   const positions = headings.map((heading) => cvHtml.indexOf(`>${heading}</h2>`))
   assert.ok(positions.every((position) => position >= 0))
   assert.deepEqual([...positions].sort((a, b) => a - b), positions)
-  assert.match(cvHtml, /external work by Zong et al\. \(ICLR 2026\)/)
-  assert.match(cvHtml, /Independent Exploration - Safety of Tool-Using LLM Agents/)
-  assert.match(cvHtml, /External reference: MCP-SafetyBench paper/)
-  assert.match(cvHtml, /no experiments, defense implementation, or validated results are claimed/)
+  assert.match(cvHtml, /speech processing, multimodal learning, trustworthy and robust machine learning/)
+  assert.match(cvHtml, /GenAI Email &amp; Scheduling Agent/)
+  assert.doesNotMatch(cvHtml, /MCP-SafetyBench|Zong et al\.|Independent Exploration|tool-using agent security/i)
   assert.match(cvHtml, /80\.36% validation accuracy/)
   assert.match(cvHtml, /74\.4% held-out test accuracy/)
   assert.match(cvHtml, /github\.com\/nzrnaghme\/RespondEmailAgent/)
@@ -91,7 +89,7 @@ test('section navigation uses real anchors without an artificial loading state',
   const home = await read('src/components/Home.tsx')
   assert.doesNotMatch(app + nav, /setLoading|setIsLoading|<Loading|scrollToSection/)
   assert.match(nav, /href=\{`#\$\{item\.id\}`\}/)
-  assert.match(home, /href="#agent-security"/)
+  assert.match(home, /href="#research"/)
   assert.match(home + nav, /download="Naghmeh_Melody_Nazar_Research_CV\.pdf"/)
   assert.match(nav, /event\.key === 'Escape'/)
   assert.match(nav, /aria-current=/)
@@ -116,6 +114,13 @@ test('ambient features stay bounded, opt-in, and motion-aware', async () => {
   assert.match(music, /preload="none"/)
   assert.match(music, /aria-pressed=\{isPlaying\}/)
   assert.doesNotMatch(music, /autoPlay|localStorage/)
+  assert.match(music, /import\.meta\.env\.BASE_URL/)
+  assert.match(music, /playPendingRef/)
+  assert.match(music, /if \(!audio\.paused\)/)
+  const mountEffect = music.match(/useEffect\(\(\) => \{[\s\S]*?\n  \}, \[\]\)/)?.[0] ?? ''
+  assert.doesNotMatch(mountEffect, /audio\.src|audio\.play\(\)/)
+  assert.ok(music.indexOf('audio.src =') > music.indexOf('const togglePlay'))
+  assert.match(navigation, /className="hidden lg:inline-flex/)
   assert.match(particles, /fpsLimit: 40/)
   assert.match(particles, /value: 24/)
   assert.match(particles, /pointer-events-none/)

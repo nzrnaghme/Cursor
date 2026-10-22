@@ -51,13 +51,13 @@ const Home = () => {
 
             <motion.div variants={fadeUp} className="mt-7 flex flex-wrap gap-3">
               <motion.a
-                href="#agent-security"
+                href="#research"
                 className="min-h-11 px-5 py-3 text-sm font-semibold bg-[#526d1d] text-white hover:bg-[#607e25] rounded-md inline-flex items-center"
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.98 }}
                 transition={{ duration: 0.2 }}
               >
-                Explore current interests
+                View research experience
               </motion.a>
               <motion.a
                 href={cvHref}
