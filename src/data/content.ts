@@ -25,7 +25,7 @@ export const aboutParagraphs = [
 export const researchSnapshot = [
   { value: 'Completed research', label: 'Four-class speech ML on RAVDESS + TESS' },
   { value: 'Broader interests', label: 'Trustworthy, robust & multimodal ML' },
-  { value: '3+ years', label: 'Production software engineering' },
+  { value: '5+ years', label: 'Production software engineering' },
 ] as const
 
 /** Prefer same-domain PDF when present in public/; fallback until owner adds file. */
