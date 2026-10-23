@@ -36,9 +36,20 @@ test('applicant profile is evidence-aware and institution-neutral', () => {
   assert.match(profile, /human-centered AI/)
   assert.doesNotMatch(profile, /Prof\. Rudner|Vector's/i)
   assert.match(content.identity.headline, /Speech, Multimodal & Trustworthy AI/)
-  assert.equal('agentSecurityStudy' in content, false)
-  assert.doesNotMatch(source, /MCP-SafetyBench|Zong et al\.|Indirect Prompt Injection/)
+  assert.equal(content.agentSecurityResearch.title, 'Security Evaluation of Tool-Using LLM Agents')
+  assert.equal(content.agentSecurityResearch.status, 'Ongoing independent research')
+  assert.equal(content.agentSecurityResearch.text, "Independent research on how untrusted content — for example text inside emails, documents, or tool outputs — can redirect an LLM agent's tool calls. Includes a structured analysis of MCP-SafetyBench (a benchmark of unsafe tool-use scenarios), tracing of the decision points where injected content changes agent behavior, and defense ideas such as confidence gating before tool execution. This work connects to my PhD research direction in trustworthy agentic AI.")
   assert.match(content.researchDirections.flatMap((track) => track.items).join(' '), /tool-using and agentic systems/)
+})
+
+test('requested research and manuscript additions render in the specified order', async () => {
+  const research = await read('src/components/Research.tsx')
+  const outputs = await read('src/components/Publications.tsx')
+  assert.ok(research.indexOf('id="agent-security-research"') > research.indexOf('id="speech-ml"'))
+  assert.match(research, /agentSecurityResearch\.status/)
+  assert.match(research, /agentSecurityResearch\.text/)
+  assert.equal(content.publications[0].manuscript, 'Manuscript in preparation for Interspeech 2027.')
+  assert.match(outputs, /item\.manuscript/)
 })
 
 test('project links describe their destination', () => {
@@ -77,7 +88,7 @@ test('faculty-outreach CV is ATS-readable and keeps evidence guardrails', async 
 })
 
 test('all local content assets exist', async () => {
-  const paths = [content.getCvHref(), content.getAccessibleCvHref(), content.thesisCaseStudy.image,
+  const paths = [content.getCvHref(), content.getAccessibleCvHref(), '/Naghmeh_Nazar_CV.pdf', content.thesisCaseStudy.image,
     ...content.projects.map((project) => project.image),
     ...content.experience.map((role) => role.image)]
   for (const path of paths) await access(new URL(`../public${path}`, import.meta.url))
@@ -87,10 +98,18 @@ test('section navigation uses real anchors without an artificial loading state',
   const app = await read('src/App.tsx')
   const nav = await read('src/components/Navigation.tsx')
   const home = await read('src/components/Home.tsx')
+  const contact = await read('src/components/Contact.tsx')
   assert.doesNotMatch(app + nav, /setLoading|setIsLoading|<Loading|scrollToSection/)
   assert.match(nav, /href=\{`#\$\{item\.id\}`\}/)
   assert.match(home, /href="#research"/)
   assert.match(home + nav, /download="Naghmeh_Melody_Nazar_Research_CV\.pdf"/)
+  for (const component of [home, contact]) {
+    assert.match(component, /href="\/Naghmeh_Nazar_CV\.pdf"/)
+    assert.match(component, /download="Naghmeh_Nazar_CV\.pdf"/)
+    assert.match(component, /Download CV/)
+    assert.match(component, /https:\/\/github\.com\/nzrnaghme/)
+    assert.match(component, /https:\/\/www\.linkedin\.com\/in\/YOUR-PROFILE/)
+  }
   assert.match(nav, /event\.key === 'Escape'/)
   assert.match(nav, /aria-current=/)
   assert.match(app, /IntersectionObserver/)

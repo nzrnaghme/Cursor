@@ -38,6 +38,9 @@ const Publications = () => (
           </div>
           <h3 className="text-lg font-medium text-white mb-1">{item.title}</h3>
           <p className="text-gray-300 font-light">{item.detail}</p>
+          {'manuscript' in item && item.manuscript && (
+            <p className="text-sm text-gray-300 mt-2">{item.manuscript}</p>
+          )}
           {item.note && <p className="text-sm text-gray-400 mt-2 italic">{item.note}</p>}
           <a
             href={`mailto:${identity.email}?subject=${encodeURIComponent(`Request: ${item.title}`)}`}

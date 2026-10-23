@@ -1,12 +1,11 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import { identity, cv, getAccessibleCvHref, getCvHref } from '../data/content'
+import { identity, getAccessibleCvHref } from '../data/content'
 import { slideFromLeft, slideFromRight, staggerContainer, easeSmooth } from '../utils/motion'
 
 const Contact = () => {
   const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: true })
 
-  const cvHref = getCvHref()
   const accessibleCvHref = getAccessibleCvHref()
   const currentYear = new Date().getFullYear()
 
@@ -57,14 +56,14 @@ const Contact = () => {
 
             <div className="flex flex-wrap items-center gap-4">
               <motion.a
-                href={cvHref}
-                download="Naghmeh_Melody_Nazar_Research_CV.pdf"
+                href="/Naghmeh_Nazar_CV.pdf"
+                download="Naghmeh_Nazar_CV.pdf"
                 className="inline-block px-6 py-3 bg-[#526d1d] text-white text-sm font-medium uppercase tracking-wider hover:bg-[#556b2f] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white rounded-sm"
-                aria-label={`Download ${cv.label} as a PDF`}
+                aria-label="Download CV as a PDF"
                 whileHover={{ scale: 1.04, y: -2 }}
                 whileTap={{ scale: 0.98 }}
               >
-                Download {cv.label}
+                Download CV
               </motion.a>
               <a
                 href={accessibleCvHref}
@@ -92,22 +91,22 @@ const Contact = () => {
               <ul className="space-y-2">
                 <li>
                   <a
-                    href={identity.github}
+                    href="https://github.com/nzrnaghme"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-gray-300 hover:text-[#a9c66c] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6b8e23] rounded-sm"
                   >
-                    GitHub →
+                    GitHub
                   </a>
                 </li>
                 <li>
                   <a
-                    href={identity.linkedIn}
+                    href="https://www.linkedin.com/in/YOUR-PROFILE"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-gray-300 hover:text-[#a9c66c] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6b8e23] rounded-sm"
                   >
-                    LinkedIn →
+                    LinkedIn
                   </a>
                 </li>
                 <li>
