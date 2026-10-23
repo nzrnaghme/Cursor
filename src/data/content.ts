@@ -112,6 +112,12 @@ export const thesisCaseStudy = {
   imageAlt: 'Pipeline showing 16 kHz speech, 128 by 128 log-Mel features, a ResNet-inspired CNN, and neutral, happy, sad, and angry output labels',
 } as const
 
+export const agentSecurityResearch = {
+  title: 'Security Evaluation of Tool-Using LLM Agents',
+  status: 'Ongoing independent research',
+  text: `Independent research on how untrusted content — for example text inside emails, documents, or tool outputs — can redirect an LLM agent's tool calls. Includes a structured analysis of MCP-SafetyBench (a benchmark of unsafe tool-use scenarios), tracing of the decision points where injected content changes agent behavior, and defense ideas such as confidence gating before tool execution. This work connects to my PhD research direction in trustworthy agentic AI.`,
+} as const
+
 export const publications = [
   {
     title: 'M.S. thesis research',
@@ -119,6 +125,7 @@ export const publications = [
     venue: 'CSUN · August 2026',
     status: 'Thesis' as const,
     note: 'Thesis PDF available on request.',
+    manuscript: 'Manuscript in preparation for Interspeech 2027.',
   },
   {
     title: '40th Annual CSU Student Research Competition',

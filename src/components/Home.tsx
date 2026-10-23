@@ -1,11 +1,10 @@
 import { motion, useReducedMotion } from 'framer-motion'
-import { identity, cv, getAccessibleCvHref, getCvHref, researchSnapshot } from '../data/content'
+import { identity, getAccessibleCvHref, researchSnapshot } from '../data/content'
 import { fadeUp, staggerContainer, easeSmooth } from '../utils/motion'
 import ParticlesBackground from './ParticlesBackground'
 
 const Home = () => {
   const reduceMotion = useReducedMotion()
-  const cvHref = getCvHref()
   const accessibleCvHref = getAccessibleCvHref()
 
   return (
@@ -60,15 +59,15 @@ const Home = () => {
                 View research experience
               </motion.a>
               <motion.a
-                href={cvHref}
-                download="Naghmeh_Melody_Nazar_Research_CV.pdf"
+                href="/Naghmeh_Nazar_CV.pdf"
+                download="Naghmeh_Nazar_CV.pdf"
                 className="min-h-11 px-5 py-3 text-sm font-semibold text-white border border-white/30 hover:border-[#a9c66c] hover:bg-white/5 rounded-md inline-flex items-center"
-                aria-label={`Download ${cv.label} as a PDF`}
+                aria-label="Download CV as a PDF"
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.98 }}
                 transition={{ duration: 0.2 }}
               >
-                Download research CV
+                Download CV
               </motion.a>
               <a
                 href={`mailto:${identity.email}?subject=Fall%202027%20PhD%20research%20inquiry`}
@@ -89,8 +88,8 @@ const Home = () => {
 
             <motion.nav variants={fadeUp} className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-sm" aria-label="Profile links">
               {[
-                { label: 'GitHub ↗', href: identity.github },
-                { label: 'LinkedIn ↗', href: identity.linkedIn },
+                { label: 'GitHub', href: 'https://github.com/nzrnaghme' },
+                { label: 'LinkedIn', href: 'https://www.linkedin.com/in/YOUR-PROFILE' },
                 { label: 'Accessible HTML CV ↗', href: accessibleCvHref },
               ].map((link) => (
                 <a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer" className="min-h-11 inline-flex items-center text-gray-300 hover:text-[#bddb80]">

@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { thesisCaseStudy } from '../data/content'
+import { agentSecurityResearch, thesisCaseStudy } from '../data/content'
 import SectionShell from './SectionShell'
 import { fadeUp, staggerContainer } from '../utils/motion'
 
@@ -135,6 +135,23 @@ const Research = () => (
             </figure>
           </div>
         </details>
+      </motion.article>
+
+      <motion.article
+        id="agent-security-research"
+        className="scroll-mt-28 rounded-2xl border border-white/10 bg-[#232323] p-6 sm:p-8"
+        variants={fadeUp}
+        aria-labelledby="agent-security-research-title"
+      >
+        <div className="flex flex-wrap items-center gap-2 mb-5">
+          <StatusBadge tone="amber">{agentSecurityResearch.status}</StatusBadge>
+        </div>
+        <h3 id="agent-security-research-title" className="text-2xl sm:text-3xl font-semibold tracking-[-0.02em] text-white max-w-[820px]">
+          {agentSecurityResearch.title}
+        </h3>
+        <p className="mt-4 text-gray-200 leading-relaxed max-w-[900px]">
+          {agentSecurityResearch.text}
+        </p>
       </motion.article>
     </motion.div>
   </SectionShell>
