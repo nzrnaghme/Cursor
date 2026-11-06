@@ -77,12 +77,12 @@ export const thesisCaseStudy = {
     'How can residual neural networks classify emotional states from speech, and how should their performance be evaluated across speakers and datasets?',
   data: {
     summary:
-      'RAVDESS and TESS speech loaded at 16 kHz and represented as 128 × 128 log-Mel spectrograms. The current label mapping groups RAVDESS calm recordings with neutral.',
+      'The original thesis pipeline loads RAVDESS and TESS speech at 16 kHz and represents it as 128 × 128 log-Mel spectrograms. Its label mapping groups RAVDESS calm recordings with neutral.',
   },
   model: '2D ResNet-inspired CNN with four output labels: neutral, happy, sad, and angry.',
   training:
     'Adam optimization with dropout and residual connections, supported by a reproducible preprocessing and evaluation pipeline.',
-  evaluation: 'On the current mixed-corpus split, the model achieved 80.36% validation accuracy and 74.4% held-out test accuracy. The split does not establish speaker-independent or cross-corpus generalization.',
+  evaluation: 'In the original thesis evaluation, the model achieved 80.36% validation accuracy and 74.4% held-out test accuracy. The split does not establish speaker-independent or cross-corpus generalization.',
   errorAnalysis: [
     'Happy / Neutral confusion patterns',
     'Speaker variability across the corpus',
@@ -107,7 +107,9 @@ export const thesisCaseStudy = {
   ],
   figureCaption:
     'Speech emotion recognition pipeline: audio preprocessing, log-Mel features, a ResNet-inspired CNN, and four output labels.',
-  codeAvailability: 'Source code has not been publicly released.',
+  codeAvailability: 'The revised v10 source is available on GitHub, with training, evaluation, file inference, and a Colab notebook.',
+  codeUrl: 'https://github.com/nzrnaghme/RealTime-SER-ResNet',
+  codeLabel: 'View SER code on GitHub',
   image: '/images/speech-emotion-pipeline.svg',
   imageAlt: 'Pipeline showing 16 kHz speech, 128 by 128 log-Mel features, a ResNet-inspired CNN, and neutral, happy, sad, and angry output labels',
 } as const

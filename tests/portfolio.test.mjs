@@ -18,7 +18,8 @@ test('education and thesis status match the current reviewed content', () => {
   assert.match(content.thesisCaseStudy.evaluation, /74\.4% held-out test accuracy/)
   assert.doesNotMatch(source, /under review|4,900|approval logic/i)
   assert.doesNotMatch(content.identity.bio, /real-time|rigorous/i)
-  assert.match(content.thesisCaseStudy.codeAvailability, /not been publicly released/)
+  assert.match(content.thesisCaseStudy.codeAvailability, /v10 source is available on GitHub/)
+  assert.equal(content.thesisCaseStudy.codeUrl, 'https://github.com/nzrnaghme/RealTime-SER-ResNet')
 })
 
 test('research uses implementation descriptors and reports the verified evaluation', () => {

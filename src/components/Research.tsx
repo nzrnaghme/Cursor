@@ -54,7 +54,23 @@ const Research = () => (
         </h3>
         <p className="mt-4 text-gray-200 leading-relaxed max-w-[820px]">{thesisCaseStudy.question}</p>
 
-        <dl className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-7" aria-label="Speech emotion recognition results">
+        <div className="mt-6 flex flex-col gap-4 rounded-lg border border-[#6b8e23]/45 bg-[#29361f]/40 p-5 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#bddb80]">Source code · v10</p>
+            <p className="mt-2 max-w-[560px] text-sm leading-relaxed text-gray-200">{thesisCaseStudy.codeAvailability}</p>
+          </div>
+          <a
+            href={thesisCaseStudy.codeUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex min-h-11 w-full shrink-0 items-center justify-center gap-2 rounded-md bg-[#526d1d] px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#405916] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#a9c66c] sm:w-auto"
+          >
+            {thesisCaseStudy.codeLabel}
+            <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+
+        <dl className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-7" aria-label="Original thesis speech emotion recognition results">
           <div className="p-5 rounded-lg bg-[#18212a] border border-[#4f7182]/35">
             <dt className="text-xs uppercase tracking-[0.14em] text-gray-400">Validation accuracy</dt>
             <dd className="mt-2 text-3xl font-semibold text-white">80.36%</dd>
@@ -69,7 +85,7 @@ const Research = () => (
           </div>
         </dl>
         <p className="mt-3 text-sm text-gray-400 leading-relaxed">
-          These figures describe the current split and held-out mixed test set; they do not establish speaker-independent or cross-corpus generalization.
+          These are the original thesis results from a mixed-corpus split; they do not establish speaker-independent or cross-corpus generalization. The linked v10 source uses a new speaker-disjoint protocol, so results from the two versions are not directly comparable.
         </p>
 
         <details className="group mt-5 rounded-lg border border-white/10 bg-white/[0.025]">
@@ -115,7 +131,6 @@ const Research = () => (
                   </li>
                 ))}
               </ul>
-              <p className="mt-4 text-sm text-gray-400">{thesisCaseStudy.codeAvailability}</p>
             </div>
 
             <figure className="mt-4 rounded-xl overflow-hidden border border-white/10 bg-[#1e1e1e]">
